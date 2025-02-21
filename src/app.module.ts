@@ -10,6 +10,7 @@ import databaseConfig from 'src/config/database';
 import { APP_GUARD } from '@nestjs/core';
 import { ClerkAuthGuard } from './auth/clerk-auth.guard';
 import { CategoryModule } from './category/category.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,16 +25,10 @@ import { CategoryModule } from './category/category.module';
       inject: [ConfigService],
     }),
     EventModule,
+    AuthModule,
     CategoryModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    ClerkClientProvider,
-    {
-      provide: APP_GUARD,
-      useClass: ClerkAuthGuard,
-    },
-  ],
+  providers: [AppService, ClerkClientProvider],
 })
 export class AppModule {}
