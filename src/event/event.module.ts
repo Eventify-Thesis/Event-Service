@@ -1,9 +1,28 @@
 import { Module } from '@nestjs/common';
 import { EventService } from './event.service';
-import { EventController } from './event.controller';
+import { MongooseModule } from '@nestjs/mongoose';
+import { EventSchema } from './entities/event.entity';
+import { PaymentInfo, PaymentInfoSchema } from './entities/payment-info.entity';
+import { Setting, SettingSchema } from './entities/setting.entity';
+import { PlannerEventController } from './controllers/planner/event.controller';
+import { EventRepository } from './repositories/event.repository';
+import { SettingRepository } from './repositories/setting.repository';
+import { PaymentInfoRepository } from './repositories/payment-info.repository';
 
 @Module({
-  controllers: [EventController],
-  providers: [EventService],
+  imports: [
+    MongooseModule.forFeature([{ name: Event.name, schema: EventSchema }]),
+    MongooseModule.forFeature([
+      { name: PaymentInfo.name, schema: PaymentInfoSchema },
+    ]),
+    MongooseModule.forFeature([{ name: Setting.name, schema: SettingSchema }]),
+  ],
+  controllers: [PlannerEventController],
+  providers: [
+    EventService,
+    EventRepository,
+    SettingRepository,
+    PaymentInfoRepository,
+  ],
 })
 export class EventModule {}

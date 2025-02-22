@@ -7,8 +7,6 @@ import { EventModule } from './event/event.module';
 import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
 import appConfig from 'src/config/app';
 import databaseConfig from 'src/config/database';
-import { APP_GUARD } from '@nestjs/core';
-import { ClerkAuthGuard } from './auth/clerk-auth.guard';
 import { CategoryModule } from './category/category.module';
 import { AuthModule } from './auth/auth.module';
 @Module({

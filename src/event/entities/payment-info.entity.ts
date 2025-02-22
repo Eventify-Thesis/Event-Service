@@ -26,7 +26,7 @@ export class PaymentInfo {
   bankAccountNumber: string;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'event' })
-  event_id: string;
+  eventId: string;
 }
 
 export const PaymentInfoSchema = SchemaFactory.createForClass(PaymentInfo);

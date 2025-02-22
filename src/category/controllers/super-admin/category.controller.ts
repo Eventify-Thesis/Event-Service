@@ -28,7 +28,9 @@ import {
 } from 'src/common/docs/response.doc';
 
 @ApiTags('Super Admin Category')
-@Controller('event/category/super-admin')
+@Controller({
+  path: 'super-admin/categories',
+})
 @ApiUnauthorizedResponse(unauthorizedResponse)
 @UseGuards(RoleGuard(Role.SUPER_ADMIN))
 export class SuperAdminCategoryController {
