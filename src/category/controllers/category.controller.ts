@@ -4,7 +4,7 @@ import { CategoryService } from 'src/category/category.service';
 import { CategoryDto } from 'src/category/dto/category-doc.dto';
 
 @ApiTags('Category')
-@Controller('category')
+@Controller('event/category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
   @Get()
