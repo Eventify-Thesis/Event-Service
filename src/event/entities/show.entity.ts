@@ -12,10 +12,7 @@ export type ShowDocument = Show & Document;
     },
   },
 })
-export class Show {
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'event' })
-  event_id: string;
-}
+export class Show {}
 
 export const ShowSchema = SchemaFactory.createForClass(Show);
 ShowSchema.plugin(paginate);

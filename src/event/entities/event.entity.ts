@@ -3,6 +3,20 @@ import mongoose, { Document, Schema as MongooseSchema } from 'mongoose';
 import * as paginate from 'mongoose-paginate-v2';
 import { EventStatus, EventType } from '../event.constant';
 
+// @Schema({
+//   toJSON: {
+//     transform(doc, ret) {
+//       ret.id = ret._id;
+//       delete ret._id;
+//     },
+//   },
+// })
+// class PaymentInfo extends Document {
+//   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'paymentinfos' })
+//   _id: string;
+// }
+// const PaymentInfoSchema = SchemaFactory.createForClass(PaymentInfo);
+
 export type EventDocument = Event & Document;
 
 @Schema({
