@@ -1,15 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
   IsMongoId,
   IsNumber,
+  IsOptional,
   IsString,
   IsUrl,
 } from 'class-validator';
+import { EventType } from '../event.constant';
 
 export class CreateDraftEventDto {
-  @ApiProperty({ required: true, default: null })
+  @ApiProperty({ required: false, default: null })
+  @IsOptional()
   @IsMongoId()
   id: string;
 
@@ -34,7 +38,7 @@ export class CreateDraftEventDto {
       'https://salt.tkbcdn.com/ts/ds/67/03/5e/b821228f3c93e4aa76993160aa69afd8.png',
     required: true,
   })
-  @IsUrl()
+  @IsString()
   eventName: string;
 
   @ApiProperty({ example: ['theatersandart'], required: true })
@@ -82,10 +86,11 @@ export class CreateDraftEventDto {
   street: string;
 
   @ApiProperty({ example: [1], required: true })
-  @IsString()
+  @IsArray()
+  @Type(() => Number)
   categoriesIds: number[];
 
   @ApiProperty()
-  @IsEnum(['online', 'offline'])
+  @IsEnum(Object.values(EventType))
   eventType: string;
 }

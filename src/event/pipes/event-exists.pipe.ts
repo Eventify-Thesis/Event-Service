@@ -1,8 +1,8 @@
 import { Injectable, PipeTransform } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import { EventService } from '../event.service';
 import { AppException } from 'src/common/exceptions/app.exception';
 import { MESSAGE } from '../event.constant';
+import { EventService } from '../services/event.service';
 @Injectable()
 export class EventExists implements PipeTransform<any> {
   constructor(private moduleRef: ModuleRef) {}

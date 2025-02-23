@@ -7,27 +7,36 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
-import { BodyParamUser } from 'src/common/decorators/body-param-user.decorator';
+import { ClerkAuthGuard } from 'src/auth/clerk-auth.guard';
 import { successResponse } from 'src/common/docs/response.doc';
 import { CreateDraftEventDto } from 'src/event/dto/create-draft-event.dto';
 import { UpdateEventSettingDto } from 'src/event/dto/update-event-setting.dto';
-import { EventService } from 'src/event/event.service';
+import { PlannerEventService } from 'src/event/services/planner-event.service';
 import { EventBodyExists } from 'src/event/pipes/event-body-exists.pipe';
 import { EventExists } from 'src/event/pipes/event-exists.pipe';
+import EventRole from 'src/auth/event-role/event-roles.enum';
+import EventRoleGuard from 'src/auth/event-role/event-roles.guards';
+import RequestWithUser from 'src/auth/role/requestWithUser.interface';
+import RequestWithUserAndOrganizations from 'src/auth/event-role/requestWithUserAndOrganizations.interface';
 
 @Controller({
   path: 'planner/events',
 })
+@UseGuards(ClerkAuthGuard)
 export class PlannerEventController {
-  constructor(private readonly eventService: EventService) {}
+  constructor(private readonly eventService: PlannerEventService) {}
 
+  @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @Post('draft')
   async upsert(
     @Body(EventBodyExists) createDraftEventDto: CreateDraftEventDto,
+    @Req() req: RequestWithUserAndOrganizations,
   ) {
-    return await this.eventService.upsert(createDraftEventDto);
+    return await this.eventService.upsert(req.user.user.id, createDraftEventDto);
   }
 
   @Put(':id/settings')

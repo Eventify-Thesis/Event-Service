@@ -28,6 +28,9 @@ export type EventDocument = Event & Document;
   },
 })
 export class Event {
+  @Prop()
+  organizationId: string;
+
   @Prop({ required: true })
   eventName: string;
 

@@ -1,10 +1,16 @@
-import { User, verifyToken } from '@clerk/backend';
+import { Organization, User, verifyToken } from '@clerk/backend';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-custom';
 import { Request } from 'express';
 import { ClerkClient } from '@clerk/backend';
+
+
+interface UserAndOrganizations {
+  user: User,
+  organizations: any;
+}
 
 @Injectable()
 export class ClerkStrategy extends PassportStrategy(Strategy, 'clerk') {
@@ -16,7 +22,8 @@ export class ClerkStrategy extends PassportStrategy(Strategy, 'clerk') {
     super();
   }
 
-  async validate(req: Request): Promise<User> {
+
+  async validate(req: Request): Promise<UserAndOrganizations> {
     const token = req.headers.authorization?.split(' ').pop();
 
     if (!token) {
@@ -29,8 +36,10 @@ export class ClerkStrategy extends PassportStrategy(Strategy, 'clerk') {
       });
 
       const user = await this.clerkClient.users.getUser(tokenPayload.sub);
-
-      return user;
+      return {
+        user: user,
+        organizations: tokenPayload.organizations,
+      };
     } catch (error) {
       console.error(error);
       throw new UnauthorizedException('Invalid token');
