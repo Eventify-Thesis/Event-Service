@@ -1,6 +1,6 @@
 import { Optional } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateCategoryDto {
   @ApiProperty({ example: 'sport', required: true })
@@ -19,6 +19,6 @@ export class CreateCategoryDto {
   nameVi: string;
 
   @ApiProperty({ example: 'imageURL', required: false })
-  @Optional()
+  @IsOptional()
   image: string;
 }

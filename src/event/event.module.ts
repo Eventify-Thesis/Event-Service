@@ -1,5 +1,4 @@
-import { Module } from '@nestjs/common';
-import { EventService } from './event.service';
+import { Global, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EventSchema } from './entities/event.entity';
 import { PaymentInfo, PaymentInfoSchema } from './entities/payment-info.entity';
@@ -8,7 +7,11 @@ import { PlannerEventController } from './controllers/planner/event.controller';
 import { EventRepository } from './repositories/event.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { PaymentInfoRepository } from './repositories/payment-info.repository';
+import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
+import { PlannerEventService } from './services/planner-event.service';
+import { EventService } from './services/event.service';
 
+@Global()
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Event.name, schema: EventSchema }]),
@@ -19,10 +22,18 @@ import { PaymentInfoRepository } from './repositories/payment-info.repository';
   ],
   controllers: [PlannerEventController],
   providers: [
+    ClerkClientProvider,
     EventService,
+    PlannerEventService,
     EventRepository,
     SettingRepository,
     PaymentInfoRepository,
   ],
+  exports: [
+    EventService,
+    EventRepository,
+    SettingRepository,
+    PaymentInfoRepository,
+  ]
 })
 export class EventModule {}
