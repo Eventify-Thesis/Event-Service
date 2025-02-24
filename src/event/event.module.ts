@@ -10,6 +10,8 @@ import { PaymentInfoRepository } from './repositories/payment-info.repository';
 import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
 import { PlannerEventService } from './services/planner-event.service';
 import { EventService } from './services/event.service';
+import { ShowRepository } from './repositories/show.repository';
+import { Show, ShowSchema } from './entities/show.entity';
 
 @Global()
 @Module({
@@ -19,6 +21,7 @@ import { EventService } from './services/event.service';
       { name: PaymentInfo.name, schema: PaymentInfoSchema },
     ]),
     MongooseModule.forFeature([{ name: Setting.name, schema: SettingSchema }]),
+    MongooseModule.forFeature([{ name: Show.name, schema: ShowSchema }]),
   ],
   controllers: [PlannerEventController],
   providers: [
@@ -28,6 +31,7 @@ import { EventService } from './services/event.service';
     EventRepository,
     SettingRepository,
     PaymentInfoRepository,
+    ShowRepository
   ],
   exports: [
     EventService,

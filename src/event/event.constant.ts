@@ -12,6 +12,11 @@ export enum EventStatus {
   WATING_FOR_APPROVAL = 'Waiting for approval',
 }
 
+export enum BusinessType {
+  ORGANIZER = 'organizer',
+  INDIVIDUAL = 'individual',
+}
+
 export const MESSAGE = {
   EVENT_NOT_FOUND: {
     error: 'EVENT_NOT_FOUND',

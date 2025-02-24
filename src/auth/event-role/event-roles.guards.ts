@@ -39,6 +39,9 @@ const EventRoleGuard = (eventRoles: EventRole | EventRole[]): Type<CanActivate> 
       const [_, userRole] = organizationEntries.find(([orgId]) => orgId === eventOrgId) || [];
       
       // Convert single role to array for consistent checking
+
+      console.log(eventRoles, userRole)
+      console.log(eventOrgId, organizationEntries)
       const requiredRoles = Array.isArray(eventRoles) ? eventRoles : [eventRoles];
       // Check both organization membership and role
       const hasOrganizationAccess = organizationEntries.some(([orgId]) => orgId === eventOrgId);

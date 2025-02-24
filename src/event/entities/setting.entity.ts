@@ -13,22 +13,27 @@ export type SettingDocument = Setting & Document;
   },
 })
 export class Setting {
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'event' })
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'event',
+    unique: true,
+    required: true,
+  })
   eventId: string;
 
-  @Prop({ required: true, maxlength: 40 })
+  @Prop({ maxlength: 40 })
   url: string;
 
-  @Prop({ required: true })
+  @Prop()
   messageAttendees: string;
 
-  @Prop({ required: true })
+  @Prop({ default: true })
   isPrivate: boolean;
 
-  @Prop({ required: true })
+  @Prop()
   eventDescription: string;
 
-  @Prop({ required: true, default: false })
+  @Prop({ default: false })
   isEnableQuestionForm: boolean;
 }
 
