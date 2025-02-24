@@ -22,6 +22,8 @@ import EventRole from 'src/auth/event-role/event-roles.enum';
 import EventRoleGuard from 'src/auth/event-role/event-roles.guards';
 import RequestWithUser from 'src/auth/role/requestWithUser.interface';
 import RequestWithUserAndOrganizations from 'src/auth/event-role/requestWithUserAndOrganizations.interface';
+import { UpdateEventPaymentInfoDto } from 'src/event/dto/update-event-payment-info.dto';
+import { UpdateEventShowDto } from 'src/event/dto/update-event-show.dto';
 
 @Controller({
   path: 'planner/events',
@@ -39,11 +41,12 @@ export class PlannerEventController {
     return await this.eventService.upsert(req.user.user.id, createDraftEventDto);
   }
 
-  @Put(':id/settings')
+  @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
+  @Put(':eventId/settings')
   @ApiOkResponse(successResponse)
   async updateSetting(
     @Body() updateEventSettingDto: UpdateEventSettingDto,
-    @Param('id', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: string,
   ) {
     await this.eventService.updateSetting(eventId, updateEventSettingDto);
     return {
@@ -51,13 +54,29 @@ export class PlannerEventController {
     };
   }
 
-  @Put(':id/payment-info')
+  
+  @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
+  @Put(':eventId/payment-info')
   @ApiOkResponse(successResponse)
   async updatePaymentInfo(
-    @Body() updatePaymentInfoDto: any,
-    @Param('id', EventExists) eventId: string,
+    @Body() updatePaymentInfoDto: UpdateEventPaymentInfoDto,
+    @Param('eventId', EventExists) eventId: string,
   ) {
     await this.eventService.updatePaymentInfo(eventId, updatePaymentInfoDto);
+    return {
+      status: 'success',
+    };
+  }
+
+  
+  @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
+  @Put(':eventId/shows')
+  @ApiOkResponse(successResponse)
+  async updateShow(
+    @Body() updateShowDto: UpdateEventShowDto,
+    @Param('eventId', EventExists) eventId: string,
+  ) {
+    await this.eventService.updateShow(eventId, updateShowDto);
     return {
       status: 'success',
     };

@@ -9,7 +9,6 @@ import appConfig from 'src/config/app';
 import databaseConfig from 'src/config/database';
 import { CategoryModule } from './category/category.module';
 import { AuthModule } from './auth/auth.module';
-import { MemberModule } from './member/member.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -26,7 +25,6 @@ import { MemberModule } from './member/member.module';
     EventModule,
     AuthModule,
     CategoryModule,
-    MemberModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],

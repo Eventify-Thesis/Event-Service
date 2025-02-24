@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document, Schema as MongooseSchema } from 'mongoose';
-import * as paginate from 'mongoose-paginate-v2';
+import { BusinessType } from '../event.constant';
 
 export type PaymentInfoDocument = PaymentInfo & Document;
 
@@ -13,21 +13,32 @@ export type PaymentInfoDocument = PaymentInfo & Document;
   },
 })
 export class PaymentInfo {
-  @Prop({ required: true, maxlength: 40 })
-  bankName: string;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'event', unique: true, required: true })
+  eventId: string;
 
-  @Prop({
-    required: true,
-    type: String,
-  })
-  bankHolderName: string;
+  @Prop()
+  bankAccount: string;
+
+  @Prop()
+  bankAccountName: string;
 
   @Prop()
   bankAccountNumber: string;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'event' })
-  eventId: string;
+  @Prop()
+  bankOffice: string;
+
+  @Prop({ required: true, enum: BusinessType, default: 'organizer' })
+  businessType: string;
+
+  @Prop()
+  companyName: string;
+
+  @Prop()
+  companyAddress: string;
+
+  @Prop()
+  taxNumber: string;
 }
 
 export const PaymentInfoSchema = SchemaFactory.createForClass(PaymentInfo);
-PaymentInfoSchema.plugin(paginate);
