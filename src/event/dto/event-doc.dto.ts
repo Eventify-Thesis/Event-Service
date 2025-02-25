@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BusinessType } from '../event.constant';
+import { BusinessType, EventStatus } from '../event.constant';
+import { IsEnum } from 'class-validator';
+import EventRole from 'src/auth/event-role/event-roles.enum';
 
 class TicketTypeResponse {
   @ApiProperty()
@@ -161,4 +163,72 @@ export class EventDetailResponse {
 
   @ApiProperty({ type: ShowResponse })
   show: ShowResponse;
+}
+
+export class EventListAllQuery {
+  @ApiProperty({
+    required: false,
+    example: 10,
+  })
+  limit: number;
+
+  @ApiProperty({
+    required: false,
+    example: 1,
+  })
+  page: number;
+
+  @ApiProperty({
+    required: false,
+    example: 'name',
+    description: 'Event Name',
+  })
+  keyword: string;
+
+  @ApiProperty({
+    required: false,
+    example: 'PENDING_APPROVAL',
+    description: 'Event status',
+  })
+  status: string;
+
+  @ApiProperty({
+    required: false,
+    example: 'name.desc createdAt.asc',
+    description: 'name.desc createdAt.asc ',
+  })
+  sort: string;
+}
+
+export class EventListAllResponse {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty()
+  addressFull: string;
+
+  @ApiProperty()
+  eventBannerURL: string;
+
+  @ApiProperty()
+  eventName: string;
+
+  @ApiProperty()    
+  url: string;
+
+  @ApiProperty()
+  startTime: Date;
+
+  @ApiProperty()
+  endTime: string;
+
+  @ApiProperty()
+  status: EventStatus;
+
+  @ApiProperty()
+  venueName: string;
+
+  @ApiProperty()
+  @IsEnum(EventRole)
+  role: string;
 }

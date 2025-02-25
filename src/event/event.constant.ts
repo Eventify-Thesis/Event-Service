@@ -1,20 +1,20 @@
 import { HttpStatus } from '@nestjs/common';
 
 export enum EventType {
-  'ONLINE' = 'Online',
-  'OFFLINE' = 'Offline',
+  'ONLINE' = 'ONLINE',
+  'OFFLINE' = 'OFFLINE',
 }
 
 export enum EventStatus {
-  DRAFT = 'Draft',
-  PUBLISHED = 'Published',
-  INCOMING = 'Incoming',
-  WATING_FOR_APPROVAL = 'Waiting for approval',
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+  INCOMING = 'INCOMING',
+  PENDING_APPROVAL = 'PENDING_APPROVAL',
 }
 
 export enum BusinessType {
-  ORGANIZER = 'organizer',
-  INDIVIDUAL = 'individual',
+  ORGANIZER = 'ORGANIZER',
+  INDIVIDUAL = 'INDIVIDUAL',
 }
 
 export const MESSAGE = {

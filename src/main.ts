@@ -5,12 +5,14 @@ import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
 import * as configAWS from 'aws-sdk';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
 async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('event');
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(new TransformInterceptor());
   app.use(cookieParser());
 
 
@@ -37,6 +39,6 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('API', app, document);
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(configService.get<number>('PORT'));
 }
 bootstrap();

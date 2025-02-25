@@ -10,7 +10,8 @@ import { ShowRepository } from '../repositories/show.repository';
 import { UpdateEventShowDto } from '../dto/update-event-show.dto';
 import { EventDetailResponse } from '../dto/event-doc.dto';
 import { AppException } from 'src/common/exceptions/app.exception';
-import { MESSAGE } from '../event.constant';
+import { EventStatus, MESSAGE } from '../event.constant';
+import path from 'path';
 
 @Injectable()
 export class PlannerEventService {
@@ -28,6 +29,44 @@ export class PlannerEventService {
     });
 
     return !!entity;
+  }
+
+  async list(paramPagination, { keyword, status }: any) {
+    if (!status) status = EventStatus.INCOMING;
+    const condition = [];
+
+    if (keyword) {
+      keyword = new RegExp(
+        keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+        'gi',
+      );
+      condition.push({
+        $or: [
+          { eventName: { $regex: keyword } },
+          { venueName: { $regex: keyword } },
+          { orgName: { $regex: keyword } },
+        ],
+      });
+    }
+
+    const events = await this.eventRepository.pagination({
+      conditions: {
+        $and: [
+          {
+            status: status,
+            ...(condition.length ? { $or: condition } : {}),
+          },
+        ],
+      },
+      select: ['eventName', 'venueName', 'status', 'eventBannerURL'],
+      populate: {
+        path: 'setting',
+        select: 'url'
+      },
+      ...paramPagination,
+    });
+
+    return events;
   }
 
   async upsert(userId: string, createDraftEventDto: CreateDraftEventDto) {
@@ -62,27 +101,17 @@ export class PlannerEventService {
       role: 'org:owner',
     });
 
-    // Update event with organizationId
-
-    await this.eventRepository.updateOne(
-      {
-        _id: event.id,
-      },
-      {
-        organizationId: organization.id,
-      },
-    );
-
     // Create default setting and payment info
 
-    await this.settingRepository.create({
+    const setting = await this.settingRepository.create({
       eventId: event.id,
       messageAttendees: '',
       isPrivate: true,
       eventDescription: '',
+      url: ''
     });
 
-    await this.paymentInfoRepository.create({
+    const paymentInfo = await this.paymentInfoRepository.create({
       eventId: event.id,
       bankAccount: '',
       bankAccountName: '',
@@ -93,9 +122,23 @@ export class PlannerEventService {
       taxNumber: '',
     });
 
-    await this.showRepository.create({
+    const show = await this.showRepository.create({
       eventId: event.id,
     });
+
+    // Update event with organizationId, payment info, setting and shows
+
+    await this.eventRepository.updateOne(
+      {
+        _id: event.id,
+      },
+      {
+        organizationId: organization.id,
+        paymentInfo: paymentInfo,
+        setting: setting,
+        show: show,
+      },
+    );
 
     return event;
   }
@@ -167,7 +210,7 @@ export class PlannerEventService {
     if (!setting) {
       throw new AppException(MESSAGE.SETTING_NOT_FOUND);
     }
-  
+
     return setting.toObject();
   }
 
@@ -176,7 +219,7 @@ export class PlannerEventService {
     if (!paymentInfo) {
       throw new AppException(MESSAGE.PAYMENT_INFO_NOT_FOUND);
     }
-  
+
     return paymentInfo.toObject();
   }
 
@@ -185,7 +228,7 @@ export class PlannerEventService {
     if (!show) {
       throw new AppException(MESSAGE.SHOW_NOT_FOUND);
     }
-  
+
     return show.toObject();
   }
 

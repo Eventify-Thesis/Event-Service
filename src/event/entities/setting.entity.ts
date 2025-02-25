@@ -5,6 +5,7 @@ import * as paginate from 'mongoose-paginate-v2';
 export type SettingDocument = Setting & Document;
 
 @Schema({
+  timestamps: true,
   versionKey: false,
   toJSON: {
     virtuals: true,

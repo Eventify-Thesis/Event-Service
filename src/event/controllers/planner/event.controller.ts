@@ -9,10 +9,11 @@ import {
   Put,
   UseGuards,
   Req,
+  Query,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiQuery, getSchemaPath } from '@nestjs/swagger';
 import { ClerkAuthGuard } from 'src/auth/clerk-auth.guard';
-import { successResponse } from 'src/common/docs/response.doc';
+import { PaginationResponse, successResponse } from 'src/common/docs/response.doc';
 import { CreateDraftEventDto } from 'src/event/dto/create-draft-event.dto';
 import { UpdateEventSettingDto } from 'src/event/dto/update-event-setting.dto';
 import { PlannerEventService } from 'src/event/services/planner-event.service';
@@ -24,6 +25,8 @@ import RequestWithUser from 'src/auth/role/requestWithUser.interface';
 import RequestWithUserAndOrganizations from 'src/auth/event-role/requestWithUserAndOrganizations.interface';
 import { UpdateEventPaymentInfoDto } from 'src/event/dto/update-event-payment-info.dto';
 import { UpdateEventShowDto } from 'src/event/dto/update-event-show.dto';
+import { pagination } from 'src/common/decorators/pagination';
+import { EventListAllQuery, EventListAllResponse } from 'src/event/dto/event-doc.dto';
 
 @Controller({
   path: 'planner/events',
@@ -31,7 +34,37 @@ import { UpdateEventShowDto } from 'src/event/dto/update-event-show.dto';
 @ApiBearerAuth()
 @UseGuards(ClerkAuthGuard)
 export class PlannerEventController {
-  constructor(private readonly eventService: PlannerEventService) {}
+  constructor(private readonly eventService: PlannerEventService) { }
+  
+  @Get('') 
+  @ApiOkResponse({
+    schema: {
+      properties: {
+        data: {
+          allOf: [
+            { $ref: getSchemaPath(PaginationResponse) },
+            {
+              properties: {
+                docs: {
+                  type: 'array',
+                  items: {
+                    $ref: getSchemaPath(EventListAllResponse),
+                  },
+                },
+              },
+            },
+          ],
+        },
+      },
+    },
+  })
+  @ApiQuery({
+    type: EventListAllQuery,
+  })
+  async list(@pagination() paramPagination, @Query() query) {
+    return await this.eventService.list(paramPagination, query);
+  }
+
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @Post('draft')
@@ -122,11 +155,6 @@ export class PlannerEventController {
   async findShows(@Param('eventId', EventExists) eventId: string) {
     return await this.eventService.findShows(eventId);
   }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
-  //   return this.eventService.update(+id, updateEventDto);
-  // }
 
   @UseGuards(EventRoleGuard(EventRole.OWNER))
   @ApiOkResponse(successResponse)
