@@ -10,7 +10,7 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse } from '@nestjs/swagger';
 import { ClerkAuthGuard } from 'src/auth/clerk-auth.guard';
 import { successResponse } from 'src/common/docs/response.doc';
 import { CreateDraftEventDto } from 'src/event/dto/create-draft-event.dto';
@@ -28,6 +28,7 @@ import { UpdateEventShowDto } from 'src/event/dto/update-event-show.dto';
 @Controller({
   path: 'planner/events',
 })
+@ApiBearerAuth()
 @UseGuards(ClerkAuthGuard)
 export class PlannerEventController {
   constructor(private readonly eventService: PlannerEventService) {}
@@ -38,11 +39,18 @@ export class PlannerEventController {
     @Body(EventBodyExists) createDraftEventDto: CreateDraftEventDto,
     @Req() req: RequestWithUserAndOrganizations,
   ) {
-    return await this.eventService.upsert(req.user.user.id, createDraftEventDto);
+    return await this.eventService.upsert(
+      req.user.user.id,
+      createDraftEventDto,
+    );
   }
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @Put(':eventId/settings')
+  @ApiBody({
+    required: true,
+    type: UpdateEventSettingDto,
+  })
   @ApiOkResponse(successResponse)
   async updateSetting(
     @Body() updateEventSettingDto: UpdateEventSettingDto,
@@ -54,9 +62,12 @@ export class PlannerEventController {
     };
   }
 
-  
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @Put(':eventId/payment-info')
+  @ApiBody({
+    required: true,
+    type: UpdateEventPaymentInfoDto,
+  })
   @ApiOkResponse(successResponse)
   async updatePaymentInfo(
     @Body() updatePaymentInfoDto: UpdateEventPaymentInfoDto,
@@ -68,9 +79,12 @@ export class PlannerEventController {
     };
   }
 
-  
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @Put(':eventId/shows')
+  @ApiBody({
+    required: true,
+    type: UpdateEventShowDto,
+  })
   @ApiOkResponse(successResponse)
   async updateShow(
     @Body() updateShowDto: UpdateEventShowDto,
@@ -82,9 +96,31 @@ export class PlannerEventController {
     };
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.eventService.findOne(+id);
+  @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
+  @Get(':eventId')
+  async findOne(@Param('eventId', EventExists) eventId: string) {
+    return await this.eventService.findOne(eventId);
+  }
+
+  @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
+  @Get(':eventId/settings')
+  async findSettings(@Param('eventId', EventExists) eventId: string) {
+    return await this.eventService.findSettings(eventId);
+  }
+
+  @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
+  @Get(':eventId/payment-info')
+  async findPaymentInfo(@Param('eventId', EventExists) eventId: string) {
+    return await this.eventService.findPaymentInfo(eventId);
+  }
+
+  @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
+  @ApiOkResponse(
+    
+  )
+  @Get(':eventId/shows')
+  async findShows(@Param('eventId', EventExists) eventId: string) {
+    return await this.eventService.findShows(eventId);
   }
 
   // @Patch(':id')
@@ -92,8 +128,13 @@ export class PlannerEventController {
   //   return this.eventService.update(+id, updateEventDto);
   // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.eventService.remove(+id);
+  @UseGuards(EventRoleGuard(EventRole.OWNER))
+  @ApiOkResponse(successResponse)
+  @Delete(':eventId')
+  async remove(@Param('eventId', EventExists) eventId: string) {
+    await this.eventService.remove(eventId);
+    return {
+      status: 'success',
+    };
   }
 }

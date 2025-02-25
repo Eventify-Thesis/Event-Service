@@ -1,8 +1,10 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
-import { ApiOkResponse, ApiTags, getSchemaPath } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags, getSchemaPath } from '@nestjs/swagger';
 import { ClerkAuthGuard } from 'src/auth/clerk-auth.guard';
 import EventRole from 'src/auth/event-role/event-roles.enum';
 import EventRoleGuard from 'src/auth/event-role/event-roles.guards';
+import Role from 'src/auth/role/roles.enum';
+import RoleGuard from 'src/auth/role/roles.guards';
 import { CategoryService } from 'src/category/category.service';
 import { CategoryDto } from 'src/category/dto/category-doc.dto';
 
@@ -10,7 +12,7 @@ import { CategoryDto } from 'src/category/dto/category-doc.dto';
 @Controller({
   path: 'categories',
 })
-@UseGuards(EventRoleGuard(EventRole.OWNER))
+@ApiBearerAuth()
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
   @Get()

@@ -8,6 +8,9 @@ import { UpdateEventPaymentInfoDto } from '../dto/update-event-payment-info.dto'
 import { ClerkClient } from '@clerk/backend';
 import { ShowRepository } from '../repositories/show.repository';
 import { UpdateEventShowDto } from '../dto/update-event-show.dto';
+import { EventDetailResponse } from '../dto/event-doc.dto';
+import { AppException } from 'src/common/exceptions/app.exception';
+import { MESSAGE } from '../event.constant';
 
 @Injectable()
 export class PlannerEventService {
@@ -36,7 +39,7 @@ export class PlannerEventService {
         createDraftEventDto,
         {
           new: true,
-        }
+        },
       );
     }
     // Create event in database
@@ -140,15 +143,53 @@ export class PlannerEventService {
     return `This action returns all event`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
+  async findOne(id: string) {
+    // Find the main event document
+    const event = await this.eventRepository.findById(id);
+
+    // Find related documents
+    const [setting, paymentInfo, show] = await Promise.all([
+      this.settingRepository.findOne({ eventId: id }),
+      this.paymentInfoRepository.findOne({ eventId: id }),
+      this.showRepository.findOne({ eventId: id }),
+    ]);
+
+    return {
+      ...event.toObject(),
+      setting: setting?.toObject(),
+      paymentInfo: paymentInfo?.toObject(),
+      show: show?.toObject(),
+    };
   }
 
-  // update(id: number, updateEventDto: UpdateEventDto) {
-  //   return `This action updates a #${id} event`;
-  // }
+  async findSettings(eventId: string) {
+    const setting = await this.settingRepository.findOne({ eventId });
+    if (!setting) {
+      throw new AppException(MESSAGE.SETTING_NOT_FOUND);
+    }
+  
+    return setting.toObject();
+  }
 
-  remove(id: number) {
-    return `This action removes a #${id} event`;
+  async findPaymentInfo(eventId: string) {
+    const paymentInfo = await this.paymentInfoRepository.findOne({ eventId });
+    if (!paymentInfo) {
+      throw new AppException(MESSAGE.PAYMENT_INFO_NOT_FOUND);
+    }
+  
+    return paymentInfo.toObject();
+  }
+
+  async findShows(eventId: string) {
+    const show = await this.showRepository.findOne({ eventId });
+    if (!show) {
+      throw new AppException(MESSAGE.SHOW_NOT_FOUND);
+    }
+  
+    return show.toObject();
+  }
+
+  async remove(eventId: string) {
+    await this.eventRepository.deleteOne({ _id: eventId });
   }
 }

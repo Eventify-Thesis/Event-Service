@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document, Schema as MongooseSchema } from 'mongoose';
+import { Document, Schema as MongooseSchema, Types } from 'mongoose';
 import * as paginate from 'mongoose-paginate-v2';
 import { EventStatus, EventType } from '../event.constant';
 
@@ -20,14 +20,21 @@ import { EventStatus, EventType } from '../event.constant';
 export type EventDocument = Event & Document;
 
 @Schema({
+  versionKey: false,
   toJSON: {
-    transform(doc, ret) {
-      ret.id = ret._id;
+    virtuals: true,
+    transform: (doc, ret) => {
+      ret.id = ret._id.toString();
       delete ret._id;
+      delete ret.__v;
+      return ret;
     },
   },
 })
 export class Event {
+  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
   @Prop()
   organizationId: string;
 
