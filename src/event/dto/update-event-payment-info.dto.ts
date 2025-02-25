@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsEnum, IsString } from 'class-validator';
+import { BusinessType } from '../event.constant';
 
 export class UpdateEventPaymentInfoDto {
   @ApiProperty({ required: true, default: 'Vietcombank' })
@@ -19,8 +20,8 @@ export class UpdateEventPaymentInfoDto {
   bankOffice: string;
 
   @ApiProperty({ required: true, default: 'organizer' })
-  @IsEnum(['organizer', 'individual'])
-  businessType: string;
+  @IsEnum(BusinessType)
+  businessType: BusinessType;
 
   @ApiProperty({ required: true, default: 'Eventure' })
   @IsString()

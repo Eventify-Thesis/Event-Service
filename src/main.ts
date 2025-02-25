@@ -7,10 +7,12 @@ import { ConfigService } from '@nestjs/config';
 import * as configAWS from 'aws-sdk';
 
 async function bootstrap() {
+
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('event');
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
+
 
   const cors = require('cors');
   const corsOptions = {
@@ -28,11 +30,10 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Grab-Team14-API')
-    .setDescription('Emploi App API description')
+    .setTitle('EventService-API')
+    .setDescription('Event Service - Eventify App API description')
     .setVersion('1.0')
-    .addTag('Emploi')
-    .addCookieAuth()
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('API', app, document);

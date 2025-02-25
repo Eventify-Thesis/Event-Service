@@ -1,18 +1,25 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document, Schema as MongooseSchema } from 'mongoose';
+import { Document, Schema as MongooseSchema, Types } from 'mongoose';
 import * as paginate from 'mongoose-paginate-v2';
 
 export type ShowDocument = Show & Document;
 
 @Schema({
+  versionKey: false,
   toJSON: {
-    transform(doc, ret) {
-      ret.id = ret._id;
+    virtuals: true,
+    transform: (doc, ret) => {
+      ret.id = ret._id.toString();
       delete ret._id;
+      delete ret.__v;
+      return ret;
     },
   },
 })
 export class TicketType {
+  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
   @Prop({ required: true })
   name: string;
 
@@ -70,15 +77,24 @@ export class Showing {
 }
 
 @Schema({
+  versionKey: false,
   toJSON: {
-    transform(doc, ret) {
-      ret.id = ret._id;
+    virtuals: true,
+    transform: (doc, ret) => {
+      ret.id = ret._id.toString();
       delete ret._id;
+      delete ret.__v;
+      return ret;
     },
   },
 })
 export class Show {
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'event', unique: true, required: true })
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'event',
+    unique: true,
+    required: true,
+  })
   eventId: string;
 
   @Prop({ type: [Showing], required: true })

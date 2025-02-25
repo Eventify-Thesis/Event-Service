@@ -34,8 +34,7 @@ export class CreateDraftEventDto {
   eventBannerURL: string;
 
   @ApiProperty({
-    example:
-      'https://salt.tkbcdn.com/ts/ds/67/03/5e/b821228f3c93e4aa76993160aa69afd8.png',
+    example: 'Event Name',
     required: true,
   })
   @IsString()
@@ -90,7 +89,7 @@ export class CreateDraftEventDto {
   @Type(() => Number)
   categoriesIds: number[];
 
-  @ApiProperty()
+  @ApiProperty({required: true, default: EventType.OFFLINE})
   @IsEnum(Object.values(EventType))
   eventType: string;
 }
