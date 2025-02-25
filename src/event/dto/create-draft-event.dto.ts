@@ -89,7 +89,7 @@ export class CreateDraftEventDto {
   @Type(() => Number)
   categoriesIds: number[];
 
-  @ApiProperty({required: true, default: EventType.OFFLINE})
+  @ApiProperty({ required: true, default: EventType.OFFLINE })
   @IsEnum(Object.values(EventType))
   eventType: string;
 }

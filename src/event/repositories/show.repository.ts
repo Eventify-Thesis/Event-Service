@@ -6,9 +6,7 @@ import { Show, ShowDocument } from '../entities/show.entity';
 
 @Injectable()
 export class ShowRepository extends AbstractRepository<ShowDocument> {
-  constructor(
-    @InjectModel(Show.name) model: PaginateModel<ShowDocument>,
-  ) {
+  constructor(@InjectModel(Show.name) model: PaginateModel<ShowDocument>) {
     super(model);
   }
 }

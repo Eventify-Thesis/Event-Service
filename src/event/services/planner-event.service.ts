@@ -61,7 +61,7 @@ export class PlannerEventService {
       select: ['eventName', 'venueName', 'status', 'eventBannerURL'],
       populate: {
         path: 'setting',
-        select: 'url'
+        select: 'url',
       },
       ...paramPagination,
     });
@@ -108,7 +108,7 @@ export class PlannerEventService {
       messageAttendees: '',
       isPrivate: true,
       eventDescription: '',
-      url: ''
+      url: '',
     });
 
     const paymentInfo = await this.paymentInfoRepository.create({

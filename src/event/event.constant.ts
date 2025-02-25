@@ -37,5 +37,5 @@ export const MESSAGE = {
     error: 'SHOW_NOT_FOUND',
     message: 'Show not found',
     httpStatus: HttpStatus.NOT_FOUND,
-  }
+  },
 };

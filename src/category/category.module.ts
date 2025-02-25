@@ -12,7 +12,7 @@ import { AuthModule } from 'src/auth/auth.module';
     MongooseModule.forFeature([
       { name: Category.name, schema: CategorySchema },
     ]),
-    AuthModule
+    AuthModule,
   ],
   controllers: [SuperAdminCategoryController, CategoryController],
   providers: [CategoryService, CategoryRepository],

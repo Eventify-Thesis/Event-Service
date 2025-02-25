@@ -6,9 +6,8 @@ import { Strategy } from 'passport-custom';
 import { Request } from 'express';
 import { ClerkClient } from '@clerk/backend';
 
-
 interface UserAndOrganizations {
-  user: User,
+  user: User;
   organizations: any;
 }
 
@@ -21,7 +20,6 @@ export class ClerkStrategy extends PassportStrategy(Strategy, 'clerk') {
   ) {
     super();
   }
-
 
   async validate(req: Request): Promise<UserAndOrganizations> {
     const token = req.headers.authorization?.split(' ').pop();

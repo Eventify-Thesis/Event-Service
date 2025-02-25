@@ -5,9 +5,7 @@ import { EventService } from 'src/event/services/event.service';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly eventService: EventService
-  ) {}
+  constructor(private readonly eventService: EventService) {}
 
   async findOne(query: Record<string, any>) {
     const entity = await this.eventService.findOne(query);

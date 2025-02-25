@@ -8,20 +8,8 @@ import { AuthService } from './auth.service';
 import { ModuleRef } from '@nestjs/core';
 
 @Module({
-  imports: [
-    PassportModule,
-    ConfigModule,
-    EventModule
-  ],
-  providers: [
-    ClerkStrategy,
-    ClerkClientProvider,
-    AuthService,
-  ],
-  exports: [
-    PassportModule,
-    AuthService,
-    ModuleRef
-  ],
+  imports: [PassportModule, ConfigModule, EventModule],
+  providers: [ClerkStrategy, ClerkClientProvider, AuthService],
+  exports: [PassportModule, AuthService, ModuleRef],
 })
 export class AuthModule {}
