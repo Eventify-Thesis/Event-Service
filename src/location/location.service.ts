@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { CreateLocationDto } from './dto/create-location.dto';
-import { UpdateLocationDto } from './dto/update-location.dto';
+import { CityRepository } from './repositories/region.repository';
+import { DistrictRepository } from './repositories/district.repository';
+import { WardRepository } from './repositories/ward.repository';
 
 @Injectable()
 export class LocationService {
-  create(createLocationDto: CreateLocationDto) {
-    return 'This action adds a new location';
+  constructor(
+    private readonly cityRepository: CityRepository,
+    private readonly districtRepository: DistrictRepository,
+    private readonly wardRepository: WardRepository,
+  ) {}
+
+  async findListCity(regionId: string) {
+    return await this.cityRepository.find({
+      countryId: regionId,
+    });
   }
 
-  findAll() {
-    return `This action returns all location`;
+  async findListDistrict(cityId: string) {
+    return await this.districtRepository.find({
+      cityId: cityId,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} location`;
-  }
-
-  update(id: number, updateLocationDto: UpdateLocationDto) {
-    return `This action updates a #${id} location`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} location`;
+  async findListWard(districtId: string) {
+    return await this.wardRepository.find({
+      districtId: districtId,
+    });
   }
 }
