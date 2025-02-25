@@ -31,13 +31,13 @@ import { Show, ShowSchema } from './entities/show.entity';
     EventRepository,
     SettingRepository,
     PaymentInfoRepository,
-    ShowRepository
+    ShowRepository,
   ],
   exports: [
     EventService,
     EventRepository,
     SettingRepository,
     PaymentInfoRepository,
-  ]
+  ],
 })
 export class EventModule {}

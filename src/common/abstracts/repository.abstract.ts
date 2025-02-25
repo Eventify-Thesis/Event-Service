@@ -119,7 +119,7 @@ export default class AbstractRepository<T extends Document> {
     projection?: ProjectionType<T>,
     options?: QueryOptions,
   ): Promise<T | null> {
-    return this.model.findById(id, projection, options)
+    return this.model.findById(id, projection, options);
   }
 
   async findAll(): Promise<T[]> {

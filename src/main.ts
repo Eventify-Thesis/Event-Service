@@ -8,13 +8,11 @@ import * as configAWS from 'aws-sdk';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
 async function bootstrap() {
-
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('event');
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
   app.use(cookieParser());
-
 
   const cors = require('cors');
   const corsOptions = {

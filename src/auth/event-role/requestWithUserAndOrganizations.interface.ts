@@ -4,8 +4,8 @@ import { Request } from 'express';
 interface RequestWithUserAndOrganizations extends Request {
   user: {
     user: User;
-    organizations: any;  
-  }
+    organizations: any;
+  };
 }
 
 export default RequestWithUserAndOrganizations;

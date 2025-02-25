@@ -213,7 +213,7 @@ export class EventListAllResponse {
   @ApiProperty()
   eventName: string;
 
-  @ApiProperty()    
+  @ApiProperty()
   url: string;
 
   @ApiProperty()

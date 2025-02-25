@@ -11,9 +11,18 @@ import {
   Req,
   Query,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiQuery, getSchemaPath } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOkResponse,
+  ApiQuery,
+  getSchemaPath,
+} from '@nestjs/swagger';
 import { ClerkAuthGuard } from 'src/auth/clerk-auth.guard';
-import { PaginationResponse, successResponse } from 'src/common/docs/response.doc';
+import {
+  PaginationResponse,
+  successResponse,
+} from 'src/common/docs/response.doc';
 import { CreateDraftEventDto } from 'src/event/dto/create-draft-event.dto';
 import { UpdateEventSettingDto } from 'src/event/dto/update-event-setting.dto';
 import { PlannerEventService } from 'src/event/services/planner-event.service';
@@ -26,7 +35,10 @@ import RequestWithUserAndOrganizations from 'src/auth/event-role/requestWithUser
 import { UpdateEventPaymentInfoDto } from 'src/event/dto/update-event-payment-info.dto';
 import { UpdateEventShowDto } from 'src/event/dto/update-event-show.dto';
 import { pagination } from 'src/common/decorators/pagination';
-import { EventListAllQuery, EventListAllResponse } from 'src/event/dto/event-doc.dto';
+import {
+  EventListAllQuery,
+  EventListAllResponse,
+} from 'src/event/dto/event-doc.dto';
 
 @Controller({
   path: 'planner/events',
@@ -34,9 +46,9 @@ import { EventListAllQuery, EventListAllResponse } from 'src/event/dto/event-doc
 @ApiBearerAuth()
 @UseGuards(ClerkAuthGuard)
 export class PlannerEventController {
-  constructor(private readonly eventService: PlannerEventService) { }
-  
-  @Get('') 
+  constructor(private readonly eventService: PlannerEventService) {}
+
+  @Get('')
   @ApiOkResponse({
     schema: {
       properties: {
@@ -64,7 +76,6 @@ export class PlannerEventController {
   async list(@pagination() paramPagination, @Query() query) {
     return await this.eventService.list(paramPagination, query);
   }
-
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @Post('draft')
@@ -148,9 +159,7 @@ export class PlannerEventController {
   }
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
-  @ApiOkResponse(
-    
-  )
+  @ApiOkResponse()
   @Get(':eventId/shows')
   async findShows(@Param('eventId', EventExists) eventId: string) {
     return await this.eventService.findShows(eventId);
