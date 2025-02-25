@@ -5,6 +5,7 @@ import { BusinessType } from '../event.constant';
 export type PaymentInfoDocument = PaymentInfo & Document;
 
 @Schema({
+  timestamps: true,
   versionKey: false,
   toJSON: {
     virtuals: true,
@@ -40,7 +41,7 @@ export class PaymentInfo {
   @Prop()
   bankOffice: string;
 
-  @Prop({ required: true, enum: BusinessType, default: 'organizer' })
+  @Prop({ required: true, enum: BusinessType, default: BusinessType.ORGANIZER })
   businessType: string;
 
   @Prop()

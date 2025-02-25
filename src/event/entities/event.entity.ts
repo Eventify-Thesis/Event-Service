@@ -3,23 +3,10 @@ import { Document, Schema as MongooseSchema, Types } from 'mongoose';
 import * as paginate from 'mongoose-paginate-v2';
 import { EventStatus, EventType } from '../event.constant';
 
-// @Schema({
-//   toJSON: {
-//     transform(doc, ret) {
-//       ret.id = ret._id;
-//       delete ret._id;
-//     },
-//   },
-// })
-// class PaymentInfo extends Document {
-//   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'paymentinfos' })
-//   _id: string;
-// }
-// const PaymentInfoSchema = SchemaFactory.createForClass(PaymentInfo);
-
 export type EventDocument = Event & Document;
 
 @Schema({
+  timestamps: true,
   versionKey: false,
   toJSON: {
     virtuals: true,
@@ -34,6 +21,15 @@ export type EventDocument = Event & Document;
 export class Event {
   @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
   _id: Types.ObjectId;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'PaymentInfo' })
+  paymentInfo: Types.ObjectId;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Setting' })
+  setting: Types.ObjectId;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Show' })
+  show: Types.ObjectId;
 
   @Prop()
   organizationId: string;

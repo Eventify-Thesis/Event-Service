@@ -19,7 +19,7 @@ export class UpdateEventPaymentInfoDto {
   @IsString()
   bankOffice: string;
 
-  @ApiProperty({ required: true, default: 'organizer' })
+  @ApiProperty({ required: true, default: 'ORGANIZER' })
   @IsEnum(BusinessType)
   businessType: BusinessType;
 
