@@ -8,21 +8,21 @@ import {
   Delete,
 } from '@nestjs/common';
 import { LocationService } from './location.service';
-@Controller('location')
+@Controller('locations')
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
-  @Get('regions/:regionId')
+  @Get('regions/:regionId/cities')
   async findListCity(@Param('regionId') regionId: string) {
     return await this.locationService.findListCity(regionId);
   }
 
-  @Get('districts/:cityId')
+  @Get('cities/:cityId/districts')
   async findListDistrict(@Param('cityId') cityId: string) {
     return await this.locationService.findListDistrict(cityId);
   }
 
-  @Get('wards/:districtId')
+  @Get('districts/:districtId/wards')
   async findListWard(@Param('districtId') districtId: string) {
     return await this.locationService.findListWard(districtId);
   }

@@ -73,8 +73,16 @@ export class PlannerEventController {
   @ApiQuery({
     type: EventListAllQuery,
   })
-  async list(@pagination() paramPagination, @Query() query) {
-    return await this.eventService.list(paramPagination, query);
+  async list(
+    @pagination() paramPagination,
+    @Query() query,
+    @Req() req: RequestWithUserAndOrganizations,
+  ) {
+    return await this.eventService.list(
+      req.user.organizations,
+      paramPagination,
+      query,
+    );
   }
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))

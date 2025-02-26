@@ -8,7 +8,7 @@ export enum EventType {
 export enum EventStatus {
   DRAFT = 'DRAFT',
   PUBLISHED = 'PUBLISHED',
-  INCOMING = 'INCOMING',
+  UPCOMING = 'UPCOMING',
   PENDING_APPROVAL = 'PENDING_APPROVAL',
 }
 

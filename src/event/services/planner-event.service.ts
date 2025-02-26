@@ -31,8 +31,10 @@ export class PlannerEventService {
     return !!entity;
   }
 
-  async list(paramPagination, { keyword, status }: any) {
-    if (!status) status = EventStatus.INCOMING;
+  async list(organizations: any, paramPagination, { keyword, status }: any) {
+    const orgIds = Object.keys(organizations);
+    console.log(orgIds);
+    if (!status) status = EventStatus.UPCOMING;
     const condition = [];
 
     if (keyword) {
@@ -54,6 +56,7 @@ export class PlannerEventService {
         $and: [
           {
             status: status,
+            organizationId: { $in: orgIds },
             ...(condition.length ? { $or: condition } : {}),
           },
         ],
