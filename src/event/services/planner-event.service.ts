@@ -33,7 +33,6 @@ export class PlannerEventService {
 
   async list(organizations: any, paramPagination, { keyword, status }: any) {
     const orgIds = Object.keys(organizations);
-    console.log(orgIds);
     if (!status) status = EventStatus.UPCOMING;
     const condition = [];
 
