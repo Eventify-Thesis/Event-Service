@@ -25,6 +25,12 @@ export class S3Controller {
     type: 'boolean',
     example: 'isPublic',
   })
+  @ApiQuery({
+    name: 'folder',
+    required: true,
+    type: 'string',
+    example: 'folder',
+  })
   @Get()
   async getSignedUrlForPuttingObject(@Query() dto: signedUrlDto) {
     const { url, key } = await this.s3Service.signedUrlForPuttingObject(dto);

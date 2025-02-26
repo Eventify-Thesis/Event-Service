@@ -10,6 +10,7 @@ import databaseConfig from 'src/config/database';
 import { CategoryModule } from './category/category.module';
 import { AuthModule } from './auth/auth.module';
 import { LocationModule } from './location/location.module';
+import { MediaModule } from './media/media.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,6 +28,7 @@ import { LocationModule } from './location/location.module';
     AuthModule,
     CategoryModule,
     LocationModule,
+    MediaModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],
