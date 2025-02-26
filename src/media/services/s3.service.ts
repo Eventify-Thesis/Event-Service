@@ -8,7 +8,7 @@ export class S3Service {
   constructor(private readonly configService: ConfigService) {}
 
   async signedUrlForPuttingObject(data: any) {
-    const key = `tmp/${uuidv4()}-${data.fileName
+    const key = `${data.folder}/${uuidv4()}-${data.fileName
       .replace(/^.*[\\\/]/, '')
       .replace(/\s/g, '')}`;
     const params = {
@@ -23,7 +23,7 @@ export class S3Service {
   }
 
   public getPublicUrlInS3(fileName) {
-    const prefixUrl = `https://grabbootcamp.s3.amazonaws.com`;
+    const prefixUrl = `https://${this.configService.get<string>('AWS_PUBLIC_BUCKET_NAME')}.s3.amazonaws.com`;
     const regex = new RegExp(`^${prefixUrl}`, 'g');
     if (!regex.test(fileName)) {
       return `${prefixUrl}/${fileName}`;

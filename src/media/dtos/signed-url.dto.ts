@@ -9,4 +9,7 @@ export class signedUrlDto {
 
   @IsNotEmpty()
   contentType: string;
+
+  @IsNotEmpty()
+  folder: string;
 }
