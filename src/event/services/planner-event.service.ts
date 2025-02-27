@@ -5,7 +5,7 @@ import { PaymentInfoRepository } from '../repositories/payment-info.repository';
 import { CreateDraftEventDto } from '../dto/create-draft-event.dto';
 import { UpdateEventSettingDto } from '../dto/update-event-setting.dto';
 import { UpdateEventPaymentInfoDto } from '../dto/update-event-payment-info.dto';
-import { ClerkClient } from '@clerk/backend';
+import { ClerkClient, User } from '@clerk/backend';
 import { ShowRepository } from '../repositories/show.repository';
 import { UpdateEventShowDto } from '../dto/update-event-show.dto';
 import { EventDetailResponse } from '../dto/event-doc.dto';
@@ -71,16 +71,12 @@ export class PlannerEventService {
     return events;
   }
 
-  async upsert(userId: string, createDraftEventDto: CreateDraftEventDto) {
+  async upsert(user: User, createDraftEventDto: CreateDraftEventDto) {
     if (createDraftEventDto.id) {
-      return await this.eventRepository.updateOne(
-        {
-          id: createDraftEventDto.id,
-        },
+      return await this.eventRepository.findByIdAndUpdate(
+        createDraftEventDto.id,
         createDraftEventDto,
-        {
-          new: true,
-        },
+        { new: true },
       );
     }
     // Create event in database
@@ -99,10 +95,19 @@ export class PlannerEventService {
     // Add the current user as owner of the organization
     await this.clerkClient.organizations.createOrganizationMembership({
       organizationId: organization.id,
-      userId: userId,
+      userId: user.id,
       role: 'org:owner',
     });
 
+    let organizations = user.publicMetadata.organizations || {};
+
+    organizations[organization.id] = 'org:owner';
+
+    await this.clerkClient.users.updateUserMetadata(user.id, {
+      publicMetadata: {
+        organizations,
+      },
+    });
     // Create default setting and payment info
 
     const setting = await this.settingRepository.create({
@@ -190,7 +195,9 @@ export class PlannerEventService {
 
   async findOne(id: string) {
     // Find the main event document
-    const event = await this.eventRepository.findById(id);
+    const event = await this.eventRepository.findOne({
+      _id: id,
+    });
 
     // Find related documents
     const [setting, paymentInfo, show] = await Promise.all([

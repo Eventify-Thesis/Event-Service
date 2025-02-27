@@ -76,10 +76,10 @@ export class PlannerEventController {
   async list(
     @pagination() paramPagination,
     @Query() query,
-    @Req() req: RequestWithUserAndOrganizations,
+    @Req() req: RequestWithUser,
   ) {
     return await this.eventService.list(
-      req.user.organizations,
+      req.user.publicMetadata.organizations,
       paramPagination,
       query,
     );
@@ -89,12 +89,9 @@ export class PlannerEventController {
   @Post('draft')
   async upsert(
     @Body(EventBodyExists) createDraftEventDto: CreateDraftEventDto,
-    @Req() req: RequestWithUserAndOrganizations,
+    @Req() req: RequestWithUser,
   ) {
-    return await this.eventService.upsert(
-      req.user.user.id,
-      createDraftEventDto,
-    );
+    return await this.eventService.upsert(req.user, createDraftEventDto);
   }
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))

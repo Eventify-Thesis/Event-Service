@@ -65,22 +65,27 @@ export class CreateDraftEventDto {
   orgDescription: string;
 
   @ApiProperty({ example: 'Venue name', required: true })
+  @IsOptional()
   @IsString()
   venueName: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsNumber()
   cityId: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsNumber()
   districtId: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsNumber()
   wardId: number;
 
   @ApiProperty({ example: 'Street name', required: true })
+  @IsOptional()
   @IsString()
   street: string;
 

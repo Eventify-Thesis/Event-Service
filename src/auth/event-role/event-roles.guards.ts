@@ -10,6 +10,7 @@ import EventRole from './event-roles.enum';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../auth.service';
 import { ModuleRef } from '@nestjs/core';
+import RequestWithUser from '../role/requestWithUser.interface';
 
 const EventRoleGuard = (
   eventRoles: EventRole | EventRole[],
@@ -27,9 +28,7 @@ const EventRoleGuard = (
     async canActivate(context: ExecutionContext) {
       await super.canActivate(context);
 
-      const request = context
-        .switchToHttp()
-        .getRequest<RequestWithUserAndOrganizations>();
+      const request = context.switchToHttp().getRequest<RequestWithUser>();
 
       const eventId = request.params.eventId || request.body.id;
       if (!eventId) return true;
@@ -38,7 +37,7 @@ const EventRoleGuard = (
 
       // Convert Clerk roles to EventRole format
       const organizationEntries = Object.entries(
-        request.user.organizations || {},
+        request.user.publicMetadata.organizations || {},
       ).map(([orgId, clerkRole]) => {
         const role = (clerkRole as string)
           .replace('org:', '')

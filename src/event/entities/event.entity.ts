@@ -65,20 +65,26 @@ export class Event {
   @Prop({ required: true })
   eventBannerURL: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   venueName: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   cityId: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   districtId: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   wardId: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   street: string;
+
+  @Prop({ required: true })
+  categories: string[];
+
+  @Prop({ required: true })
+  categoriesIds: string[];
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);

@@ -19,7 +19,7 @@ export type CityDocument = City & Document;
 })
 export class City {
   @Prop()
-  originId: string;
+  originId: number;
 
   @Prop({ required: true, maxlength: 40 })
   name: string;
