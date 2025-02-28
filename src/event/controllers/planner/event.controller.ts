@@ -36,6 +36,7 @@ import { UpdateEventPaymentInfoDto } from 'src/event/dto/update-event-payment-in
 import { UpdateEventShowDto } from 'src/event/dto/update-event-show.dto';
 import { pagination } from 'src/common/decorators/pagination';
 import {
+  EventBriefResponse,
   EventListAllQuery,
   EventListAllResponse,
 } from 'src/event/dto/event-doc.dto';
@@ -83,6 +84,21 @@ export class PlannerEventController {
       paramPagination,
       query,
     );
+  }
+
+  @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
+  @Get(':eventId/brief')
+  @ApiOkResponse({
+    schema: {
+      properties: {
+        data: {
+          $ref: getSchemaPath(EventBriefResponse),
+        },
+      },
+    },
+  })
+  async getBrief(@Param('eventId', EventExists) eventId: string) {
+    return await this.eventService.getBrief(eventId);
   }
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))

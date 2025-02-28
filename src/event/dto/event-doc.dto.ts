@@ -106,6 +106,20 @@ export class ShowResponse {
   showings: ShowingResponse[];
 }
 
+export class EventBriefResponse {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty()
+  eventName: string;
+
+  @ApiProperty()
+  eventLogoURL: string;
+
+  @ApiProperty()
+  eventBannerURL: string;
+}
+
 export class EventDetailResponse {
   @ApiProperty()
   id: string;

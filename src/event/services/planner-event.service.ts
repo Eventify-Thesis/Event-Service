@@ -8,7 +8,7 @@ import { UpdateEventPaymentInfoDto } from '../dto/update-event-payment-info.dto'
 import { ClerkClient, User } from '@clerk/backend';
 import { ShowRepository } from '../repositories/show.repository';
 import { UpdateEventShowDto } from '../dto/update-event-show.dto';
-import { EventDetailResponse } from '../dto/event-doc.dto';
+import { EventBriefResponse, EventDetailResponse } from '../dto/event-doc.dto';
 import { AppException } from 'src/common/exceptions/app.exception';
 import { EventStatus, MESSAGE } from '../event.constant';
 import path from 'path';
@@ -60,15 +60,58 @@ export class PlannerEventService {
           },
         ],
       },
-      select: ['eventName', 'venueName', 'status', 'eventBannerURL'],
-      populate: {
-        path: 'setting',
-        select: 'url',
-      },
+      select: [
+        'eventName',
+        'venueName',
+        'status',
+        'eventBannerURL',
+        'organizationId',
+      ],
+      populate: [
+        {
+          path: 'setting',
+          select: 'url',
+        },
+        {
+          path: 'show',
+          select: 'showings',
+        },
+      ],
       ...paramPagination,
     });
 
-    return events;
+    const newEvents = events.docs.map((event) => {
+      const newEvent = event.toObject();
+
+      newEvent['url'] = event.setting['url'];
+      delete newEvent.setting;
+
+      if (event.show['showings'].length > 0) {
+        newEvent['startTime'] = event.show['showings'][0].startTime;
+        newEvent['endTime'] = event.show['showings'][0].endTime;
+      }
+
+      delete newEvent.show;
+
+      newEvent['role'] = organizations[event.organizationId]
+        .split(':')[1]
+        .toUpperCase();
+      return newEvent;
+    });
+
+    return { ...events, docs: newEvents };
+  }
+
+  async getBrief(eventId: string) {
+    const event = await this.eventRepository.findOne({ _id: eventId });
+
+    const brief = new EventBriefResponse();
+    brief.id = event._id.toString();
+    brief.eventName = event.eventName;
+    brief.eventLogoURL = event.eventLogoURL;
+    brief.eventBannerURL = event.eventBannerURL;
+
+    return brief;
   }
 
   async upsert(user: User, createDraftEventDto: CreateDraftEventDto) {
