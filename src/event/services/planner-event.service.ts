@@ -216,11 +216,12 @@ export class PlannerEventService {
 
   async findSettings(eventId: string) {
     const setting = await this.settingRepository.findOne({ eventId });
+    const event = await this.eventRepository.findOne({ _id: eventId });
     if (!setting) {
       throw new AppException(MESSAGE.SETTING_NOT_FOUND);
     }
 
-    return setting.toObject();
+    return { ...setting.toObject(), eventName: event.eventName };
   }
 
   async findPaymentInfo(eventId: string) {

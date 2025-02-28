@@ -41,7 +41,7 @@ export class PaymentInfo {
   @Prop()
   bankOffice: string;
 
-  @Prop({ required: true, enum: BusinessType, default: BusinessType.ORGANIZER })
+  @Prop({ required: true, enum: BusinessType, default: BusinessType.COMPANY })
   businessType: string;
 
   @Prop()
