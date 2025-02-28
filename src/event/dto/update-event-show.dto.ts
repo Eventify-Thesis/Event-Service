@@ -5,6 +5,7 @@ import {
   IsBoolean,
   IsDate,
   IsNumber,
+  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
@@ -53,6 +54,7 @@ class UpdateTicketTypeDto {
   imageURL: string;
 
   @ApiProperty({ default: false })
+  @IsOptional()
   @IsBoolean()
   isDisabled: boolean;
 

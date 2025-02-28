@@ -13,8 +13,14 @@ export enum EventStatus {
 }
 
 export enum BusinessType {
-  ORGANIZER = 'ORGANIZER',
+  COMPANY = 'COMPANY',
   INDIVIDUAL = 'INDIVIDUAL',
+}
+
+export enum AgeRestriction {
+  ALL_AGE = 'ALL_AGE',
+  OVER_18 = 'OVER_18',
+  OVER_21 = 'OVER_21',
 }
 
 export const MESSAGE = {

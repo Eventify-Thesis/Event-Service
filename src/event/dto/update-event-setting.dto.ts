@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsString } from 'class-validator';
+import { IsBoolean, IsEnum, IsNumber, IsString } from 'class-validator';
+import { AgeRestriction } from '../event.constant';
 export class UpdateEventSettingDto {
   @ApiProperty({ required: true, default: 'url' })
   @IsString()
@@ -16,7 +17,11 @@ export class UpdateEventSettingDto {
   @IsBoolean()
   isPrivate: boolean;
 
-  @ApiProperty({ required: true, default: 'eventDescription' })
-  @IsString()
-  eventDescription: string;
+  @ApiProperty({ required: true, default: AgeRestriction.ALL_AGE })
+  @IsEnum(AgeRestriction)
+  ageRestriction: AgeRestriction;
+
+  @ApiProperty({ required: true, default: 100 })
+  @IsNumber()
+  maximumAttendees: number;
 }
