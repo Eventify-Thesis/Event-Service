@@ -96,6 +96,9 @@ export class PlannerEventService {
       newEvent['role'] = organizations[event.organizationId]
         .split(':')[1]
         .toUpperCase();
+
+      newEvent['id'] = event._id.toString();
+      delete newEvent._id;
       return newEvent;
     });
 
@@ -209,6 +212,15 @@ export class PlannerEventService {
     eventId: string,
     updateEventPaymentInfoDto: UpdateEventPaymentInfoDto,
   ) {
+    await this.eventRepository.updateOne(
+      {
+        _id: eventId,
+      },
+      {
+        status: EventStatus.PENDING_APPROVAL,
+      },
+    );
+
     return await this.paymentInfoRepository.updateOne(
       {
         eventId: eventId,
