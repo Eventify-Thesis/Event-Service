@@ -31,6 +31,7 @@ const EventRoleGuard = (
       const request = context.switchToHttp().getRequest<RequestWithUser>();
 
       const eventId = request.params.eventId || request.body.id;
+
       if (!eventId) return true;
       const event = await this.authService.findOne({ _id: eventId });
       const eventOrgId = event?.organizationId;
@@ -55,6 +56,14 @@ const EventRoleGuard = (
         ? eventRoles
         : [eventRoles];
       // Check both organization membership and role
+
+      console.log(
+        organizationEntries,
+        eventId,
+        eventOrgId,
+        userRole,
+        requiredRoles,
+      );
       const hasOrganizationAccess = organizationEntries.some(
         ([orgId]) => orgId === eventOrgId,
       );

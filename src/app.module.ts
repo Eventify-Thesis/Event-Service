@@ -11,6 +11,7 @@ import { CategoryModule } from './category/category.module';
 import { AuthModule } from './auth/auth.module';
 import { LocationModule } from './location/location.module';
 import { MediaModule } from './media/media.module';
+import { MemberModule } from './member/member.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -29,6 +30,7 @@ import { MediaModule } from './media/media.module';
     CategoryModule,
     LocationModule,
     MediaModule,
+    MemberModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],

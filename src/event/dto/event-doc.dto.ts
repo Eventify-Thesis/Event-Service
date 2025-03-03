@@ -118,6 +118,12 @@ export class EventBriefResponse {
 
   @ApiProperty()
   eventBannerURL: string;
+
+  @ApiProperty()
+  organizationId: string;
+
+  @ApiProperty({ enum: EventRole })
+  role: EventRole;
 }
 
 export class EventDetailResponse {
