@@ -12,6 +12,7 @@ import { EventBriefResponse, EventDetailResponse } from '../dto/event-doc.dto';
 import { AppException } from 'src/common/exceptions/app.exception';
 import { EventStatus, MESSAGE } from '../event.constant';
 import path from 'path';
+import { MemberService } from 'src/member/services/member.service';
 
 @Injectable()
 export class PlannerEventService {
@@ -22,6 +23,7 @@ export class PlannerEventService {
     private readonly settingRepository: SettingRepository,
     private readonly paymentInfoRepository: PaymentInfoRepository,
     private readonly showRepository: ShowRepository,
+    private readonly memberService: MemberService,
   ) {}
   async checkExists(query: Record<string, any>) {
     const entity = await this.eventRepository.exists({
@@ -105,7 +107,7 @@ export class PlannerEventService {
     return { ...events, docs: newEvents };
   }
 
-  async getBrief(eventId: string) {
+  async getBrief(user: User, eventId: string) {
     const event = await this.eventRepository.findOne({ _id: eventId });
 
     const brief = new EventBriefResponse();
@@ -113,7 +115,14 @@ export class PlannerEventService {
     brief.eventName = event.eventName;
     brief.eventLogoURL = event.eventLogoURL;
     brief.eventBannerURL = event.eventBannerURL;
+    brief.organizationId = event.organizationId;
 
+    const role = await this.memberService.getMemberRole(
+      user.id,
+      event._id.toString(),
+    );
+
+    brief.role = role;
     return brief;
   }
 
@@ -129,31 +138,11 @@ export class PlannerEventService {
     const event = await this.eventRepository.create(createDraftEventDto);
 
     // Create organization in Clerk
-    const organization =
-      await this.clerkClient.organizations.createOrganization({
-        name: createDraftEventDto.eventName,
-        maxAllowedMemberships: 100,
-        publicMetadata: {
-          eventId: event.id,
-        },
-      });
-
-    // Add the current user as owner of the organization
-    await this.clerkClient.organizations.createOrganizationMembership({
-      organizationId: organization.id,
-      userId: user.id,
-      role: 'org:owner',
-    });
-
-    let organizations = user.publicMetadata.organizations || {};
-
-    organizations[organization.id] = 'org:owner';
-
-    await this.clerkClient.users.updateUserMetadata(user.id, {
-      publicMetadata: {
-        organizations,
-      },
-    });
+    const organization = await this.memberService.assignOwner(
+      user,
+      event.id,
+      createDraftEventDto.eventName,
+    );
     // Create default setting and payment info
 
     const setting = await this.settingRepository.create({

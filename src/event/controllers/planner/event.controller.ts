@@ -97,8 +97,11 @@ export class PlannerEventController {
       },
     },
   })
-  async getBrief(@Param('eventId', EventExists) eventId: string) {
-    return await this.eventService.getBrief(eventId);
+  async getBrief(
+    @Param('eventId', EventExists) eventId: string,
+    @Req() req: RequestWithUser,
+  ) {
+    return await this.eventService.getBrief(req.user, eventId);
   }
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))

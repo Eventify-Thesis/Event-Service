@@ -12,6 +12,7 @@ import { PlannerEventService } from './services/planner-event.service';
 import { EventService } from './services/event.service';
 import { ShowRepository } from './repositories/show.repository';
 import { Show, ShowSchema } from './entities/show.entity';
+import { MemberModule } from 'src/member/member.module';
 
 @Global()
 @Module({
@@ -22,6 +23,7 @@ import { Show, ShowSchema } from './entities/show.entity';
     ]),
     MongooseModule.forFeature([{ name: Setting.name, schema: SettingSchema }]),
     MongooseModule.forFeature([{ name: Show.name, schema: ShowSchema }]),
+    MemberModule,
   ],
   controllers: [PlannerEventController],
   providers: [
