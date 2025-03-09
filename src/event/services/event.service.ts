@@ -10,6 +10,7 @@ export class EventService {
     private readonly settingRepository: SettingRepository,
     private readonly paymentInfoRepository: PaymentInfoRepository,
   ) {}
+
   async checkExists(query: Record<string, any>) {
     const entity = await this.eventRepository.exists({
       ...query,

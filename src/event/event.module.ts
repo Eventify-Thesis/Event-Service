@@ -13,6 +13,8 @@ import { EventService } from './services/event.service';
 import { ShowRepository } from './repositories/show.repository';
 import { Show, ShowSchema } from './entities/show.entity';
 import { MemberModule } from 'src/member/member.module';
+import { TicketSchema, Ticket } from './entities/ticket-type.entity';
+import { TicketRepository } from './repositories/ticket-type.repository';
 
 @Global()
 @Module({
@@ -23,6 +25,7 @@ import { MemberModule } from 'src/member/member.module';
     ]),
     MongooseModule.forFeature([{ name: Setting.name, schema: SettingSchema }]),
     MongooseModule.forFeature([{ name: Show.name, schema: ShowSchema }]),
+    MongooseModule.forFeature([{ name: Ticket.name, schema: TicketSchema }]),
     MemberModule,
   ],
   controllers: [PlannerEventController],
@@ -34,6 +37,7 @@ import { MemberModule } from 'src/member/member.module';
     SettingRepository,
     PaymentInfoRepository,
     ShowRepository,
+    TicketRepository,
   ],
   exports: [
     EventService,

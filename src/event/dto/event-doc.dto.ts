@@ -3,7 +3,7 @@ import { BusinessType, EventStatus } from '../event.constant';
 import { IsEnum } from 'class-validator';
 import EventRole from 'src/auth/event-role/event-roles.enum';
 
-class TicketTypeResponse {
+class TicketResponse {
   @ApiProperty()
   name: string;
 
@@ -42,8 +42,8 @@ class TicketTypeResponse {
 }
 
 class ShowingResponse {
-  @ApiProperty({ type: [TicketTypeResponse] })
-  ticketTypes: TicketTypeResponse[];
+  @ApiProperty({ type: [TicketResponse] })
+  tickets: TicketResponse[];
 
   @ApiProperty()
   startTime: Date;
