@@ -11,8 +11,10 @@ import { UpdateEventShowDto } from '../dto/update-event-show.dto';
 import { EventBriefResponse, EventDetailResponse } from '../dto/event-doc.dto';
 import { AppException } from 'src/common/exceptions/app.exception';
 import { EventStatus, MESSAGE } from '../event.constant';
-import path from 'path';
 import { MemberService } from 'src/member/services/member.service';
+import { CreateTicketDto } from '../dto/create-ticket-type.dto';
+import { Types } from 'mongoose';
+import { TicketRepository } from '../repositories/ticket-type.repository';
 
 @Injectable()
 export class PlannerEventService {
@@ -23,6 +25,7 @@ export class PlannerEventService {
     private readonly settingRepository: SettingRepository,
     private readonly paymentInfoRepository: PaymentInfoRepository,
     private readonly showRepository: ShowRepository,
+    private readonly ticketRepository: TicketRepository,
     private readonly memberService: MemberService,
   ) {}
   async checkExists(query: Record<string, any>) {
@@ -218,16 +221,46 @@ export class PlannerEventService {
     );
   }
 
-  async updateShow(eventId: string, updateEventShowDto: UpdateEventShowDto) {
-    // Update the show information
+  async updateShow(
+    eventId: string,
+    updateShowDto: UpdateEventShowDto,
+  ): Promise<any> {
+    await this.ticketRepository.deleteMany(eventId);
+
+    // Create all ticket types and collect their IDs
+    const showings = await Promise.all(
+      updateShowDto.showings.map(async (showing) => {
+        const tickets = await Promise.all(
+          showing.tickets.map(async (ticketDto) => {
+            // Remove id if it exists in the DTO
+            const { id, ...ticketData } = ticketDto as any;
+
+            // Create new ticket type
+            const ticket = await this.ticketRepository.create({
+              ...ticketData,
+              eventId: eventId,
+            });
+
+            return ticket._id;
+          }),
+        );
+
+        return {
+          ...showing,
+          tickets, // Replace with the new ticket type IDs
+        };
+      }),
+    );
+
+    // Update the show with the new showings containing ticket type references
     const updatedShow = await this.showRepository.updateOne(
       { eventId: eventId },
       {
         $set: {
-          showings: updateEventShowDto.showings,
+          showings,
         },
       },
-      { new: true }, // Return the updated document
+      { new: true },
     );
 
     return updatedShow;
@@ -278,12 +311,23 @@ export class PlannerEventService {
   }
 
   async findShows(eventId: string) {
-    const show = await this.showRepository.findOne({ eventId });
+    const show = await this.showRepository.findOne({ eventId }, null, {
+      populate: [
+        {
+          path: 'showings.tickets',
+          select: '-__v', // Exclude __v, include all other fields
+        },
+      ],
+    });
     if (!show) {
       throw new AppException(MESSAGE.SHOW_NOT_FOUND);
     }
+    return show;
+  }
 
-    return show.toObject();
+  async findTickets(eventId: string) {
+    const tickets = await this.ticketRepository.find({ eventId });
+    return tickets;
   }
 
   async remove(eventId: string) {

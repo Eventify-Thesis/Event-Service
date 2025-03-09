@@ -165,4 +165,8 @@ export default class AbstractRepository<T extends Document> {
   ): Promise<UpdatedModel> {
     return this.model.updateMany(filter, updated);
   }
+
+  async bulkWrite(operations: any[]) {
+    return this.model.bulkWrite(operations);
+  }
 }

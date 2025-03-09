@@ -10,7 +10,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-class UpdateTicketTypeDto {
+class UpdateTicketDto {
   @ApiProperty({ required: true })
   @IsString()
   name: string;
@@ -64,11 +64,11 @@ class UpdateTicketTypeDto {
 }
 
 class UpdateShowingDto {
-  @ApiProperty({ type: [UpdateTicketTypeDto], required: true })
+  @ApiProperty({ type: [UpdateTicketDto], required: true })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => UpdateTicketTypeDto)
-  ticketTypes: UpdateTicketTypeDto[];
+  @Type(() => UpdateTicketDto)
+  tickets: UpdateTicketDto[];
 
   @ApiProperty({ required: true })
   @IsDate()

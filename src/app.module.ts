@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { LocationModule } from './location/location.module';
 import { MediaModule } from './media/media.module';
 import { MemberModule } from './member/member.module';
+import { QuestionModule } from './question/question.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -31,6 +32,7 @@ import { MemberModule } from './member/member.module';
     LocationModule,
     MediaModule,
     MemberModule,
+    QuestionModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],

@@ -1,62 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema, Types } from 'mongoose';
 import * as paginate from 'mongoose-paginate-v2';
+import { Ticket } from './ticket-type.entity';
 
 export type ShowDocument = Show & Document;
-
-@Schema({
-  timestamps: true,
-  versionKey: false,
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
-export class TicketType {
-  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
-  _id: Types.ObjectId;
-
-  @Prop({ required: true })
-  name: string;
-
-  @Prop({ required: true })
-  price: number;
-
-  @Prop({ default: false })
-  isFree: boolean;
-
-  @Prop({ required: true })
-  quantity: number;
-
-  @Prop({ required: true })
-  minTicketPurchase: number;
-
-  @Prop({ required: true })
-  maxTicketPurchase: number;
-
-  @Prop({ required: true })
-  startTime: Date;
-
-  @Prop({ required: true })
-  endTime: Date;
-
-  @Prop({ required: true })
-  description: string;
-
-  @Prop({ required: true })
-  imageURL: string;
-
-  @Prop({ default: false })
-  isDisabled: boolean;
-
-  @Prop({ required: true })
-  position: number;
-}
 
 @Schema({
   toJSON: {
@@ -67,8 +14,11 @@ export class TicketType {
   },
 })
 export class Showing {
-  @Prop({ type: [TicketType], required: true })
-  ticketTypes: TicketType[];
+  @Prop({
+    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Ticket' }],
+    default: [],
+  })
+  tickets: Ticket[];
 
   @Prop({ required: true })
   startTime: Date;

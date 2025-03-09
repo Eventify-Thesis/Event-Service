@@ -189,6 +189,13 @@ export class PlannerEventController {
     return await this.eventService.findShows(eventId);
   }
 
+  @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
+  @ApiOkResponse()
+  @Get(':eventId/tickets')
+  async findTickets(@Param('eventId', EventExists) eventId: string) {
+    return await this.eventService.findTickets(eventId);
+  }
+
   @UseGuards(EventRoleGuard(EventRole.OWNER))
   @ApiOkResponse(successResponse)
   @Delete(':eventId')
