@@ -13,6 +13,7 @@ import { LocationModule } from './location/location.module';
 import { MediaModule } from './media/media.module';
 import { MemberModule } from './member/member.module';
 import { QuestionModule } from './question/question.module';
+import { InterestModule } from './interest/interest.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,6 +34,7 @@ import { QuestionModule } from './question/question.module';
     MediaModule,
     MemberModule,
     QuestionModule,
+    InterestModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],
