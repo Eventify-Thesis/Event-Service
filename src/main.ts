@@ -33,10 +33,32 @@ async function bootstrap() {
     .setTitle('EventService-API')
     .setDescription('Event Service - Eventify App API description')
     .setVersion('1.0')
-    .addBearerAuth()
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+    })
     .build();
+
+  const defaultOptions = {
+    swaggerOptions: {
+      authAction: {
+        defaultBearerAuth: {
+          name: 'defaultBearerAuth',
+          schema: {
+            description: 'Default',
+            type: 'http',
+            in: 'header',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+          },
+          value: 'thisIsASampleBearerAuthToken123',
+        },
+      },
+    },
+  };
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('API', app, document);
+  SwaggerModule.setup('API', app, document, defaultOptions);
   await app.listen(configService.get<number>('PORT'));
 }
 bootstrap();

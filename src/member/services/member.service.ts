@@ -163,14 +163,14 @@ export class MemberService {
 
   async listMembers(
     eventId: string,
-    { page = 1, limit = 10, search }: MemberListQuery,
+    { page = 1, limit = 10, keyword }: MemberListQuery,
   ) {
-    let keyword;
+    let nKeyword;
     const condition = [];
 
-    if (search) {
-      keyword = new RegExp(
-        search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+    if (keyword) {
+      nKeyword = new RegExp(
+        keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
         'gi',
       );
       condition.push({

@@ -52,7 +52,7 @@ export class QuestionService {
     eventId: string,
     orderData: { id: string; order: number }[],
   ) {
-    const bulkOps = orderData.map(({ id, order }) => ({
+    const bulkOps = orderData?.['sortedQuestionIds'].map(({ id, order }) => ({
       updateOne: {
         filter: { _id: id, eventId },
         update: { sortOrder: order },
