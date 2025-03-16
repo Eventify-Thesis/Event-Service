@@ -66,7 +66,7 @@ export class MemberListQuery {
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
-  search?: string;
+  keyword?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()

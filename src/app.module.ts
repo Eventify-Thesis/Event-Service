@@ -13,6 +13,8 @@ import { LocationModule } from './location/location.module';
 import { MediaModule } from './media/media.module';
 import { MemberModule } from './member/member.module';
 import { QuestionModule } from './question/question.module';
+import { VoucherModule } from './voucher/voucher.module';
+import { EventCommonModule } from './event-common/event-common.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,6 +35,8 @@ import { QuestionModule } from './question/question.module';
     MediaModule,
     MemberModule,
     QuestionModule,
+    VoucherModule,
+    EventCommonModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],
