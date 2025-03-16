@@ -13,7 +13,7 @@ import { VoucherModule } from './voucher/voucher.module';
 import { AuthModule } from './auth/auth.module';
 import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
 import { SeatingPlanModule } from './seating-plan/seating-plan.module';
-
+import { InterestModule } from './interest/interest.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -42,6 +42,7 @@ import { SeatingPlanModule } from './seating-plan/seating-plan.module';
     VoucherModule,
     AuthModule,
     SeatingPlanModule,
+    InterestModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],
