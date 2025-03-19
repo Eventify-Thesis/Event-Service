@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Voucher } from './entities/voucher.entity';
 import { CreateVoucherDto } from './dto/create-voucher.dto';
-import {
-  UpdateVoucherActiveDto,
-  UpdateVoucherDto,
-} from './dto/update-voucher.dto';
+import { UpdateVoucherDto } from './dto/update-voucher.dto';
+import { UpdateVoucherActiveDto } from './dto/update-voucher.dto';
 import { EventCommonService } from 'src/event-common/event-common.service';
-import { VoucherRepository } from './repositories/voucher.repository';
 
 @Injectable()
 export class VoucherService {
   constructor(
+    @InjectRepository(Voucher)
+    private readonly voucherRepository: Repository<Voucher>,
     private readonly eventCommonService: EventCommonService,
-    private readonly voucherRepository: VoucherRepository,
   ) {}
 
   async findAllShowings(eventId: string) {
@@ -19,48 +20,44 @@ export class VoucherService {
   }
 
   async create(eventId: string, createVoucherDto: CreateVoucherDto) {
-    return await this.voucherRepository.create({
+    const voucher = this.voucherRepository.create({
       ...createVoucherDto,
-      eventId,
+      event: { id: eventId },
     });
+    return await this.voucherRepository.save(voucher);
   }
 
-  async list(eventId: any, paramPagination, { keyword }: any) {
-    const condition = [];
+  async list(eventId: string, paramPagination, { keyword }: any) {
+    const queryBuilder = this.voucherRepository
+      .createQueryBuilder('voucher')
+      .where('voucher.eventId = :eventId', { eventId });
 
     if (keyword) {
-      keyword = new RegExp(
-        keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
-        'gi',
+      const searchKeyword = `%${keyword.trim()}%`;
+      queryBuilder.andWhere(
+        '(voucher.name ILIKE :keyword OR voucher.bulkCodePrefix ILIKE :keyword OR voucher.discountCode ILIKE :keyword)',
+        { keyword: searchKeyword },
       );
-      condition.push({
-        $or: [
-          { name: { $regex: keyword } },
-          { bulkCodePrefix: { $regex: keyword } },
-          { discountCode: { $regex: keyword } },
-        ],
-      });
     }
 
-    const vouchers = await this.voucherRepository.pagination({
-      conditions: {
-        $and: [
-          {
-            eventId,
-            ...(condition.length ? { $or: condition } : {}),
-          },
-        ],
-      },
-      ...paramPagination,
-    });
+    const [vouchers, total] = await queryBuilder
+      .skip((paramPagination.page - 1) * paramPagination.limit)
+      .take(paramPagination.limit)
+      .getManyAndCount();
 
-    return vouchers;
+    return {
+      docs: vouchers,
+      totalDocs: total,
+      itemCount: vouchers.length,
+      itemsPerPage: paramPagination.limit,
+      totalPages: Math.ceil(total / paramPagination.limit),
+      currentPage: paramPagination.page,
+    };
   }
 
   async findOne(eventId: string, id: string) {
     return await this.voucherRepository.findOne({
-      eventId,
-      _id: id,
+      where: { event: { id: eventId }, id },
     });
   }
 
@@ -69,13 +66,11 @@ export class VoucherService {
     id: string,
     updateVoucherDto: UpdateVoucherDto,
   ) {
-    return await this.voucherRepository.updateOne(
-      {
-        eventId,
-        _id: id,
-      },
+    await this.voucherRepository.update(
+      { event: { id: eventId }, id },
       updateVoucherDto,
     );
+    return this.findOne(eventId, id);
   }
 
   async changeStatus(
@@ -83,19 +78,14 @@ export class VoucherService {
     id: string,
     updateVoucherDto: UpdateVoucherActiveDto,
   ) {
-    return await this.voucherRepository.updateOne(
-      {
-        eventId,
-        _id: id,
-      },
+    await this.voucherRepository.update(
+      { event: { id: eventId }, id },
       updateVoucherDto,
     );
+    return this.findOne(eventId, id);
   }
 
   async remove(eventId: string, id: string) {
-    return await this.voucherRepository.deleteOne({
-      eventId,
-      _id: id,
-    });
+    await this.voucherRepository.delete({ event: { id: eventId }, id });
   }
 }

@@ -1,47 +1,46 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema, Types } from 'mongoose';
-import * as paginate from 'mongoose-paginate-v2';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { District } from './district.entity';
 
-export type WardDocument = Ward & Document;
-
-@Schema({
-  timestamps: true,
-  versionKey: false,
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('wards')
 export class Ward {
-  @Prop({ required: true, maxlength: 40 })
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
   name: string;
 
-  @Prop({ required: true, maxlength: 40 })
+  @Column({ name: 'name_en' })
   nameEn: string;
 
-  @Prop({ required: true, maxlength: 20 })
+  @Column()
   type: string;
 
-  @Prop({ required: true, maxlength: 20 })
+  @Column({ name: 'type_en' })
   typeEn: string;
 
-  @Prop({ required: true })
+  @Column({ name: 'district_id' })
   districtId: number;
 
-  @Prop({ required: true, default: 1 })
+  @Column({ default: 1 })
   status: number;
 
-  @Prop({ required: true })
+  @Column()
   sort: number;
 
-  @Prop({ required: true })
+  @Column({ name: 'origin_id' })
   originId: number;
-}
 
-export const WardSchema = SchemaFactory.createForClass(Ward);
-WardSchema.plugin(paginate);
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+}

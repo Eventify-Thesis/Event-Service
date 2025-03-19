@@ -1,56 +1,52 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema, Types } from 'mongoose';
-import * as paginate from 'mongoose-paginate-v2';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { AgeRestriction } from '../event.constant';
+import { Event } from './event.entity';
 
-export type SettingDocument = Setting & Document;
-
-@Schema({
-  timestamps: true,
-  versionKey: false,
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('settings')
 export class Setting {
-  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
-  _id: Types.ObjectId;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: 'event',
-    unique: true,
-    required: true,
-  })
-  eventId: string;
+  @OneToOne(() => Event, (event) => event.setting)
+  @JoinColumn({ name: 'event_id' })
+  event: Event;
 
-  @Prop({ maxlength: 40 })
+  @Column({ length: 40 })
   url: string;
 
-  @Prop()
+  @Column({ name: 'maximum_attendees' })
   maximumAttendees: number;
 
-  @Prop()
+  @Column({
+    type: 'enum',
+    enum: AgeRestriction,
+    name: 'age_restriction',
+  })
   ageRestriction: AgeRestriction;
 
-  @Prop()
+  @Column({ nullable: true, name: 'message_attendees' })
   messageAttendees: string;
 
-  @Prop({ default: true })
+  @Column({ default: true, name: 'is_private' })
   isPrivate: boolean;
 
-  @Prop()
+  @Column({ type: 'text', nullable: true, name: 'event_description' })
   eventDescription: string;
 
-  @Prop({ default: false })
-  isEnableQuestionForm: boolean;
-}
+  @Column({ default: false, name: 'is_refundable' })
+  isRefundable: boolean;
 
-export const SettingSchema = SchemaFactory.createForClass(Setting);
-SettingSchema.plugin(paginate);
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+}

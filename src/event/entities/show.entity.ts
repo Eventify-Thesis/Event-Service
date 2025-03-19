@@ -1,57 +1,43 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema, Types } from 'mongoose';
-import * as paginate from 'mongoose-paginate-v2';
-import { Ticket } from './ticket-type.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
+import { Event } from './event.entity';
+import { Ticket } from './ticket.entity';
 
-export type ShowDocument = Show & Document;
-
-@Schema({
-  toJSON: {
-    transform(doc, ret) {
-      ret.id = ret._id;
-      delete ret._id;
-    },
-  },
-})
-export class Showing {
-  @Prop({
-    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Ticket' }],
-    default: [],
-  })
-  tickets: Ticket[];
-
-  @Prop({ required: true })
-  startTime: Date;
-
-  @Prop({ required: true })
-  endTime: Date;
-}
-
-@Schema({
-  versionKey: false,
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('shows')
 export class Show {
-  @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: 'event',
-    unique: true,
-    required: true,
-  })
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ name: 'event_id' })
   eventId: string;
 
-  @Prop({ type: [Showing], required: true })
-  showings: Showing[];
-}
+  /**
+   * The event that this show belongs to.
+   */
+  @ManyToOne(() => Event)
+  @JoinColumn({ name: 'event_id' })
+  event: Event;
 
-export const ShowingSchema = SchemaFactory.createForClass(Showing);
-export const ShowSchema = SchemaFactory.createForClass(Show);
-ShowSchema.plugin(paginate);
+  @OneToMany(() => Ticket, (ticket) => ticket.show)
+  tickets: Ticket[];
+
+  @Column({ name: 'start_time', type: 'timestamp' })
+  startTime: Date;
+
+  @Column({ name: 'end_time', type: 'timestamp' })
+  endTime: Date;
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+}

@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
-  IsMongoId,
+  IsUUID,
   IsNumber,
   IsOptional,
   IsString,
@@ -14,7 +14,7 @@ import { EventType } from '../event.constant';
 export class CreateDraftEventDto {
   @ApiProperty({ required: false, default: null })
   @IsOptional()
-  @IsMongoId()
+  @IsUUID()
   id: string;
 
   @ApiProperty({
@@ -23,7 +23,7 @@ export class CreateDraftEventDto {
     required: true,
   })
   @IsUrl()
-  eventLogoURL: string;
+  eventLogoUrl: string;
 
   @ApiProperty({
     example:
@@ -31,7 +31,7 @@ export class CreateDraftEventDto {
     required: true,
   })
   @IsUrl()
-  eventBannerURL: string;
+  eventBannerUrl: string;
 
   @ApiProperty({
     example: 'Event Name',
@@ -54,7 +54,7 @@ export class CreateDraftEventDto {
     required: true,
   })
   @IsUrl()
-  orgLogoURL: string;
+  orgLogoUrl: string;
 
   @ApiProperty({ example: 'Organization name', required: true })
   @IsString()
@@ -91,10 +91,10 @@ export class CreateDraftEventDto {
 
   @ApiProperty({ example: [1], required: true })
   @IsArray()
-  @Type(() => Number)
-  categoriesIds: number[];
+  @Type(() => String)
+  categoriesIds: string[];
 
-  @ApiProperty({ required: true, default: EventType.OFFLINE })
-  @IsEnum(Object.values(EventType))
-  eventType: string;
+  @ApiProperty({ required: true, default: EventType.OFFLINE, enum: EventType })
+  @IsEnum(EventType)
+  eventType: EventType;
 }

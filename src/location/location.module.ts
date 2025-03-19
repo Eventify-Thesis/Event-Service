@@ -1,28 +1,15 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { LocationService } from './location.service';
 import { LocationController } from './location.controller';
-import { City, CitySchema } from './entities/city.entity';
-import { MongooseModule } from '@nestjs/mongoose';
-import { CityRepository } from './repositories/region.repository';
-import { District, DistrictSchema } from './entities/district.entity';
-import { DistrictRepository } from './repositories/district.repository';
-import { Ward, WardSchema } from './entities/ward.entity';
-import { WardRepository } from './repositories/ward.repository';
+import { City } from './entities/city.entity';
+import { District } from './entities/district.entity';
+import { Ward } from './entities/ward.entity';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([City, District, Ward])],
   controllers: [LocationController],
-  providers: [
-    LocationService,
-    CityRepository,
-    DistrictRepository,
-    WardRepository,
-  ],
-  imports: [
-    MongooseModule.forFeature([
-      { name: City.name, schema: CitySchema },
-      { name: District.name, schema: DistrictSchema },
-      { name: Ward.name, schema: WardSchema },
-    ]),
-  ],
+  providers: [LocationService],
+  exports: [LocationService],
 })
 export class LocationModule {}

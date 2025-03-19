@@ -58,11 +58,10 @@ export class PlannerQuestionController {
   }
 
   @Post('sort')
-  async updateOrder(
-    @Param('eventId', EventExists) eventId: string,
-    @Body() orderData: { id: string; order: number }[],
-  ) {
-    return this.questionService.updateOrder(eventId, orderData);
+  async updateOrder(@Body() sortedQuestionIds: any) {
+    return this.questionService.updateOrder(
+      sortedQuestionIds.sortedQuestionIds,
+    );
   }
 
   @Delete(':id')

@@ -32,7 +32,7 @@ class TicketResponse {
   description: string;
 
   @ApiProperty()
-  imageURL: string;
+  imageUrl: string;
 
   @ApiProperty()
   isDisabled: boolean;
@@ -114,10 +114,10 @@ export class EventBriefResponse {
   eventName: string;
 
   @ApiProperty()
-  eventLogoURL: string;
+  eventLogoUrl: string;
 
   @ApiProperty()
-  eventBannerURL: string;
+  eventBannerUrl: string;
 
   @ApiProperty()
   organizationId: string;
@@ -131,10 +131,10 @@ export class EventDetailResponse {
   id: string;
 
   @ApiProperty()
-  eventLogoURL: string;
+  eventLogoUrl: string;
 
   @ApiProperty()
-  eventBannerURL: string;
+  eventBannerUrl: string;
 
   @ApiProperty()
   eventName: string;
@@ -146,7 +146,7 @@ export class EventDetailResponse {
   eventDescription: string;
 
   @ApiProperty()
-  orgLogoURL: string;
+  orgLogoUrl: string;
 
   @ApiProperty()
   orgName: string;
@@ -228,7 +228,7 @@ export class EventListAllResponse {
   addressFull: string;
 
   @ApiProperty()
-  eventBannerURL: string;
+  eventBannerUrl: string;
 
   @ApiProperty()
   eventName: string;

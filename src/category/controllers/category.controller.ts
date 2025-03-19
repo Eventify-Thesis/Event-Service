@@ -6,7 +6,7 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 import { ClerkAuthGuard } from 'src/auth/clerk-auth.guard';
-import EventRole from 'src/auth/event-role/event-roles.enum';
+import { EventRole } from 'src/auth/event-role/event-roles.enum';
 import EventRoleGuard from 'src/auth/event-role/event-roles.guards';
 import Role from 'src/auth/role/roles.enum';
 import RoleGuard from 'src/auth/role/roles.guards';

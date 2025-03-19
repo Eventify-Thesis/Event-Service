@@ -10,6 +10,7 @@ export enum EventStatus {
   PUBLISHED = 'PUBLISHED',
   UPCOMING = 'UPCOMING',
   PENDING_APPROVAL = 'PENDING_APPROVAL',
+  CANCELLED = 'CANCELLED',
 }
 
 export enum BusinessType {
@@ -18,7 +19,7 @@ export enum BusinessType {
 }
 
 export enum AgeRestriction {
-  ALL_AGE = 'ALL_AGE',
+  ALL_AGES = 'ALL_AGES',
   OVER_18 = 'OVER_18',
   OVER_21 = 'OVER_21',
 }

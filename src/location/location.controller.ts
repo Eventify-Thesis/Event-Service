@@ -14,16 +14,16 @@ export class LocationController {
 
   @Get('regions/:regionId/cities')
   async findListCity(@Param('regionId') regionId: string) {
-    return await this.locationService.findListCity(regionId);
+    return await this.locationService.findAllCities(+regionId);
   }
 
   @Get('cities/:cityId/districts')
   async findListDistrict(@Param('cityId') cityId: string) {
-    return await this.locationService.findListDistrict(cityId);
+    return await this.locationService.findDistrictsByCity(cityId);
   }
 
   @Get('districts/:districtId/wards')
   async findListWard(@Param('districtId') districtId: string) {
-    return await this.locationService.findListWard(districtId);
+    return await this.locationService.findWardsByDistrict(districtId);
   }
 }

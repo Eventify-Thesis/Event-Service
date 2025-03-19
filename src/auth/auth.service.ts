@@ -7,8 +7,8 @@ import { EventService } from 'src/event/services/event.service';
 export class AuthService {
   constructor(private readonly eventService: EventService) {}
 
-  async findOne(query: Record<string, any>) {
-    const entity = await this.eventService.findOne(query);
+  async findOne(id: string) {
+    const entity = await this.eventService.findOne(id);
 
     return entity;
   }

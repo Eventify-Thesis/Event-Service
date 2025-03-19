@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - DATABASE_HOST=postgres
+  #     - DATABASE_PORT=5432
+  #     - DATABASE_USERNAME=postgres
+  #     - DATABASE_PASSWORD=postgres
+  #     - DATABASE_NAME=event_service
+  #     - DATABASE_SYNCHRONIZE=true
+  #     - NODE_ENV=production
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - app-network
+
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=event_service
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge

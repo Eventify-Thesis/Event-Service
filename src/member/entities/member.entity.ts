@@ -1,48 +1,48 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema, Types } from 'mongoose';
-import * as paginate from 'mongoose-paginate-v2';
-import EventRole from 'src/auth/event-role/event-roles.enum';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Event } from '../../event/entities/event.entity';
+import { EventRole } from '../../auth/event-role/event-roles.enum';
 
-export type MemberDocument = Member & Document;
-
-@Schema({
-  timestamps: true,
-  versionKey: false,
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('members')
 export class Member {
-  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
-  _id: Types.ObjectId;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Prop({ required: true })
+  @Column({ name: 'user_id' })
   userId: string;
 
-  @Prop({ required: true })
+  @Column()
   email: string;
 
-  @Prop({ required: true })
+  @Column({ name: 'first_name' })
   firstName: string;
 
-  @Prop({ required: true })
+  @Column({ name: 'last_name' })
   lastName: string;
 
-  @Prop({ required: true })
+  @Column({ name: 'organization_id' })
   organizationId: string;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, required: true })
-  eventId: Types.ObjectId;
+  @ManyToOne(() => Event)
+  @JoinColumn({ name: 'event_id' })
+  event: Event;
 
-  @Prop({ required: true, enum: Object.values(EventRole) })
+  @Column({
+    type: 'enum',
+    enum: EventRole,
+  })
   role: EventRole;
-}
 
-export const MemberSchema = SchemaFactory.createForClass(Member);
-MemberSchema.plugin(paginate);
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+}

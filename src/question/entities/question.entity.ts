@@ -1,56 +1,61 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema, Types } from 'mongoose';
-import * as paginate from 'mongoose-paginate-v2';
-import { QuestionBelongsTo, QuestionType } from '../enums/question-type.enum';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { QuestionType, QuestionBelongsTo } from '../enums/question-type.enum';
+import { Event } from '../../event/entities/event.entity';
 
-export type QuestionDocument = Question & Document;
-
-@Schema({
-  timestamps: true,
-  versionKey: false,
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('questions')
 export class Question {
-  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
-  _id: Types.ObjectId;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Prop({ required: true })
+  @ManyToOne(() => Event, (event) => event.questions)
+  @JoinColumn({ name: 'event_id' })
+  event: Event;
+
+  @Column()
   title: string;
 
-  @Prop({ required: true, enum: Object.values(QuestionType) })
+  @Column({ type: 'enum', enum: QuestionType })
   type: QuestionType;
 
-  @Prop({})
-  options?: string[];
-
-  @Prop({ type: String, required: false })
-  description?: string;
-
-  @Prop({ required: true, type: Number })
-  sortOrder: number;
-
-  @Prop({ default: false })
+  @Column({ default: false })
   required: boolean;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Event', required: true })
-  eventId: Types.ObjectId;
+  @Column({ type: 'json', nullable: true })
+  options: string[];
 
-  @Prop({ required: true, enum: Object.values(QuestionBelongsTo) })
+  @Column({ type: 'text', nullable: true })
+  description: string;
+
+  @Column({ nullable: true, name: 'sort_order' })
+  sortOrder: number;
+
+  @Column({
+    type: 'enum',
+    enum: QuestionBelongsTo,
+    nullable: true,
+    name: 'belongs_to',
+  })
   belongsTo: QuestionBelongsTo;
 
-  @Prop({ default: false })
+  @Column({ default: false, name: 'is_hidden' })
   isHidden: boolean;
 
-  @Prop({ type: [String], required: false })
-  ticketIds?: string[];
+  @Column({ type: 'json', nullable: true, name: 'ticket_ids' })
+  ticketIds: string[];
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 
   isMultipleChoice(): boolean {
     return [QuestionType.MULTI_SELECT_DROPDOWN, QuestionType.CHECKBOX].includes(
@@ -58,6 +63,3 @@ export class Question {
     );
   }
 }
-
-export const QuestionSchema = SchemaFactory.createForClass(Question);
-QuestionSchema.plugin(paginate);

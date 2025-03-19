@@ -23,7 +23,7 @@ import {
 } from '@nestjs/swagger';
 import { ClerkAuthGuard } from 'src/auth/clerk-auth.guard';
 import EventRoleGuard from 'src/auth/event-role/event-roles.guards';
-import EventRole from 'src/auth/event-role/event-roles.enum';
+import { EventRole } from 'src/auth/event-role/event-roles.enum';
 import { EventExists } from 'src/event/pipes/event-exists.pipe';
 import { pagination } from 'src/common/decorators/pagination';
 import { Query } from '@nestjs/common';

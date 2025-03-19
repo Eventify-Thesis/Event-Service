@@ -1,103 +1,106 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema, Types } from 'mongoose';
-import * as paginate from 'mongoose-paginate-v2';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Event } from '../../event/entities/event.entity';
 import {
   VoucherCodeType,
   VoucherDiscountType,
   VoucherStatus,
 } from '../voucher.constant';
 
-export type VoucherDocument = Voucher & Document;
-
-@Schema({
-  timestamps: true,
-  versionKey: false,
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('vouchers')
 export class Voucher {
-  @Prop({ type: MongooseSchema.Types.ObjectId, required: true })
-  eventId: string;
-  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
-  _id: Types.ObjectId;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Prop({ required: true })
+  @ManyToOne(() => Event)
+  @JoinColumn({ name: 'event_id' })
+  event: Event;
+
+  @Column({ name: 'event_id' })
+  eventId: string;
+
+  @Column()
   name: string;
 
-  @Prop({ required: true, default: true })
+  @Column({ default: true })
   active: boolean;
 
-  @Prop({ required: true, enum: VoucherCodeType })
+  @Column({
+    type: 'enum',
+    enum: VoucherCodeType,
+    default: VoucherCodeType.SINGLE,
+    name: 'code_type',
+  })
   codeType: VoucherCodeType;
 
-  @Prop({ default: '' })
+  @Column({ default: '', name: 'bulk_code_prefix' })
   bulkCodePrefix: string;
 
-  @Prop({ default: 0 })
+  @Column({ default: 0, name: 'bulk_code_number' })
   bulkCodeNumber: number;
 
-  @Prop({ required: true, enum: VoucherDiscountType })
+  @Column({
+    type: 'enum',
+    enum: VoucherDiscountType,
+    default: VoucherDiscountType.FIXED,
+    name: 'discount_type',
+  })
   discountType: VoucherDiscountType;
 
-  @Prop({ required: true })
+  @Column('decimal', { precision: 10, scale: 2, name: 'discount_value' })
   discountValue: number;
 
-  @Prop({ required: true })
+  @Column()
   quantity: number;
 
-  @Prop({ required: true })
+  @Column({ default: false, name: 'is_unlimited' })
   isUnlimited: boolean;
 
-  @Prop({ required: true })
+  @Column({ default: 0, name: 'max_order_per_user' })
   maxOrderPerUser: number;
 
-  @Prop({ required: true })
+  @Column({ default: 0, name: 'min_qty_per_order' })
   minQtyPerOrder: number;
 
-  @Prop({ required: true })
+  @Column({ default: 0, name: 'max_qty_per_order' })
   maxQtyPerOrder: number;
 
-  @Prop({ required: true })
+  @Column({ default: '', name: 'discount_code' })
   discountCode: string;
 
-  @Prop({
-    type: [
-      {
-        id: { type: MongooseSchema.Types.ObjectId, required: true },
-        isAllTickets: { type: Boolean, required: true },
-        ticketIds: {
-          type: [MongooseSchema.Types.ObjectId],
-          required: true,
-        },
-      },
-    ],
-    required: true,
-  })
-  showings: {
-    id: MongooseSchema.Types.ObjectId;
+  @Column('jsonb', { nullable: true, name: 'showing_configs' })
+  showingConfigs: {
+    id: string;
     isAllTickets: boolean;
-    ticketIds: MongooseSchema.Types.ObjectId[];
+    ticketIds: string[];
   }[];
-
-  @Prop({ required: true })
+  @Column({ name: 'is_all_showings' })
   isAllShowings: boolean;
 
-  @Prop({ required: true, enum: VoucherStatus })
+  @Column({
+    type: 'enum',
+    enum: VoucherStatus,
+    default: VoucherStatus.ACTIVE,
+    name: 'status',
+  })
   status: VoucherStatus;
 
-  @Prop({ required: true })
+  @Column({ type: 'timestamp', name: 'start_time' })
   startTime: Date;
 
-  @Prop({ required: true })
+  @Column({ type: 'timestamp', name: 'end_time' })
   endTime: Date;
-}
 
-export const VoucherSchema = SchemaFactory.createForClass(Voucher);
-VoucherSchema.plugin(paginate);
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+}

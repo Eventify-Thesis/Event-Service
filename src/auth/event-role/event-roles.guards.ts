@@ -5,8 +5,7 @@ import {
   mixin,
   Type,
 } from '@nestjs/common';
-import RequestWithUserAndOrganizations from './requestWithUserAndOrganizations.interface';
-import EventRole from './event-roles.enum';
+import { EventRole } from './event-roles.enum';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../auth.service';
 import { ModuleRef } from '@nestjs/core';
@@ -33,7 +32,7 @@ const EventRoleGuard = (
       const eventId = request.params.eventId || request.body.id;
 
       if (!eventId) return true;
-      const event = await this.authService.findOne({ _id: eventId });
+      const event = await this.authService.findOne(eventId);
       const eventOrgId = event?.organizationId;
 
       // Convert Clerk roles to EventRole format
@@ -57,13 +56,6 @@ const EventRoleGuard = (
         : [eventRoles];
       // Check both organization membership and role
 
-      console.log(
-        organizationEntries,
-        eventId,
-        eventOrgId,
-        userRole,
-        requiredRoles,
-      );
       const hasOrganizationAccess = organizationEntries.some(
         ([orgId]) => orgId === eventOrgId,
       );

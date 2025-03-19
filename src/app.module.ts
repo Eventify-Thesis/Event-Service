@@ -2,41 +2,44 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventModule } from './event/event.module';
-import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
-import appConfig from 'src/config/app';
-import databaseConfig from 'src/config/database';
 import { CategoryModule } from './category/category.module';
-import { AuthModule } from './auth/auth.module';
 import { LocationModule } from './location/location.module';
 import { MediaModule } from './media/media.module';
 import { MemberModule } from './member/member.module';
 import { QuestionModule } from './question/question.module';
 import { VoucherModule } from './voucher/voucher.module';
-import { EventCommonModule } from './event-common/event-common.module';
+import { AuthModule } from './auth/auth.module';
+import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, databaseConfig],
     }),
-    MongooseModule.forRootAsync({
+    TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGODB_URI'),
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DATABASE_HOST'),
+        port: configService.get('DATABASE_PORT'),
+        username: configService.get('DATABASE_USERNAME'),
+        password: configService.get('DATABASE_PASSWORD'),
+        database: configService.get('DATABASE_NAME'),
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: configService.get('DATABASE_SYNCHRONIZE') === 'true',
       }),
       inject: [ConfigService],
     }),
     EventModule,
-    AuthModule,
     CategoryModule,
     LocationModule,
     MediaModule,
     MemberModule,
     QuestionModule,
     VoucherModule,
-    EventCommonModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],

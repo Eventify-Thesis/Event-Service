@@ -1,38 +1,32 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema, Types } from 'mongoose';
-import * as paginate from 'mongoose-paginate-v2';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToMany,
+} from 'typeorm';
 
-export type CategoryDocument = Category & Document;
-
-@Schema({
-  timestamps: true,
-  versionKey: false,
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('categories')
 export class Category {
-  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
-  _id: Types.ObjectId;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Prop({ required: true, maxlength: 40 })
+  @Column({ length: 40 })
   code: string;
 
-  @Prop({ required: true, maxlength: 40 })
+  @Column({ length: 40, name: 'name_en' })
   nameEn: string;
 
-  @Prop({ required: true, maxlength: 40 })
+  @Column({ length: 40, name: 'name_vi' })
   nameVi: string;
 
-  @Prop({ required: false })
+  @Column({ nullable: true })
   image: string;
-}
 
-export const CategorySchema = SchemaFactory.createForClass(Category);
-CategorySchema.plugin(paginate);
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+}

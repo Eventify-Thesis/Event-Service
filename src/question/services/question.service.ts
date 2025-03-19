@@ -1,65 +1,56 @@
 import { Injectable } from '@nestjs/common';
-import { QuestionRepository } from '../repositories/question.repository';
-import { QuestionAnswerRepository } from '../repositories/question-answer.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Question } from '../entities/question.entity';
 import { CreateQuestionDto } from '../dto/create-question.dto';
 import { UpdateQuestionDto } from '../dto/update-question.dto';
 
 @Injectable()
 export class QuestionService {
   constructor(
-    private readonly questionRepository: QuestionRepository,
-    private readonly answerRepository: QuestionAnswerRepository,
+    @InjectRepository(Question)
+    private readonly questionRepository: Repository<Question>,
   ) {}
 
   async checkExists(query: Record<string, any>) {
-    const entity = await this.questionRepository.exists(query);
+    const entity = await this.questionRepository.findOne({ where: query });
     return !!entity;
   }
 
   async create(eventId: string, createQuestionDto: CreateQuestionDto) {
-    const maxOrder = await this.questionRepository.model
-      .find({ eventId })
-      .sort({ sortOrder: -1 })
-      .select('sortOrder')
-      .exec();
-    const order =
-      maxOrder && maxOrder.length > 0 ? maxOrder[0].sortOrder + 1 : 1;
-    return await this.questionRepository.create({
+    const maxOrder = await this.questionRepository
+      .createQueryBuilder('question')
+      .where('question.event_id = :eventId', { eventId })
+      .orderBy('question.sort_order', 'DESC')
+      .getOne();
+
+    const order = maxOrder ? maxOrder.sortOrder + 1 : 1;
+    const question = this.questionRepository.create({
       ...createQuestionDto,
-      eventId,
+      event: { id: eventId },
       sortOrder: order,
     });
+
+    return await this.questionRepository.save(question);
   }
 
   async findAll(eventId: string) {
-    return await this.questionRepository.find(
-      { eventId },
-      {
-        sort: { sortOrder: 1 },
-      },
-    );
+    return await this.questionRepository.find({
+      where: { event: { id: eventId } },
+      order: { sortOrder: 'ASC' },
+    });
   }
 
   async findAllPublic(eventId: string) {
-    return await this.questionRepository.find({ eventId, isHidden: false });
+    return await this.questionRepository.find({
+      where: { event: { id: eventId }, isHidden: false },
+    });
   }
 
   async findOne(id: string, eventId: string) {
-    return this.questionRepository.findOne({ _id: id, eventId });
-  }
-
-  async updateOrder(
-    eventId: string,
-    orderData: { id: string; order: number }[],
-  ) {
-    const bulkOps = orderData?.['sortedQuestionIds'].map(({ id, order }) => ({
-      updateOne: {
-        filter: { _id: id, eventId },
-        update: { sortOrder: order },
-      },
-    }));
-
-    return this.questionRepository.bulkWrite(bulkOps);
+    return this.questionRepository.findOne({
+      where: { id, event: { id: eventId } },
+    });
   }
 
   async update(
@@ -67,13 +58,38 @@ export class QuestionService {
     eventId: string,
     updateQuestionDto: UpdateQuestionDto,
   ) {
-    return await this.questionRepository.updateOne(
-      { _id: id, eventId },
+    await this.questionRepository.update(
+      { id, event: { id: eventId } },
       updateQuestionDto,
     );
+    return this.findOne(id, eventId);
   }
 
   async remove(id: string, eventId: string) {
-    return await this.questionRepository.deleteOne({ _id: id, eventId });
+    await this.questionRepository.delete({ id, event: { id: eventId } });
+  }
+
+  async updateOrder(sortedQuestionIds: { id: string; sortOrder: number }[]) {
+    const queryRunner =
+      this.questionRepository.manager.connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      for (const question of sortedQuestionIds) {
+        await queryRunner.manager.update(
+          Question,
+          { id: question.id },
+          { sortOrder: question.sortOrder },
+        );
+      }
+
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+      throw err;
+    } finally {
+      await queryRunner.release();
+    }
   }
 }

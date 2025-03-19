@@ -1,27 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { PaymentInfoRepository } from '../repositories/payment-info.repository';
-import { SettingRepository } from '../repositories/setting.repository';
-import { EventRepository } from '../repositories/event.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Event } from '../entities/event.entity';
+import { PaymentInfo } from '../entities/payment-info.entity';
+import { Setting } from '../entities/setting.entity';
+import { Show } from '../entities/show.entity';
 
 @Injectable()
 export class EventService {
   constructor(
-    private readonly eventRepository: EventRepository,
-    private readonly settingRepository: SettingRepository,
-    private readonly paymentInfoRepository: PaymentInfoRepository,
+    @InjectRepository(Event)
+    private readonly eventRepository: Repository<Event>,
+    @InjectRepository(PaymentInfo)
+    private readonly paymentInfoRepository: Repository<PaymentInfo>,
+    @InjectRepository(Setting)
+    private readonly settingRepository: Repository<Setting>,
+    @InjectRepository(Show)
+    private readonly showRepository: Repository<Show>,
   ) {}
 
-  async checkExists(query: Record<string, any>) {
+  async findAll(): Promise<Event[]> {
+    return this.eventRepository.find({
+      relations: ['paymentInfo', 'setting', 'shows'],
+    });
+  }
+
+  async findOne(id: string): Promise<Event> {
+    return this.eventRepository.findOne({
+      where: { id },
+    });
+  }
+  async remove(id: string): Promise<void> {
+    await this.eventRepository.delete(id);
+  }
+
+  async checkExists(id: string) {
     const entity = await this.eventRepository.exists({
-      ...query,
+      where: { id },
     });
 
     return !!entity;
-  }
-
-  async findOne(query: Record<string, any>) {
-    const entity = await this.eventRepository.findOne(query);
-
-    return entity;
   }
 }

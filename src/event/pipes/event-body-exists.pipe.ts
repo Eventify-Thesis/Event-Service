@@ -12,9 +12,7 @@ export class EventBodyExists implements PipeTransform<any> {
     });
 
     if (!value.id) return value;
-    const isExists = await eventService.checkExists({
-      _id: value.id,
-    });
+    const isExists = await eventService.checkExists(value.id);
 
     if (!isExists) {
       throw new AppException(MESSAGE.EVENT_NOT_FOUND);

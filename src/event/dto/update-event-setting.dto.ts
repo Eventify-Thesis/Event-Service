@@ -17,7 +17,7 @@ export class UpdateEventSettingDto {
   @IsBoolean()
   isPrivate: boolean;
 
-  @ApiProperty({ required: true, default: AgeRestriction.ALL_AGE })
+  @ApiProperty({ required: true, default: AgeRestriction.ALL_AGES })
   @IsEnum(AgeRestriction)
   ageRestriction: AgeRestriction;
 
