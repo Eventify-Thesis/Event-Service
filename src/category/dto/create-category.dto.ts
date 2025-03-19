@@ -18,7 +18,7 @@ export class CreateCategoryDto {
   @IsNotEmpty()
   nameVi: string;
 
-  @ApiProperty({ example: 'imageURL', required: false })
+  @ApiProperty({ example: 'imageUrl', required: false })
   @IsOptional()
   image: string;
 }

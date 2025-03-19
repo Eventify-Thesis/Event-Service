@@ -1,17 +1,14 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { VoucherService } from './voucher.service';
 import { PlannerVoucherController } from './controllers/planner/voucher.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Voucher, VoucherSchema } from './entities/voucher.entity';
-import { VoucherRepository } from './repositories/voucher.repository';
+import { Voucher } from './entities/voucher.entity';
 import { EventCommonModule } from 'src/event-common/event-common.module';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: Voucher.name, schema: VoucherSchema }]),
-    EventCommonModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Voucher]), EventCommonModule],
   controllers: [PlannerVoucherController],
-  providers: [VoucherService, VoucherRepository],
+  providers: [VoucherService],
+  exports: [VoucherService],
 })
 export class VoucherModule {}

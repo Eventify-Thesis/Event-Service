@@ -1,57 +1,56 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema, Types } from 'mongoose';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { BusinessType } from '../event.constant';
+import { Event } from './event.entity';
 
-export type PaymentInfoDocument = PaymentInfo & Document;
-
-@Schema({
-  timestamps: true,
-  versionKey: false,
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('payment_info')
 export class PaymentInfo {
-  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
-  _id: Types.ObjectId;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: 'event',
-    unique: true,
-    required: true,
-  })
-  eventId: string;
+  @OneToOne(() => Event, (event) => event.paymentInfo)
+  @JoinColumn({ name: 'event_id' })
+  event: Event;
 
-  @Prop()
+  @Column({ name: 'bank_account' })
   bankAccount: string;
 
-  @Prop()
+  @Column({ name: 'bank_account_name' })
   bankAccountName: string;
 
-  @Prop()
+  @Column({ name: 'bank_account_number' })
   bankAccountNumber: string;
 
-  @Prop()
+  @Column({ name: 'bank_office' })
   bankOffice: string;
 
-  @Prop({ required: true, enum: BusinessType, default: BusinessType.COMPANY })
-  businessType: string;
+  @Column({
+    type: 'enum',
+    enum: BusinessType,
+    name: 'business_type',
+    default: BusinessType.COMPANY,
+  })
+  businessType: BusinessType;
 
-  @Prop()
+  @Column({ name: 'company_name' })
   companyName: string;
 
-  @Prop()
+  @Column({ name: 'company_address' })
   companyAddress: string;
 
-  @Prop()
-  taxNumber: string;
-}
+  @Column({ name: 'company_tax_number' })
+  companyTaxNumber: string;
 
-export const PaymentInfoSchema = SchemaFactory.createForClass(PaymentInfo);
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+}

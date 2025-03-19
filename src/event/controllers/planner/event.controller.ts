@@ -31,7 +31,6 @@ import { EventExists } from 'src/event/pipes/event-exists.pipe';
 import EventRole from 'src/auth/event-role/event-roles.enum';
 import EventRoleGuard from 'src/auth/event-role/event-roles.guards';
 import RequestWithUser from 'src/auth/role/requestWithUser.interface';
-import RequestWithUserAndOrganizations from 'src/auth/event-role/requestWithUserAndOrganizations.interface';
 import { UpdateEventPaymentInfoDto } from 'src/event/dto/update-event-payment-info.dto';
 import { UpdateEventShowDto } from 'src/event/dto/update-event-show.dto';
 import { pagination } from 'src/common/decorators/pagination';
@@ -158,7 +157,7 @@ export class PlannerEventController {
     @Body() updateShowDto: UpdateEventShowDto,
     @Param('eventId', EventExists) eventId: string,
   ) {
-    await this.eventService.updateShow(eventId, updateShowDto);
+    await this.eventService.updateShows(eventId, updateShowDto);
     return {
       status: 'success',
     };

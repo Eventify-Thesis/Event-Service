@@ -4,7 +4,7 @@ import {
   IsBoolean,
   IsDate,
   IsEnum,
-  IsMongoId,
+  IsUUID,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -20,18 +20,18 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 
 class ShowingDto {
-  @IsMongoId()
+  @IsUUID()
   @IsNotEmpty()
-  id: Types.ObjectId;
+  id: string;
 
   @IsBoolean()
   @IsNotEmpty()
   isAllTickets: boolean;
 
   @IsArray()
-  @IsMongoId({ each: true })
+  @IsUUID()
   @IsNotEmpty()
-  ticketIds: Types.ObjectId[];
+  ticketIds: string[];
 }
 
 export class CreateVoucherDto {

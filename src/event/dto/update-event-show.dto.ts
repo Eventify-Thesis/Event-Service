@@ -2,68 +2,57 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray,
-  IsBoolean,
   IsDate,
-  IsNumber,
+  IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
   ValidateNested,
 } from 'class-validator';
 
-class UpdateTicketDto {
+export class UpdateTicketDto {
+  @ApiProperty({ required: false })
+  @IsOptional()
+  id?: string;
+
   @ApiProperty({ required: true })
   @IsString()
+  @IsNotEmpty()
   name: string;
 
   @ApiProperty({ required: true })
-  @IsNumber()
+  @IsNotEmpty()
   price: number;
 
-  @ApiProperty({ default: false })
-  @IsBoolean()
-  isFree: boolean;
-
   @ApiProperty({ required: true })
-  @IsNumber()
+  @IsNotEmpty()
   quantity: number;
 
   @ApiProperty({ required: true })
-  @IsNumber()
+  @IsNotEmpty()
   minTicketPurchase: number;
 
   @ApiProperty({ required: true })
-  @IsNumber()
+  @IsNotEmpty()
   maxTicketPurchase: number;
 
   @ApiProperty({ required: true })
-  @IsDate()
-  @Type(() => Date)
-  startTime: Date;
-
-  @ApiProperty({ required: true })
-  @IsDate()
-  @Type(() => Date)
-  endTime: Date;
-
-  @ApiProperty({ required: true })
   @IsString()
+  @IsNotEmpty()
   description: string;
 
   @ApiProperty({ required: true })
   @IsString()
-  imageURL: string;
-
-  @ApiProperty({ default: false })
-  @IsOptional()
-  @IsBoolean()
-  isDisabled: boolean;
-
-  @ApiProperty({ required: true })
-  @IsNumber()
-  position: number;
+  @IsNotEmpty()
+  imageUrl: string;
 }
 
-class UpdateShowingDto {
+export class ShowDto {
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsUUID()
+  id?: string;
+
   @ApiProperty({ type: [UpdateTicketDto], required: true })
   @IsArray()
   @ValidateNested({ each: true })
@@ -82,9 +71,9 @@ class UpdateShowingDto {
 }
 
 export class UpdateEventShowDto {
-  @ApiProperty({ type: [UpdateShowingDto], required: true })
+  @ApiProperty({ type: [ShowDto], required: true })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => UpdateShowingDto)
-  showings: UpdateShowingDto[];
+  @Type(() => ShowDto)
+  shows: ShowDto[];
 }

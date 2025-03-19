@@ -1,14 +1,5 @@
-import { PaginateModel } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
-import { Injectable } from '@nestjs/common';
-import { Category, CategoryDocument } from '../entities/category.entity';
-import AbstractRepository from 'src/common/abstracts/repository.abstract';
+import { EntityRepository, Repository } from 'typeorm';
+import { Category } from '../entities/category.entity';
 
-@Injectable()
-export class CategoryRepository extends AbstractRepository<CategoryDocument> {
-  constructor(
-    @InjectModel(Category.name) model: PaginateModel<CategoryDocument>,
-  ) {
-    super(model);
-  }
-}
+@EntityRepository(Category)
+export class CategoryRepository extends Repository<Category> {}

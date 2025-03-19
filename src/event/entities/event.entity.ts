@@ -1,91 +1,98 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema, Types } from 'mongoose';
-import * as paginate from 'mongoose-paginate-v2';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToOne,
+  OneToMany,
+} from 'typeorm';
 import { EventStatus, EventType } from '../event.constant';
+import { PaymentInfo } from './payment-info.entity';
+import { Setting } from './setting.entity';
+import { Show } from './show.entity';
+import { Question } from '../../question/entities/question.entity';
 
-export type EventDocument = Event & Document;
-
-@Schema({
-  timestamps: true,
-  versionKey: false,
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('events')
 export class Event {
-  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
-  _id: Types.ObjectId;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'PaymentInfo' })
-  paymentInfo: Types.ObjectId;
-
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Setting' })
-  setting: Types.ObjectId;
-
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Show' })
-  show: Types.ObjectId;
-
-  @Prop()
+  @Column({ name: 'organization_id' })
   organizationId: string;
 
-  @Prop({ required: true })
+  @Column({ name: 'event_name' })
   eventName: string;
 
-  @Prop()
+  @OneToOne(() => Setting, (setting) => setting.event)
+  setting: Setting;
+
+  @OneToOne(() => PaymentInfo, (paymentInfo) => paymentInfo.event)
+  paymentInfo: PaymentInfo;
+
+  @OneToMany(() => Show, (show) => show.event)
+  shows: Show[];
+
+  @OneToMany(() => Question, (question) => question.event)
+  questions: Question[];
+
+  @Column({ nullable: true, name: 'event_description' })
   eventDescription: string;
 
-  @Prop({ required: true, enum: Object.values(EventType) })
-  eventType: string;
-
-  @Prop({
-    required: true,
-    enum: Object.values(EventStatus),
-    default: EventStatus.DRAFT,
+  @Column({
+    type: 'enum',
+    enum: EventType,
+    name: 'event_type',
   })
-  status: string;
+  eventType: EventType;
 
-  @Prop({ required: true })
+  @Column({
+    type: 'enum',
+    enum: EventStatus,
+    default: EventStatus.DRAFT,
+    name: 'status',
+  })
+  status: EventStatus;
+
+  @Column({ name: 'org_name' })
   orgName: string;
 
-  @Prop({ required: true })
+  @Column({ name: 'org_description' })
   orgDescription: string;
 
-  @Prop({ required: true })
-  orgLogoURL: string;
+  @Column({ name: 'org_logo_url' })
+  orgLogoUrl: string;
 
-  @Prop({ required: true })
-  eventLogoURL: string;
+  @Column({ name: 'event_logo_url' })
+  eventLogoUrl: string;
 
-  @Prop({ required: true })
-  eventBannerURL: string;
+  @Column({ name: 'event_banner_url' })
+  eventBannerUrl: string;
 
-  @Prop({ required: false })
+  @Column({ nullable: true, name: 'venue_name' })
   venueName: string;
 
-  @Prop({ required: false })
-  cityId: string;
+  @Column({ nullable: true, name: 'city_id' })
+  cityId: number;
 
-  @Prop({ required: false })
-  districtId: string;
+  @Column({ nullable: true, name: 'district_id' })
+  districtId: number;
 
-  @Prop({ required: false })
-  wardId: string;
+  @Column({ nullable: true, name: 'ward_id' })
+  wardId: number;
 
-  @Prop({ required: false })
+  @Column({ nullable: true })
   street: string;
 
-  @Prop({ required: true })
+  @Column('text', { array: true, name: 'categories' })
   categories: string[];
 
-  @Prop({ required: true })
+  @Column('text', { array: true, name: 'categories_ids' })
   categoriesIds: string[];
-}
 
-export const EventSchema = SchemaFactory.createForClass(Event);
-EventSchema.plugin(paginate);
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
+}

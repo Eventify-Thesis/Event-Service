@@ -10,11 +10,18 @@ import { ShowRepository } from '../repositories/show.repository';
 import { UpdateEventShowDto } from '../dto/update-event-show.dto';
 import { EventBriefResponse, EventDetailResponse } from '../dto/event-doc.dto';
 import { AppException } from 'src/common/exceptions/app.exception';
-import { EventStatus, MESSAGE } from '../event.constant';
+import {
+  AgeRestriction,
+  BusinessType,
+  EventStatus,
+  MESSAGE,
+} from '../event.constant';
 import { MemberService } from 'src/member/services/member.service';
 import { CreateTicketDto } from '../dto/create-ticket-type.dto';
-import { Types } from 'mongoose';
-import { TicketRepository } from '../repositories/ticket-type.repository';
+import { TicketRepository } from '../repositories/ticket.repository';
+import { Brackets } from 'typeorm';
+import { IPaginationOptions } from 'src/common/pagination/interfaces/pagination-options.interface';
+import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 @Injectable()
 export class PlannerEventService {
@@ -28,102 +35,100 @@ export class PlannerEventService {
     private readonly ticketRepository: TicketRepository,
     private readonly memberService: MemberService,
   ) {}
-  async checkExists(query: Record<string, any>) {
-    const entity = await this.eventRepository.exists({
-      ...query,
-    });
 
+  async checkExists(query: Record<string, any>) {
+    const entity = await this.eventRepository.findOne({
+      where: query,
+    });
     return !!entity;
   }
 
   async list(organizations: any, paramPagination, { keyword, status }: any) {
     const orgIds = Object.keys(organizations);
     if (!status) status = EventStatus.UPCOMING;
-    const condition = [];
+
+    const queryBuilder = this.eventRepository
+      .createQueryBuilder('event')
+      .leftJoinAndSelect('event.setting', 'setting')
+      .leftJoinAndSelect('event.shows', 'shows', 'shows.event_id = event.id')
+      .where('event.status = :status', { status })
+      .andWhere('event.organization_id IN (:...orgIds)', { orgIds });
 
     if (keyword) {
-      keyword = new RegExp(
-        keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
-        'gi',
+      const searchKeyword = `%${keyword.trim()}%`;
+      queryBuilder.andWhere(
+        new Brackets((qb) => {
+          qb.where('event.eventName ILIKE :keyword', { keyword: searchKeyword })
+            .orWhere('event.venueName ILIKE :keyword', {
+              keyword: searchKeyword,
+            })
+            .orWhere('event.orgName ILIKE :keyword', {
+              keyword: searchKeyword,
+            });
+        }),
       );
-      condition.push({
-        $or: [
-          { eventName: { $regex: keyword } },
-          { venueName: { $regex: keyword } },
-          { orgName: { $regex: keyword } },
-        ],
-      });
     }
 
-    const events = await this.eventRepository.pagination({
-      conditions: {
-        $and: [
-          {
-            status: status,
-            organizationId: { $in: orgIds },
-            ...(condition.length ? { $or: condition } : {}),
-          },
-        ],
-      },
-      select: [
-        'eventName',
-        'venueName',
-        'status',
-        'eventBannerURL',
-        'organizationId',
-      ],
-      populate: [
-        {
-          path: 'setting',
-          select: 'url',
-        },
-        {
-          path: 'show',
-          select: 'showings',
-        },
-      ],
-      ...paramPagination,
-    });
+    const [events, total] = await queryBuilder
+      .select([
+        'event.id',
+        'event.eventName',
+        'event.venueName',
+        'event.status',
+        'event.eventBannerUrl',
+        'event.organizationId',
+        'setting.url',
+        'shows.id',
+        'shows.startTime',
+        'shows.endTime',
+      ])
+      // .orderBy('event.created_at', 'DESC')
+      .skip(paramPagination.limit * (paramPagination.page - 1))
+      .take(paramPagination.limit)
+      .getManyAndCount();
 
-    const newEvents = events.docs.map((event) => {
-      const newEvent = event.toObject();
+    const transformedEvents = events.map((event) => {
+      const newEvent: any = {
+        id: event.id,
+        eventName: event.eventName,
+        venueName: event.venueName,
+        status: event.status,
+        eventBannerUrl: event.eventBannerUrl,
+        organizationId: event.organizationId,
+        url: event.setting.url,
+        role: organizations[event.organizationId].split(':')[1].toUpperCase(),
+      };
 
-      newEvent['url'] = event.setting['url'];
-      delete newEvent.setting;
-
-      if (event.show['showings'].length > 0) {
-        newEvent['startTime'] = event.show['showings'][0].startTime;
-        newEvent['endTime'] = event.show['showings'][0].endTime;
+      if (event.shows?.length > 0) {
+        newEvent.startTime = event.shows[0].startTime;
+        newEvent.endTime = event.shows[0].endTime;
       }
 
-      delete newEvent.show;
-
-      newEvent['role'] = organizations[event.organizationId]
-        .split(':')[1]
-        .toUpperCase();
-
-      newEvent['id'] = event._id.toString();
-      delete newEvent._id;
       return newEvent;
     });
 
-    return { ...events, docs: newEvents };
+    return {
+      docs: transformedEvents,
+      totalDocs: total,
+      limit: paramPagination.limit,
+      totalPages: Math.ceil(total / paramPagination.limit),
+      currentPage: paramPagination.page,
+    };
   }
 
   async getBrief(user: User, eventId: string) {
-    const event = await this.eventRepository.findOne({ _id: eventId });
+    const event = await this.eventRepository.findOne({
+      where: { id: eventId },
+    });
 
     const brief = new EventBriefResponse();
-    brief.id = event._id.toString();
+    brief.id = event.id.toString();
     brief.eventName = event.eventName;
-    brief.eventLogoURL = event.eventLogoURL;
-    brief.eventBannerURL = event.eventBannerURL;
+    brief.eventLogoUrl = event.eventLogoUrl;
+    brief.eventBannerUrl = event.eventBannerUrl;
     brief.organizationId = event.organizationId;
 
-    const role = await this.memberService.getMemberRole(
-      user.id,
-      event._id.toString(),
-    );
+    const role = await this.memberService.getMemberRole(user.id, event.id);
 
     brief.role = role;
     return brief;
@@ -131,14 +136,19 @@ export class PlannerEventService {
 
   async upsert(user: User, createDraftEventDto: CreateDraftEventDto) {
     if (createDraftEventDto.id) {
-      return await this.eventRepository.findByIdAndUpdate(
+      await this.eventRepository.update(
         createDraftEventDto.id,
         createDraftEventDto,
-        { new: true },
       );
+      return await this.eventRepository.findOne({
+        where: { id: createDraftEventDto.id },
+      });
     }
+
     // Create event in database
-    const event = await this.eventRepository.create(createDraftEventDto);
+    createDraftEventDto['organizationId'] = 'placeholder';
+    const event = this.eventRepository.create(createDraftEventDto);
+    await this.eventRepository.save(event);
 
     // Create organization in Clerk
     const organization = await this.memberService.assignOwner(
@@ -146,44 +156,36 @@ export class PlannerEventService {
       event.id,
       createDraftEventDto.eventName,
     );
-    // Create default setting and payment info
 
-    const setting = await this.settingRepository.create({
-      eventId: event.id,
+    // Create default setting
+    const setting = this.settingRepository.create({
+      event: event,
       messageAttendees: '',
       isPrivate: true,
       eventDescription: '',
       url: '',
+      maximumAttendees: 0,
+      ageRestriction: AgeRestriction.ALL_AGES,
     });
+    await this.settingRepository.save(setting);
 
-    const paymentInfo = await this.paymentInfoRepository.create({
-      eventId: event.id,
+    // Create default payment info
+    const paymentInfo = this.paymentInfoRepository.create({
+      event: event,
       bankAccount: '',
       bankAccountName: '',
       bankAccountNumber: '',
       bankOffice: '',
+      businessType: BusinessType.COMPANY,
       companyName: '',
       companyAddress: '',
-      taxNumber: '',
+      companyTaxNumber: '',
     });
+    await this.paymentInfoRepository.save(paymentInfo);
 
-    const show = await this.showRepository.create({
-      eventId: event.id,
-    });
-
-    // Update event with organizationId, payment info, setting and shows
-
-    await this.eventRepository.updateOne(
-      {
-        _id: event.id,
-      },
-      {
-        organizationId: organization.id,
-        paymentInfo: paymentInfo,
-        setting: setting,
-        show: show,
-      },
-    );
+    // Update event with organizationId
+    event.organizationId = organization.id;
+    await this.eventRepository.save(event);
 
     return event;
   }
@@ -192,145 +194,178 @@ export class PlannerEventService {
     eventId: string,
     updateEventSettingDto: UpdateEventSettingDto,
   ) {
-    return await this.settingRepository.updateOne(
-      {
-        eventId: eventId,
-      },
-      updateEventSettingDto,
-    );
+    const setting = await this.settingRepository.findOne({
+      where: { event: { id: eventId } },
+    });
+    if (!setting) {
+      throw new AppException(MESSAGE.SETTING_NOT_FOUND);
+    }
+
+    Object.assign(setting, updateEventSettingDto);
+    return await this.settingRepository.save(setting);
   }
 
   async updatePaymentInfo(
     eventId: string,
     updateEventPaymentInfoDto: UpdateEventPaymentInfoDto,
   ) {
-    await this.eventRepository.updateOne(
-      {
-        _id: eventId,
-      },
-      {
-        status: EventStatus.PENDING_APPROVAL,
-      },
-    );
-
-    return await this.paymentInfoRepository.updateOne(
-      {
-        eventId: eventId,
-      },
-      updateEventPaymentInfoDto,
-    );
-  }
-
-  async updateShow(
-    eventId: string,
-    updateShowDto: UpdateEventShowDto,
-  ): Promise<any> {
-    await this.ticketRepository.deleteMany(eventId);
-
-    // Create all ticket types and collect their IDs
-    const showings = await Promise.all(
-      updateShowDto.showings.map(async (showing) => {
-        const tickets = await Promise.all(
-          showing.tickets.map(async (ticketDto) => {
-            // Remove id if it exists in the DTO
-            const { id, ...ticketData } = ticketDto as any;
-
-            // Create new ticket type
-            const ticket = await this.ticketRepository.create({
-              ...ticketData,
-              eventId: eventId,
-            });
-
-            return ticket._id;
-          }),
-        );
-
-        return {
-          ...showing,
-          tickets, // Replace with the new ticket type IDs
-        };
-      }),
-    );
-
-    // Update the show with the new showings containing ticket type references
-    const updatedShow = await this.showRepository.updateOne(
-      { eventId: eventId },
-      {
-        $set: {
-          showings,
-        },
-      },
-      { new: true },
-    );
-
-    return updatedShow;
-  }
-
-  findAll() {
-    return `This action returns all event`;
-  }
-
-  async findOne(id: string) {
-    // Find the main event document
+    // Update event status
     const event = await this.eventRepository.findOne({
-      _id: id,
+      where: { id: eventId },
     });
+    event.status = EventStatus.PENDING_APPROVAL;
+    await this.eventRepository.save(event);
 
-    // Find related documents
-    const [setting, paymentInfo, show] = await Promise.all([
-      this.settingRepository.findOne({ eventId: id }),
-      this.paymentInfoRepository.findOne({ eventId: id }),
-      this.showRepository.findOne({ eventId: id }),
-    ]);
-
-    return {
-      ...event.toObject(),
-      setting: setting?.toObject(),
-      paymentInfo: paymentInfo?.toObject(),
-      show: show?.toObject(),
-    };
-  }
-
-  async findSettings(eventId: string) {
-    const setting = await this.settingRepository.findOne({ eventId });
-    const event = await this.eventRepository.findOne({ _id: eventId });
-    if (!setting) {
-      throw new AppException(MESSAGE.SETTING_NOT_FOUND);
-    }
-
-    return { ...setting.toObject(), eventName: event.eventName };
-  }
-
-  async findPaymentInfo(eventId: string) {
-    const paymentInfo = await this.paymentInfoRepository.findOne({ eventId });
+    // Update payment info
+    const paymentInfo = await this.paymentInfoRepository.findOne({
+      where: { event: { id: eventId } },
+    });
     if (!paymentInfo) {
       throw new AppException(MESSAGE.PAYMENT_INFO_NOT_FOUND);
     }
 
-    return paymentInfo.toObject();
+    Object.assign(paymentInfo, updateEventPaymentInfoDto);
+    return await this.paymentInfoRepository.save(paymentInfo);
+  }
+
+  async updateShows(eventId: string, updateEventShowDto: UpdateEventShowDto) {
+    const event = await this.eventRepository.findOne({
+      where: { id: eventId },
+      relations: ['shows', 'shows.tickets'],
+    });
+
+    if (!event) {
+      throw new AppException(MESSAGE.EVENT_NOT_FOUND);
+    }
+
+    // Delete existing shows and tickets that are not in the update
+    await this.ticketRepository
+      .createQueryBuilder()
+      .delete()
+      .from('tickets')
+      .where('event_id = :eventId', {
+        eventId,
+      })
+      .execute();
+
+    await this.showRepository
+      .createQueryBuilder()
+      .delete()
+      .from('shows')
+      .where('event_id = :eventId', {
+        eventId,
+      })
+      .execute();
+
+    // Process each show
+    const shows = [];
+    for (const showDto of updateEventShowDto.shows) {
+      let show;
+      if (showDto.id) {
+        // Update existing show
+        show = await this.showRepository.findOne({
+          where: { id: showDto.id },
+          relations: ['tickets'],
+        });
+        show.startTime = showDto.startTime;
+        show.endTime = showDto.endTime;
+      } else {
+        // Create new show
+        show = this.showRepository.create({
+          event,
+          startTime: showDto.startTime,
+          endTime: showDto.endTime,
+        });
+      }
+
+      // Save the show to get an ID if it's new
+      show = await this.showRepository.save(show);
+
+      // Process tickets for this show
+      const tickets = [];
+      for (const ticketDto of showDto.tickets) {
+        let ticket;
+        // Create new ticket
+        delete ticketDto.id;
+
+        ticket = this.ticketRepository.create({
+          ...ticketDto,
+          show,
+          event,
+        });
+
+        tickets.push(await this.ticketRepository.save(ticket));
+      }
+
+      show.tickets = tickets;
+      shows.push(show);
+    }
+
+    return shows;
+  }
+
+  async findOne(id: string) {
+    const event = await this.eventRepository.findOne({
+      where: { id },
+      relations: ['setting', 'paymentInfo', 'shows'],
+    });
+
+    if (!event) {
+      throw new AppException(MESSAGE.EVENT_NOT_FOUND);
+    }
+
+    return event;
+  }
+
+  async findSettings(eventId: string) {
+    const setting = await this.settingRepository.findOne({
+      where: { event: { id: eventId } },
+      relations: ['event'],
+    });
+
+    if (!setting) {
+      throw new AppException(MESSAGE.SETTING_NOT_FOUND);
+    }
+
+    return {
+      ...setting,
+      eventName: setting.event.eventName,
+    };
+  }
+
+  async findPaymentInfo(eventId: string) {
+    const paymentInfo = await this.paymentInfoRepository.findOne({
+      where: { event: { id: eventId } },
+    });
+
+    if (!paymentInfo) {
+      throw new AppException(MESSAGE.PAYMENT_INFO_NOT_FOUND);
+    }
+
+    return paymentInfo;
   }
 
   async findShows(eventId: string) {
-    const show = await this.showRepository.findOne({ eventId }, null, {
-      populate: [
-        {
-          path: 'showings.tickets',
-          select: '-__v', // Exclude __v, include all other fields
-        },
-      ],
-    });
+    const show = await this.showRepository
+      .createQueryBuilder('shows')
+      .where('shows.event_id = :eventId', { eventId })
+      .leftJoinAndSelect('shows.tickets', 'tickets')
+      .getMany();
+
     if (!show) {
       throw new AppException(MESSAGE.SHOW_NOT_FOUND);
     }
+
     return show;
   }
 
   async findTickets(eventId: string) {
-    const tickets = await this.ticketRepository.find({ eventId });
-    return tickets;
+    return await this.ticketRepository.find({
+      where: { event: { id: eventId } },
+    });
   }
 
   async remove(eventId: string) {
-    await this.eventRepository.deleteOne({ _id: eventId });
+    await this.eventRepository.delete({ id: eventId });
   }
 }

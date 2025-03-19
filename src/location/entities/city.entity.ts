@@ -1,52 +1,51 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema, Types } from 'mongoose';
-import * as paginate from 'mongoose-paginate-v2';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { District } from './district.entity';
 
-export type CityDocument = City & Document;
-
-@Schema({
-  timestamps: true,
-  versionKey: false,
-  toJSON: {
-    virtuals: true,
-    transform: (doc, ret) => {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('cities')
 export class City {
-  @Prop()
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ name: 'origin_id' })
   originId: number;
 
-  @Prop({ required: true, maxlength: 40 })
+  @Column({ length: 40 })
   name: string;
 
-  @Prop({ required: true, maxlength: 40 })
+  @Column({ length: 40, name: 'name_en' })
   nameEn: string;
 
-  @Prop({ required: true, maxlength: 20 })
+  @Column({ length: 20 })
   type: string;
 
-  @Prop({ required: true, maxlength: 20 })
+  @Column({ length: 20, name: 'type_en' })
   typeEn: string;
 
-  @Prop({ maxlength: 20 })
+  @Column({ length: 20, nullable: true, name: 'short_name' })
   shortName: string;
 
-  @Prop({ required: true })
+  @Column({ name: 'country_id' })
   countryId: number;
 
-  @Prop({ required: true })
+  @Column()
   sort: number;
 
-  @Prop({ required: true, default: 1 })
+  @Column({ default: 1 })
   status: number;
 
-  @Prop({ required: true, maxlength: 100 })
+  @Column({ length: 100, name: 'location_id' })
   locationId: string;
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }
-export const CitySchema = SchemaFactory.createForClass(City);
-CitySchema.plugin(paginate);

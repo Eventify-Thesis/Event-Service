@@ -1,49 +1,61 @@
 import { Injectable } from '@nestjs/common';
-import { EventCommonRepository } from './repositories/event.repository';
-import { SettingCommonRepository } from './repositories/setting.repository';
-import { PaymentInfoCommonRepository } from './repositories/payment-info.repository';
-import { ShowCommonRepository } from './repositories/show.repository';
-import { TicketCommonRepository } from './repositories/ticket-type.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Event } from 'src/event/entities/event.entity';
+import { Setting } from 'src/event/entities/setting.entity';
+import { Show } from 'src/event/entities/show.entity';
+import { PaymentInfo } from 'src/event/entities/payment-info.entity';
 
 @Injectable()
 export class EventCommonService {
   constructor(
-    private readonly eventRepository: EventCommonRepository,
-    private readonly settingRepository: SettingCommonRepository,
-    private readonly paymentInfoRepository: PaymentInfoCommonRepository,
-    private readonly showRepository: ShowCommonRepository,
-    private readonly ticketRepository: TicketCommonRepository,
+    @InjectRepository(Event)
+    private readonly eventRepository: Repository<Event>,
+    @InjectRepository(Setting)
+    private readonly settingRepository: Repository<Setting>,
+    @InjectRepository(Show)
+    private readonly showRepository: Repository<Show>,
+    @InjectRepository(PaymentInfo)
+    private readonly paymentInfoRepository: Repository<PaymentInfo>,
   ) {}
 
   async findAllShowings(eventId: string) {
-    const show = await this.showRepository.model.findOne({ eventId }).populate([
-      {
-        path: 'showings.tickets',
-        select:
-          '+ name + startTime +endTime + quantity + createdAt + updatedAt',
+    const show = await this.showRepository.findOne({
+      where: { event: { id: eventId } },
+      relations: ['tickets'],
+      select: {
+        id: true,
+        startTime: true,
+        endTime: true,
+        tickets: {
+          id: true,
+          name: true,
+          startTime: true,
+          endTime: true,
+          quantity: true,
+          createdAt: true,
+          updatedAt: true,
+        },
       },
-    ]);
+    });
 
-    if (!show || !show.showings) {
+    if (!show) {
       return [];
     }
 
     const currentTime = new Date();
-    const showings = show.showings.map((showing) => ({
-      startTime: showing.startTime,
 
-      endTime: showing.endTime,
-      tickets: showing.tickets.map((ticket) => {
-        return {
-          ...ticket.toObject(),
-          isSelectable:
-            currentTime >= ticket.startTime && currentTime <= ticket.endTime,
-        };
-      }),
+    // Now we return the show with its tickets
+    return {
+      startTime: show.startTime,
+      endTime: show.endTime,
       isSelectable:
-        currentTime >= showing.startTime && currentTime <= showing.endTime,
-    }));
-
-    return showings;
+        currentTime >= show.startTime && currentTime <= show.endTime,
+      tickets: show.tickets.map((ticket) => ({
+        ...ticket,
+        isSelectable:
+          currentTime >= ticket.startTime && currentTime <= ticket.endTime,
+      })),
+    };
   }
 }

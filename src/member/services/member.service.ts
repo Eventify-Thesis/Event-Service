@@ -8,7 +8,9 @@ import { AddMemberDto, MemberListQuery } from '../dto/member.dto';
 import { ClerkClient, Organization, User } from '@clerk/backend';
 import { MESSAGE } from '../member.constant';
 import EventRole from 'src/auth/event-role/event-roles.enum';
-import { MemberRepository } from '../repositories/member.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Member } from '../entities/member.entity';
 
 @Injectable()
 export class MemberService {
@@ -23,7 +25,8 @@ export class MemberService {
   constructor(
     @Inject('ClerkClient')
     private readonly clerkClient: ClerkClient,
-    private readonly memberRepository: MemberRepository,
+    @InjectRepository(Member)
+    private readonly memberRepository: Repository<Member>,
   ) {}
 
   private canManageRole(userRole: EventRole, targetRole: EventRole): boolean {
@@ -64,10 +67,10 @@ export class MemberService {
       },
     });
 
-    await this.memberRepository.create({
+    await this.memberRepository.save({
       userId: user.id,
       email: user.emailAddresses[0].emailAddress,
-      eventId: eventId,
+      event: { id: eventId },
       role: EventRole.OWNER,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -86,8 +89,10 @@ export class MemberService {
 
     // Check if member already exists
     const existingMember = await this.memberRepository.findOne({
-      eventId,
-      email: dto.email,
+      where: {
+        event: { id: eventId },
+        email: dto.email,
+      },
     });
 
     if (existingMember) {
@@ -119,13 +124,13 @@ export class MemberService {
     }
 
     // Create member in our database
-    const member = await this.memberRepository.create({
+    const member = await this.memberRepository.save({
       userId: clerkUser.id,
       email: dto.email,
       firstName: clerkUser.firstName,
       lastName: clerkUser.lastName,
       organizationId: dto.organizationId,
-      eventId: eventId,
+      event: { id: eventId },
       role: dto.role,
     });
 
@@ -134,8 +139,10 @@ export class MemberService {
 
   async deleteMember(user: User, eventId: string, userId: string) {
     const member = await this.memberRepository.findOne({
-      userId: userId,
-      eventId,
+      where: {
+        userId: userId,
+        event: { id: eventId },
+      },
     });
 
     if (!member) {
@@ -158,51 +165,47 @@ export class MemberService {
       throw new BadRequestException(MESSAGE.CLERK_ERROR);
     }
 
-    await this.memberRepository.deleteOne({ _id: member._id });
+    await this.memberRepository.delete(member.id);
   }
 
   async listMembers(
     eventId: string,
     { page = 1, limit = 10, keyword }: MemberListQuery,
   ) {
-    let nKeyword;
-    const condition = [];
+    const queryBuilder = this.memberRepository
+      .createQueryBuilder('member')
+      .where('member.event_id = :eventId', { eventId });
 
     if (keyword) {
-      nKeyword = new RegExp(
-        keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
-        'gi',
+      const searchKeyword = `%${keyword.trim()}%`;
+      queryBuilder.andWhere(
+        '(member.lastName ILIKE :keyword OR member.firstName ILIKE :keyword OR member.email ILIKE :keyword)',
+        { keyword: searchKeyword },
       );
-      condition.push({
-        $or: [
-          { lastName: { $regex: keyword } },
-          { firstName: { $regex: keyword } },
-          { email: { $regex: keyword } },
-        ],
-      });
     }
 
-    const result = await this.memberRepository.pagination({
-      conditions: {
-        $and: [
-          {
-            eventId: eventId,
-            ...(condition.length ? { $or: condition } : {}),
-          },
-        ],
-      },
-      page,
-      limit,
-      sort: { createdAt: 1 },
-    });
+    const [result, total] = await queryBuilder
+      .skip((page - 1) * limit)
+      .take(limit)
+      .orderBy('member.createdAt', 'ASC')
+      .getManyAndCount();
 
-    return result;
+    return {
+      docs: result,
+      totalDocs: total,
+      itemCount: result.length,
+      itemsPerPage: limit,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   }
 
   async getMemberRole(userId: string, eventId: string): Promise<EventRole> {
     const member = await this.memberRepository.findOne({
-      userId,
-      eventId,
+      where: {
+        userId,
+        event: { id: eventId },
+      },
     });
 
     if (!member) {
@@ -220,8 +223,10 @@ export class MemberService {
     const currentUserRole = await this.getMemberRole(currentUser.id, eventId);
 
     const member = await this.memberRepository.findOne({
-      userId: userId,
-      eventId: eventId,
+      where: {
+        userId: userId,
+        event: { id: eventId },
+      },
     });
 
     if (!member) {
@@ -237,12 +242,6 @@ export class MemberService {
     }
 
     member.role = newRole;
-    return this.memberRepository.findOneAndUpdate(
-      {
-        eventId,
-        userId,
-      },
-      { role: newRole },
-    );
+    return this.memberRepository.save(member);
   }
 }

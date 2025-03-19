@@ -2,13 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsEnum,
-  IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { Types } from 'mongoose';
 import EventRole from 'src/auth/event-role/event-roles.enum';
 
 export class AddMemberDto {
@@ -70,7 +69,7 @@ export class MemberListQuery {
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsMongoId()
+  @IsUUID()
   eventId?: string;
 }
 

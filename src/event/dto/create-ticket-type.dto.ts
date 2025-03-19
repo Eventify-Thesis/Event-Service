@@ -44,7 +44,7 @@ export class CreateTicketDto {
 
   @IsNotEmpty()
   @IsString()
-  imageURL: string;
+  imageUrl: string;
 
   @IsBoolean()
   isDisabled: boolean;

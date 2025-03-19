@@ -1,17 +1,10 @@
-import { PaginateModel } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
-import AbstractRepository from 'src/common/abstracts/repository.abstract';
-import {
-  PaymentInfo,
-  PaymentInfoDocument,
-} from '../entities/payment-info.entity';
+import { DataSource, Repository } from 'typeorm';
+import { PaymentInfo } from '../entities/payment-info.entity';
 
 @Injectable()
-export class PaymentInfoRepository extends AbstractRepository<PaymentInfoDocument> {
-  constructor(
-    @InjectModel(PaymentInfo.name) model: PaginateModel<PaymentInfoDocument>,
-  ) {
-    super(model);
+export class PaymentInfoRepository extends Repository<PaymentInfo> {
+  constructor(private dataSource: DataSource) {
+    super(PaymentInfo, dataSource.createEntityManager());
   }
 }

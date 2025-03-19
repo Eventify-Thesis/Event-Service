@@ -1,4 +1,4 @@
-enum EventRole {
+export enum EventRole {
   OWNER = 'OWNER',
   ADMIN = 'ADMIN',
   MANAGER = 'MANAGER',
