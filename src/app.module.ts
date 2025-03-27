@@ -12,6 +12,7 @@ import { QuestionModule } from './question/question.module';
 import { VoucherModule } from './voucher/voucher.module';
 import { AuthModule } from './auth/auth.module';
 import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
+import { SeatingPlanModule } from './seating-plan/seating-plan.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
     QuestionModule,
     VoucherModule,
     AuthModule,
+    SeatingPlanModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],
