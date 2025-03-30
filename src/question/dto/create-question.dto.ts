@@ -44,7 +44,7 @@ export class CreateQuestionDto {
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
-  ticketIds?: string[];
+  ticketTypeIds?: string[];
 
   @ApiProperty({ required: false })
   @IsBoolean()

@@ -6,19 +6,19 @@ import { Event } from './entities/event.entity';
 import { PaymentInfo } from './entities/payment-info.entity';
 import { Setting } from './entities/setting.entity';
 import { Show } from './entities/show.entity';
-import { Ticket } from './entities/ticket.entity';
+import { TicketType } from './entities/ticket-type.entity';
 import { EventRepository } from './repositories/event.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { PaymentInfoRepository } from './repositories/payment-info.repository';
 import { ShowRepository } from './repositories/show.repository';
-import { TicketRepository } from './repositories/ticket.repository';
 import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
 import { PlannerEventService } from './services/planner-event.service';
 import { MemberModule } from 'src/member/member.module';
+import { TicketTypeRepository } from './repositories/ticket-type.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Event, PaymentInfo, Setting, Show, Ticket]),
+    TypeOrmModule.forFeature([Event, PaymentInfo, Setting, Show, TicketType]),
     MemberModule,
   ],
   controllers: [PlannerEventController],
@@ -30,7 +30,7 @@ import { MemberModule } from 'src/member/member.module';
     SettingRepository,
     PaymentInfoRepository,
     ShowRepository,
-    TicketRepository,
+    TicketTypeRepository,
   ],
   exports: [
     EventService,

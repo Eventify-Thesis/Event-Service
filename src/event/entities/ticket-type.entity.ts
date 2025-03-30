@@ -6,12 +6,14 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToOne,
 } from 'typeorm';
 import { Show } from './show.entity';
 import { Event } from './event.entity';
+import { SeatCategoryMapping } from '../../seating-plan/entities/seat-category-mapping.entity';
 
-@Entity('tickets')
-export class Ticket {
+@Entity('ticket_types')
+export class TicketType {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -70,4 +72,9 @@ export class Ticket {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToOne(() => SeatCategoryMapping, (scm) => scm.ticketType, {
+    cascade: true,
+  })
+  seatCategoryMapping: SeatCategoryMapping;
 }

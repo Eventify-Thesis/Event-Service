@@ -17,11 +17,8 @@ import {
   MESSAGE,
 } from '../event.constant';
 import { MemberService } from 'src/member/services/member.service';
-import { CreateTicketDto } from '../dto/create-ticket-type.dto';
-import { TicketRepository } from '../repositories/ticket.repository';
+import { TicketTypeRepository } from '../repositories/ticket-type.repository';
 import { Brackets } from 'typeorm';
-import { IPaginationOptions } from 'src/common/pagination/interfaces/pagination-options.interface';
-import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 @Injectable()
 export class PlannerEventService {
@@ -32,7 +29,7 @@ export class PlannerEventService {
     private readonly settingRepository: SettingRepository,
     private readonly paymentInfoRepository: PaymentInfoRepository,
     private readonly showRepository: ShowRepository,
-    private readonly ticketRepository: TicketRepository,
+    private readonly ticketTypeRepository: TicketTypeRepository,
     private readonly memberService: MemberService,
   ) {}
 
@@ -231,7 +228,7 @@ export class PlannerEventService {
   async updateShows(eventId: string, updateEventShowDto: UpdateEventShowDto) {
     const event = await this.eventRepository.findOne({
       where: { id: eventId },
-      relations: ['shows', 'shows.tickets'],
+      relations: ['shows', 'shows.ticketTypes'],
     });
 
     if (!event) {
@@ -239,10 +236,10 @@ export class PlannerEventService {
     }
 
     // Delete existing shows and tickets that are not in the update
-    await this.ticketRepository
+    await this.ticketTypeRepository
       .createQueryBuilder()
       .delete()
-      .from('tickets')
+      .from('ticket_types')
       .where('event_id = :eventId', {
         eventId,
       })
@@ -265,7 +262,7 @@ export class PlannerEventService {
         // Update existing show
         show = await this.showRepository.findOne({
           where: { id: showDto.id },
-          relations: ['tickets'],
+          relations: ['ticketTypes'],
         });
         show.startTime = showDto.startTime;
         show.endTime = showDto.endTime;
@@ -282,22 +279,22 @@ export class PlannerEventService {
       show = await this.showRepository.save(show);
 
       // Process tickets for this show
-      const tickets = [];
-      for (const ticketDto of showDto.tickets) {
-        let ticket;
+      const ticketTypes = [];
+      for (const ticketDto of showDto.ticketTypes) {
+        let ticketType;
         // Create new ticket
         delete ticketDto.id;
 
-        ticket = this.ticketRepository.create({
+        ticketType = this.ticketTypeRepository.create({
           ...ticketDto,
           show,
           event,
         });
 
-        tickets.push(await this.ticketRepository.save(ticket));
+        ticketTypes.push(await this.ticketTypeRepository.save(ticketType));
       }
 
-      show.tickets = tickets;
+      show.ticketTypes = ticketTypes;
       shows.push(show);
     }
 
@@ -348,8 +345,15 @@ export class PlannerEventService {
   async findShows(eventId: string) {
     const show = await this.showRepository
       .createQueryBuilder('shows')
+      .leftJoinAndSelect('shows.ticketTypes', 'ticket_types')
+      .leftJoin('shows.seatingPlan', 'seating_plans')
+      .addSelect([
+        'seating_plans.id',
+        'seating_plans.name',
+        'seating_plans.description',
+        'seating_plans.locked',
+      ])
       .where('shows.event_id = :eventId', { eventId })
-      .leftJoinAndSelect('shows.tickets', 'tickets')
       .getMany();
 
     if (!show) {
@@ -359,10 +363,25 @@ export class PlannerEventService {
     return show;
   }
 
-  async findTickets(eventId: string) {
-    return await this.ticketRepository.find({
+  async findTicketTypes(eventId: string) {
+    return await this.ticketTypeRepository.find({
       where: { event: { id: eventId } },
     });
+  }
+
+  async findTicketTypesOfShow(eventId: string, showId: string) {
+    const ticketTypes = await this.ticketTypeRepository
+      .createQueryBuilder('ticket_types')
+      .where('ticket_types.show_id = :showId', { showId })
+      .leftJoinAndSelect(
+        'ticket_types.seatCategoryMapping',
+        'seat_category_mappings',
+        'seat_category_mappings.show = :showId',
+        { showId },
+      )
+      .getMany();
+
+    return ticketTypes;
   }
 
   async remove(eventId: string) {

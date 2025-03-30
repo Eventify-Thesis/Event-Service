@@ -6,7 +6,6 @@ import {
   IsObject,
   IsJSON,
 } from 'class-validator';
-import { Type } from 'class-transformer';
 
 export class CreateSeatingPlanDto {
   @IsNotEmpty()
@@ -19,5 +18,5 @@ export class CreateSeatingPlanDto {
 
   @IsNotEmpty()
   @IsJSON()
-  plan: JSON;
+  plan: any;
 }

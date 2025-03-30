@@ -76,6 +76,14 @@ export class PlannerSeatingPlanController {
     return await this.seatingPlanService.findOne(eventId, id);
   }
 
+  @Get(':id/categories')
+  async getCategories(
+    @Param('eventId', EventExists) eventId: string,
+    @Param('id') id: string,
+  ) {
+    return await this.seatingPlanService.getCategories(eventId, id);
+  }
+
   @Patch(':id')
   @ApiOkResponse({ type: SeatingPlan })
   @ApiBody({ type: UpdateSeatingPlanDto })
