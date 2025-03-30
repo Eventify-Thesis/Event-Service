@@ -1,17 +1,13 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { InterestService } from './interest.service';
 import { InterestController } from './interest.controller';
-import { InterestRepository } from './repositories/interest.repositories';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Interest, InterestSchema } from './entities/Interest.entity';
+import { Interest } from './entities/interest.entity';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Interest])],
   controllers: [InterestController],
-  providers: [InterestService, InterestRepository],
-  imports: [
-    MongooseModule.forFeature([
-      { name: Interest.name, schema: InterestSchema },
-    ]),
-  ],
+  providers: [InterestService],
+  exports: [InterestService],
 })
 export class InterestModule {}

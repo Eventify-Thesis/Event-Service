@@ -1,10 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  BadRequestException,
+} from '@nestjs/common';
 import { InterestService } from './interest.service';
 import { CreateInterestDto } from './dto/create-interest.dto';
-import { UpdateInterestDto } from './dto/update-interest.dto';
 import { MESSAGE } from './interest.constant';
 
-@Controller('interest')
+@Controller('interests')
 export class InterestController {
   constructor(private readonly interestService: InterestService) {}
 
@@ -13,20 +20,20 @@ export class InterestController {
     return await this.interestService.create(createInterestDto);
   }
 
-  @Get('favourite/:userId')
+  @Get('users/:userId/favourites')
   async findAllFavourite(@Param('userId') userId: string) {
     if (!userId) {
       throw new BadRequestException(MESSAGE.USER_ID_REQUIRED);
     }
     return await this.interestService.findAllFavourite(userId);
   }
-  
-  @Get('user/:userId/event/:eventId')
+
+  @Get('users/:userId/events/:eventId')
   async findOne(@Param('userId') userId: string, @Param('eventId') eventId: string) {
     return await this.interestService.findOne(userId, eventId);
   }
 
-  @Delete('user/:userId/event/:eventId')
+  @Delete('users/:userId/events/:eventId')
   async remove(@Param('userId') userId: string, @Param('eventId') eventId: string) {
     return await this.interestService.remove(userId, eventId);
   }

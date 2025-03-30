@@ -1,4 +1,14 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateInterestDto } from './create-interest.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export class UpdateInterestDto extends PartialType(CreateInterestDto) {}
+export class CreateInterestDto {
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  userId: string;
+
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  eventId: string;
+}

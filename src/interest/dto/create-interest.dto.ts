@@ -1,11 +1,19 @@
-import { IsNotEmpty, IsMongoId } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CreateInterestDto {
-  @IsMongoId()
-  @IsNotEmpty()
-  userId: string;
+    @ApiProperty({ required: false })
+    @IsOptional()
+    @IsUUID()
+    id: string;
+    
+    @ApiProperty({ required: true })
+    @IsString()
+    @IsNotEmpty()
+    userId: string;
 
-  @IsMongoId()
-  @IsNotEmpty()
-  eventId: string;
+    @ApiProperty({ required: true })
+    @IsString()
+    @IsNotEmpty()
+    eventId: string;
 }

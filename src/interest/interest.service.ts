@@ -1,29 +1,37 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { InterestRepository } from './repositories/interest.repositories';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Interest } from './entities/interest.entity';
 import { CreateInterestDto } from './dto/create-interest.dto';
 import { MESSAGE } from './interest.constant';
 
 @Injectable()
 export class InterestService {
-  constructor(private readonly interestRepository: InterestRepository) { }
-  
+  constructor(
+    @InjectRepository(Interest)
+    private readonly interestRepository: Repository<Interest>,
+  ) {}
+
   async checkExist(userId: string, eventId: string): Promise<boolean> {
-    return !!(await this.interestRepository.exists({ userId, eventId }));
+    const count = await this.interestRepository.count({ where: { userId, eventId } });
+    return count > 0;
   }
 
   async create(createInterestDto: CreateInterestDto) {
     if (await this.checkExist(createInterestDto.userId, createInterestDto.eventId)) {
       throw new BadRequestException(MESSAGE.INTEREST_ALREADY_EXISTS);
     }
-    return await this.interestRepository.create(createInterestDto);
+    
+    const interest = this.interestRepository.create(createInterestDto);
+    return await this.interestRepository.save(interest);
   }
-  
+
   async findAllFavourite(userId: string) {
-    return await this.interestRepository.find({ userId: userId });
+    return await this.interestRepository.find({ where: { userId } });
   }
 
   async findOne(userId: string, eventId: string) {
-    const interest = await this.interestRepository.findOne({ userId, eventId });
+    const interest = await this.interestRepository.findOne({ where: { userId, eventId } });
 
     if (!interest) {
       throw new BadRequestException(MESSAGE.INTEREST_NOT_FOUND);
@@ -32,12 +40,13 @@ export class InterestService {
     return interest;
   }
 
-
   async remove(userId: string, eventId: string) {
-    if (!await this.checkExist(userId, eventId)) {
+    const deleteResult = await this.interestRepository.delete({ userId, eventId });
+
+    if (!deleteResult.affected) {
       throw new BadRequestException(MESSAGE.INTEREST_NOT_FOUND);
     }
 
-    return await this.interestRepository.deleteOne({ userId: userId, eventId: eventId });
+    return { message: 'Interest removed successfully' };
   }
 }
