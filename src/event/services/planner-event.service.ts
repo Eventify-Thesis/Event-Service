@@ -345,7 +345,7 @@ export class PlannerEventService {
   async findShows(eventId: string) {
     const show = await this.showRepository
       .createQueryBuilder('shows')
-      .where('shows.event_id = :eventId', { eventId })
+      .leftJoinAndSelect('shows.ticketTypes', 'ticket_types')
       .leftJoin('shows.seatingPlan', 'seating_plans')
       .addSelect([
         'seating_plans.id',
@@ -353,6 +353,7 @@ export class PlannerEventService {
         'seating_plans.description',
         'seating_plans.locked',
       ])
+      .where('shows.event_id = :eventId', { eventId })
       .getMany();
 
     if (!show) {
