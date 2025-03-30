@@ -136,7 +136,7 @@ export class InitialSchema1710860000000 implements MigrationInterface {
                 CONSTRAINT "fk_show_event" FOREIGN KEY ("event_id") REFERENCES "events"("id")
             );
 
-            CREATE TABLE "tickets" (
+            CREATE TABLE "ticket_types" (
                 "id" uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
                 "event_id" uuid NOT NULL,
                 "show_id" uuid NOT NULL,
@@ -144,8 +144,8 @@ export class InitialSchema1710860000000 implements MigrationInterface {
                 "price" decimal(10,2) NOT NULL,
                 "is_free" boolean NOT NULL DEFAULT false, 
                 "quantity" integer NOT NULL,
-                "min_ticket_purchase" integer NOT NULL,
-                "max_ticket_purchase" integer NOT NULL,
+                "min_ticket_purchase" integer,
+                "max_ticket_purchase" integer,
                 "start_time" TIMESTAMP NOT NULL,
                 "end_time" TIMESTAMP NOT NULL,
                 "description" text NOT NULL,
@@ -154,8 +154,8 @@ export class InitialSchema1710860000000 implements MigrationInterface {
                 "sold_quantity" integer NOT NULL DEFAULT 0,
                 "created_at" TIMESTAMP NOT NULL DEFAULT now(),
                 "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
-                CONSTRAINT "fk_ticket_event" FOREIGN KEY ("event_id") REFERENCES "events"("id"),
-                CONSTRAINT "fk_ticket_show" FOREIGN KEY ("show_id") REFERENCES "shows"("id")
+                CONSTRAINT "fk_ticket_type_event" FOREIGN KEY ("event_id") REFERENCES "events"("id"),
+                CONSTRAINT "fk_ticket_type_show" FOREIGN KEY ("show_id") REFERENCES "shows"("id")
             );
 
             CREATE TABLE "members" (
@@ -183,7 +183,7 @@ export class InitialSchema1710860000000 implements MigrationInterface {
                 "sort_order" integer NOT NULL,
                 "belongs_to" question_belongs_to_enum NOT NULL,
                 "is_hidden" boolean NOT NULL DEFAULT false,
-                "ticket_ids" jsonb,
+                "ticket_type_ids" jsonb,
                 "created_at" TIMESTAMP NOT NULL DEFAULT now(),
                 "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
                 CONSTRAINT "fk_question_event" FOREIGN KEY ("event_id") REFERENCES "events"("id")
@@ -222,7 +222,7 @@ export class InitialSchema1710860000000 implements MigrationInterface {
             DROP TABLE IF EXISTS "vouchers";
             DROP TABLE IF EXISTS "questions";
             DROP TABLE IF EXISTS "members";
-            DROP TABLE IF EXISTS "tickets";
+            DROP TABLE IF EXISTS "ticket_types";
             DROP TABLE IF EXISTS "shows";
             DROP TABLE IF EXISTS "settings";
             DROP TABLE IF EXISTS "payment_info";

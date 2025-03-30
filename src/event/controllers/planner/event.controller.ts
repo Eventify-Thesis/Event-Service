@@ -190,9 +190,9 @@ export class PlannerEventController {
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @ApiOkResponse()
-  @Get(':eventId/tickets')
+  @Get(':eventId/ticket-types')
   async findTickets(@Param('eventId', EventExists) eventId: string) {
-    return await this.eventService.findTickets(eventId);
+    return await this.eventService.findTicketTypes(eventId);
   }
 
   @UseGuards(EventRoleGuard(EventRole.OWNER))

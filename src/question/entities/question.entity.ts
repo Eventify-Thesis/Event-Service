@@ -48,8 +48,8 @@ export class Question {
   @Column({ default: false, name: 'is_hidden' })
   isHidden: boolean;
 
-  @Column({ type: 'json', nullable: true, name: 'ticket_ids' })
-  ticketIds: string[];
+  @Column({ type: 'json', nullable: true, name: 'ticket_type_ids' })
+  ticketTypeIds: string[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

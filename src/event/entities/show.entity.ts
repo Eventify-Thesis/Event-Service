@@ -7,9 +7,11 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { Event } from './event.entity';
-import { Ticket } from './ticket.entity';
+import { TicketType } from './ticket-type.entity';
+import { SeatCategoryMapping } from 'src/seating-plan/entities/seat-category-mapping.entity';
 
 @Entity('shows')
 export class Show {
@@ -18,16 +20,6 @@ export class Show {
 
   @Column({ name: 'event_id' })
   eventId: string;
-
-  /**
-   * The event that this show belongs to.
-   */
-  @ManyToOne(() => Event)
-  @JoinColumn({ name: 'event_id' })
-  event: Event;
-
-  @OneToMany(() => Ticket, (ticket) => ticket.show)
-  tickets: Ticket[];
 
   @Column({ name: 'start_time', type: 'timestamp' })
   startTime: Date;
@@ -40,4 +32,19 @@ export class Show {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  // Relations
+  @ManyToOne(() => Event)
+  @JoinColumn({ name: 'event_id' })
+  event: Event;
+
+  @OneToMany(() => TicketType, (ticketType) => ticketType.show)
+  @JoinColumn({ name: 'show_id' })
+  ticketTypes: TicketType[];
+
+  @OneToOne(
+    () => SeatCategoryMapping,
+    (seatCategoryMapping) => seatCategoryMapping.show,
+  )
+  seatCategoryMapping: SeatCategoryMapping;
 }

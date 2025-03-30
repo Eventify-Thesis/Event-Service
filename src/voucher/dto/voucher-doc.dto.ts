@@ -109,8 +109,8 @@ export class VoucherDetailResponse {
   @ApiProperty({ type: [Object] })
   showings: {
     id: string;
-    isAllTickets: boolean;
-    ticketIds: string[];
+    isAllTicketTypes: boolean;
+    ticketTypeIds: string[];
   }[];
 
   @ApiProperty()

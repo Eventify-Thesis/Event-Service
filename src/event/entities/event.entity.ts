@@ -12,6 +12,7 @@ import { PaymentInfo } from './payment-info.entity';
 import { Setting } from './setting.entity';
 import { Show } from './show.entity';
 import { Question } from '../../question/entities/question.entity';
+import { SeatCategoryMapping } from 'src/seating-plan/entities/seat-category-mapping.entity';
 
 @Entity('events')
 export class Event {
@@ -23,18 +24,6 @@ export class Event {
 
   @Column({ name: 'event_name' })
   eventName: string;
-
-  @OneToOne(() => Setting, (setting) => setting.event)
-  setting: Setting;
-
-  @OneToOne(() => PaymentInfo, (paymentInfo) => paymentInfo.event)
-  paymentInfo: PaymentInfo;
-
-  @OneToMany(() => Show, (show) => show.event)
-  shows: Show[];
-
-  @OneToMany(() => Question, (question) => question.event)
-  questions: Question[];
 
   @Column({ nullable: true, name: 'event_description' })
   eventDescription: string;
@@ -95,4 +84,23 @@ export class Event {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  // Relations
+  @OneToOne(() => Setting, (setting) => setting.event)
+  setting: Setting;
+
+  @OneToOne(() => PaymentInfo, (paymentInfo) => paymentInfo.event)
+  paymentInfo: PaymentInfo;
+
+  @OneToMany(() => Show, (show) => show.event)
+  shows: Show[];
+
+  @OneToMany(() => Question, (question) => question.event)
+  questions: Question[];
+
+  @OneToMany(
+    () => SeatCategoryMapping,
+    (seatCategoryMapping) => seatCategoryMapping.event,
+  )
+  seatCategoryMappings: SeatCategoryMapping[];
 }

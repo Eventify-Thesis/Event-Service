@@ -6,7 +6,7 @@ import {
   IsDate,
 } from 'class-validator';
 
-export class CreateTicketDto {
+export class CreateTicketTypeDto {
   @IsNotEmpty()
   @IsString()
   name: string;

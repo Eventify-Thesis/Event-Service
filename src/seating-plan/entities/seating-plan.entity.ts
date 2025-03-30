@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { Event } from '../../event/entities/event.entity';
-import { EventRole } from '../../auth/event-role/event-roles.enum';
+import { SeatCategoryMapping } from './seat-category-mapping.entity';
 
 @Entity('seating_plans')
 export class SeatingPlan {
@@ -39,4 +41,14 @@ export class SeatingPlan {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToMany(
+    () => SeatCategoryMapping,
+    (seatCategoryMapping) => seatCategoryMapping.seatingPlan,
+    {
+      onDelete: 'CASCADE',
+    },
+  )
+  @JoinColumn({ name: 'seating_plan_id' })
+  seatCategoryMappings: SeatCategoryMapping[];
 }

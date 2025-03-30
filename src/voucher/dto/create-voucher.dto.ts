@@ -26,12 +26,12 @@ class ShowingDto {
 
   @IsBoolean()
   @IsNotEmpty()
-  isAllTickets: boolean;
+  isAllTicketTypes: boolean;
 
   @IsArray()
   @IsUUID()
   @IsNotEmpty()
-  ticketIds: string[];
+  ticketTypeIds: string[];
 }
 
 export class CreateVoucherDto {

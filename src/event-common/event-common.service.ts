@@ -22,12 +22,12 @@ export class EventCommonService {
   async findAllShowings(eventId: string) {
     const show = await this.showRepository.findOne({
       where: { event: { id: eventId } },
-      relations: ['tickets'],
+      relations: ['ticketTypes'],
       select: {
         id: true,
         startTime: true,
         endTime: true,
-        tickets: {
+        ticketTypes: {
           id: true,
           name: true,
           startTime: true,
@@ -51,10 +51,11 @@ export class EventCommonService {
       endTime: show.endTime,
       isSelectable:
         currentTime >= show.startTime && currentTime <= show.endTime,
-      tickets: show.tickets.map((ticket) => ({
-        ...ticket,
+      ticketTypes: show.ticketTypes.map((ticketType) => ({
+        ...ticketType,
         isSelectable:
-          currentTime >= ticket.startTime && currentTime <= ticket.endTime,
+          currentTime >= ticketType.startTime &&
+          currentTime <= ticketType.endTime,
       })),
     };
   }
