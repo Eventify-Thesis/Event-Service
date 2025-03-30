@@ -3,6 +3,9 @@ import { CreateSeatingPlanDto } from './dto/create-seating-plan.dto';
 import { UpdateSeatingPlanDto } from './dto/update-seating-plan.dto';
 import { SeatingPlanRepository } from './repositories/seating-plan.repository';
 import { SeatingPlanListQuery } from './dto/seating-plan.doc.dto';
+import { Repository } from 'typeorm';
+import { Show } from 'src/event/entities/show.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class SeatingPlanService {
@@ -57,12 +60,24 @@ export class SeatingPlanService {
     });
   }
 
+  async getCategories(eventId: string, id: string) {
+    const seatingPlan = await this.seatingPlanRepository.findOne({
+      where: {
+        eventId,
+        id,
+      },
+    });
+
+    const plan = JSON.parse(seatingPlan.plan);
+    return plan.categories;
+  }
+
   async update(
     eventId: string,
     id: string,
     updateSeatingPlanDto: UpdateSeatingPlanDto,
   ) {
-    return this.seatingPlanRepository.update(
+    await this.seatingPlanRepository.update(
       {
         eventId,
         id,

@@ -8,9 +8,10 @@ import { SeatCategoryMapping } from './entities/seat-category-mapping.entity';
 import { PlannerSeatCategoryMappingController } from './controllers/planner/seat-category-mapping.controller';
 import { SeatCategoryMappingService } from './services/seat-category-mapping.service';
 import { SeatCategoryMappingRepository } from './repositories/seat-category-mapping.repository';
+import { Show } from 'src/event/entities/show.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SeatingPlan, SeatCategoryMapping])],
+  imports: [TypeOrmModule.forFeature([SeatingPlan, SeatCategoryMapping, Show])],
   controllers: [
     PlannerSeatingPlanController,
     PlannerSeatCategoryMappingController,

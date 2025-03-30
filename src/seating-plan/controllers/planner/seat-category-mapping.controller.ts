@@ -6,6 +6,7 @@ import {
   Body,
   Param,
   ParseUUIDPipe,
+  Get,
 } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { SeatCategoryMappingService } from '../../services/seat-category-mapping.service';
@@ -20,6 +21,15 @@ export class PlannerSeatCategoryMappingController {
   constructor(
     private readonly seatCategoryMappingService: SeatCategoryMappingService,
   ) {}
+
+  @Get()
+  @ApiOkResponse({ type: [SeatCategoryMapping] })
+  async findAll(
+    @Param('eventId', EventExists) eventId: string,
+    @Param('showId', ParseUUIDPipe) showId: string,
+  ) {
+    return this.seatCategoryMappingService.findByShowId(eventId, showId);
+  }
 
   @Post('')
   @ApiOkResponse({ type: [SeatCategoryMapping] })
@@ -55,7 +65,7 @@ export class PlannerSeatCategoryMappingController {
     @Param('eventId', EventExists) eventId: string,
     @Param('showId', ParseUUIDPipe) showId: string,
   ) {
-    await this.seatCategoryMappingService.deleteByShowId(showId);
+    await this.seatCategoryMappingService.deleteByShowId(eventId, showId);
     return {
       success: true,
     };

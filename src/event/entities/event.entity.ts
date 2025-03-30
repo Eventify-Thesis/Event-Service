@@ -12,7 +12,7 @@ import { PaymentInfo } from './payment-info.entity';
 import { Setting } from './setting.entity';
 import { Show } from './show.entity';
 import { Question } from '../../question/entities/question.entity';
-import { SeatCategoryMapping } from 'src/seating-plan/entities/seat-category-mapping.entity';
+import { SeatCategoryMapping } from '../../seating-plan/entities/seat-category-mapping.entity';
 
 @Entity('events')
 export class Event {

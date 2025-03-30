@@ -195,6 +195,16 @@ export class PlannerEventController {
     return await this.eventService.findTicketTypes(eventId);
   }
 
+  @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
+  @ApiOkResponse()
+  @Get(':eventId/shows/:showId/ticket-types')
+  async findTicketTypesOfShow(
+    @Param('eventId', EventExists) eventId: string,
+    @Param('showId') showId: string,
+  ) {
+    return await this.eventService.findTicketTypesOfShow(eventId, showId);
+  }
+
   @UseGuards(EventRoleGuard(EventRole.OWNER))
   @ApiOkResponse(successResponse)
   @Delete(':eventId')

@@ -9,9 +9,9 @@ import {
   OneToOne,
 } from 'typeorm';
 import { SeatingPlan } from './seating-plan.entity';
-import { Show } from 'src/event/entities/show.entity';
-import { TicketType } from 'src/event/entities/ticket-type.entity';
-import { Event } from 'src/event/entities/event.entity';
+import { Show } from '../../event/entities/show.entity';
+import { TicketType } from '../../event/entities/ticket-type.entity';
+import { Event } from '../../event/entities/event.entity';
 
 @Entity({ name: 'seat_category_mappings' })
 export class SeatCategoryMapping {
@@ -55,17 +55,13 @@ export class SeatCategoryMapping {
   @JoinColumn({ name: 'event_id' })
   event: Event;
 
-  @OneToOne(() => Show, (show) => show.seatCategoryMapping, {
+  @ManyToOne(() => Show, (show) => show.seatCategoryMapping, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'show_id' })
   show: Show;
 
-  @ManyToOne(
-    () => TicketType,
-    (ticketType) => ticketType.seatCategoryMappings,
-    { onDelete: 'CASCADE' },
-  )
+  @OneToOne(() => TicketType, (ticketType) => ticketType.seatCategoryMapping)
   @JoinColumn({ name: 'ticket_type_id' })
   ticketType: TicketType;
 }

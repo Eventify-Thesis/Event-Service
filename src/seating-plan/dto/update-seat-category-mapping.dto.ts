@@ -1,20 +1,26 @@
-import { IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsString, IsUUID } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateSeatCategoryMappingDto {
-  @ApiProperty({ description: 'ID of the mapping to update' })
+  @ApiProperty({ description: 'ID of the seating plan' })
   @IsUUID()
-  id: string;
+  seatingPlanId: string;
 
-  @ApiProperty({ description: 'New category name for the seats', required: false })
+  @ApiProperty({ description: 'ID of the event' })
+  @IsUUID()
+  eventId: string;
+
+  @ApiProperty({ description: 'ID of the show' })
+  @IsUUID()
+  showId: string;
+
+  @ApiProperty({ description: 'Category name for the seats' })
   @IsString()
-  @IsOptional()
-  category?: string;
+  category: string;
 
-  @ApiProperty({ description: 'New ticket type ID', required: false })
+  @ApiProperty({ description: 'ID of the ticket type' })
   @IsUUID()
-  @IsOptional()
-  ticketTypeId?: string;
+  ticketTypeId: string;
 }
 
 export class BatchUpdateSeatCategoryMappingDto {

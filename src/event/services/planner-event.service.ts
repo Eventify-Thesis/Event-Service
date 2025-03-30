@@ -346,7 +346,13 @@ export class PlannerEventService {
     const show = await this.showRepository
       .createQueryBuilder('shows')
       .where('shows.event_id = :eventId', { eventId })
-      .leftJoinAndSelect('shows.ticketTypes', 'ticket_types')
+      .leftJoin('shows.seatingPlan', 'seating_plans')
+      .addSelect([
+        'seating_plans.id',
+        'seating_plans.name',
+        'seating_plans.description',
+        'seating_plans.locked',
+      ])
       .getMany();
 
     if (!show) {
@@ -360,6 +366,21 @@ export class PlannerEventService {
     return await this.ticketTypeRepository.find({
       where: { event: { id: eventId } },
     });
+  }
+
+  async findTicketTypesOfShow(eventId: string, showId: string) {
+    const ticketTypes = await this.ticketTypeRepository
+      .createQueryBuilder('ticket_types')
+      .where('ticket_types.show_id = :showId', { showId })
+      .leftJoinAndSelect(
+        'ticket_types.seatCategoryMapping',
+        'seat_category_mappings',
+        'seat_category_mappings.show = :showId',
+        { showId },
+      )
+      .getMany();
+
+    return ticketTypes;
   }
 
   async remove(eventId: string) {

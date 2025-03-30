@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Show } from './show.entity';
 import { Event } from './event.entity';
-import { SeatCategoryMapping } from 'src/seating-plan/entities/seat-category-mapping.entity';
+import { SeatCategoryMapping } from '../../seating-plan/entities/seat-category-mapping.entity';
 
 @Entity('ticket_types')
 export class TicketType {
@@ -73,11 +73,8 @@ export class TicketType {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  // Relationship
-  /**
-   * A mapping of seat categories to ticket types. This is used to determine
-   * which seat categories are available for a given ticket type.
-   */
-  @OneToOne(() => SeatCategoryMapping)
-  seatCategoryMappings: SeatCategoryMapping;
+  @OneToOne(() => SeatCategoryMapping, (scm) => scm.ticketType, {
+    cascade: true,
+  })
+  seatCategoryMapping: SeatCategoryMapping;
 }
