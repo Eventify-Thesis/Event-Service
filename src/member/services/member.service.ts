@@ -59,7 +59,7 @@ export class MemberService {
 
     let organizations = user.publicMetadata.organizations || {};
 
-    organizations[organization.id] = 'org:owner';
+    organizations[`${eventId}:${organization.id}`] = 'org:owner';
 
     await this.clerkClient.users.updateUserMetadata(user.id, {
       publicMetadata: {

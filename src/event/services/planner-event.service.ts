@@ -41,7 +41,9 @@ export class PlannerEventService {
   }
 
   async list(organizations: any, paramPagination, { keyword, status }: any) {
-    const orgIds = Object.keys(organizations);
+    const iDs = Object.keys(organizations);
+    console.log(iDs);
+    const orgIds = iDs.map((id) => id.split(':')[1]);
     if (!status) status = EventStatus.UPCOMING;
 
     const queryBuilder = this.eventRepository
@@ -93,7 +95,9 @@ export class PlannerEventService {
         eventBannerUrl: event.eventBannerUrl,
         organizationId: event.organizationId,
         url: event.setting.url,
-        role: organizations[event.organizationId].split(':')[1].toUpperCase(),
+        role: organizations[`${event.id}:${event.organizationId}`]
+          .split(':')[1]
+          .toUpperCase(),
       };
 
       if (event.shows?.length > 0) {

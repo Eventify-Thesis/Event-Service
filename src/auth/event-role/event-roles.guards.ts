@@ -7,8 +7,6 @@ import {
 } from '@nestjs/common';
 import { EventRole } from './event-roles.enum';
 import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from '../auth.service';
-import { ModuleRef } from '@nestjs/core';
 import RequestWithUser from '../role/requestWithUser.interface';
 
 const EventRoleGuard = (
@@ -16,14 +14,6 @@ const EventRoleGuard = (
 ): Type<CanActivate> => {
   @Injectable()
   class RoleGuardMixin extends AuthGuard('clerk') {
-    constructor(private moduleRef: ModuleRef) {
-      super();
-    }
-
-    private get authService(): AuthService {
-      return this.moduleRef.get(AuthService, { strict: false });
-    }
-
     async canActivate(context: ExecutionContext) {
       await super.canActivate(context);
 
@@ -32,36 +22,29 @@ const EventRoleGuard = (
       const eventId = request.params.eventId || request.body.id;
 
       if (!eventId) return true;
-      const event = await this.authService.findOne(eventId);
-      const eventOrgId = event?.organizationId;
 
       // Convert Clerk roles to EventRole format
-      const organizationEntries = Object.entries(
+      const eventEntries = Object.entries(
         request.user.publicMetadata.organizations || {},
-      ).map(([orgId, clerkRole]) => {
+      ).map(([id, clerkRole]) => {
         const role = (clerkRole as string)
           .replace('org:', '')
           .toUpperCase() as EventRole;
-        return [orgId, role] as [string, EventRole];
+        const eventId = id.split(':')[0];
+        return [eventId, role] as [string, EventRole];
       });
 
-      // Find the user's role in the event's organization
-      const [_, userRole] =
-        organizationEntries.find(([orgId]) => orgId === eventOrgId) || [];
-
       // Convert single role to array for consistent checking
-
       const requiredRoles = Array.isArray(eventRoles)
         ? eventRoles
         : [eventRoles];
       // Check both organization membership and role
 
-      const hasOrganizationAccess = organizationEntries.some(
-        ([orgId]) => orgId === eventOrgId,
+      const hasOrganizationAccess = eventEntries.some(
+        ([event, role]) => event === eventId && requiredRoles.includes(role),
       );
-      const hasRoleAccess = requiredRoles.includes(userRole);
 
-      return hasOrganizationAccess && hasRoleAccess;
+      return hasOrganizationAccess;
     }
   }
   return mixin(RoleGuardMixin);

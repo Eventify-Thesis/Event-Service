@@ -17,7 +17,7 @@ async function bootstrap() {
   const cors = require('cors');
   const corsOptions = {
     origin: 'http://localhost:5174',
-    credentials: true, //access-control-allow-credentials:true
+    credentials: true,
     optionSuccessStatus: 200,
   };
   app.use(cors(corsOptions));
