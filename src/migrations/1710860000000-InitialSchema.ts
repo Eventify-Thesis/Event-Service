@@ -214,6 +214,15 @@ export class InitialSchema1710860000000 implements MigrationInterface {
                 "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
                 CONSTRAINT "fk_voucher_event" FOREIGN KEY ("event_id") REFERENCES "events"("id")
             );
+            
+            CREATE TABLE "interests" (
+                "id" uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+                "user_id" varchar NOT NULL,
+                "event_id" uuid NOT NULL,
+                "created_at" TIMESTAMP NOT NULL DEFAULT now(),
+                "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
+                CONSTRAINT "fk_interest_event" FOREIGN KEY ("event_id") REFERENCES "events"("id") ON DELETE CASCADE
+            );
         `);
   }
 
@@ -231,6 +240,7 @@ export class InitialSchema1710860000000 implements MigrationInterface {
             DROP TABLE IF EXISTS "districts";
             DROP TABLE IF EXISTS "cities";
             DROP TABLE IF EXISTS "categories";
+            DROP TABLE IF EXISTS "interests";
             
             DROP TYPE IF EXISTS "event_role_enum";
             DROP TYPE IF EXISTS "question_type_enum";
