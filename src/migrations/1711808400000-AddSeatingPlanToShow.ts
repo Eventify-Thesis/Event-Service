@@ -8,8 +8,11 @@ export class AddSeatingPlanToShow1711808400000 implements MigrationInterface {
       ADD CONSTRAINT "fk_shows_seating_plan"
       FOREIGN KEY ("seating_plan_id")
       REFERENCES "seating_plans"("id")
-      ON DELETE SET NULL
-    `);
+      ON DELETE SET NULL;
+    
+      ALTER TABLE "shows"
+      ADD COLUMN "locked" boolean NOT NULL DEFAULT false;
+      `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

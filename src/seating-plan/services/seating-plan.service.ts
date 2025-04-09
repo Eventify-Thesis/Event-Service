@@ -1,11 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { CreateSeatingPlanDto } from './dto/create-seating-plan.dto';
-import { UpdateSeatingPlanDto } from './dto/update-seating-plan.dto';
-import { SeatingPlanRepository } from './repositories/seating-plan.repository';
-import { SeatingPlanListQuery } from './dto/seating-plan.doc.dto';
-import { Repository } from 'typeorm';
-import { Show } from 'src/event/entities/show.entity';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateSeatingPlanDto } from '../dto/create-seating-plan.dto';
+import { UpdateSeatingPlanDto } from '../dto/update-seating-plan.dto';
+import { SeatingPlanRepository } from '../repositories/seating-plan.repository';
+import { SeatingPlanListQuery } from '../dto/seating-plan.doc.dto';
+import { SeatRepository } from '../repositories/seat.repository';
 
 @Injectable()
 export class SeatingPlanService {

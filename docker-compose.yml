@@ -6,7 +6,7 @@ services:
   #     context: .
   #     dockerfile: Dockerfile
   #   ports:
-  #     - "3000:3000"
+  #     - '3000:3000'
   #   environment:
   #     - DATABASE_HOST=postgres
   #     - DATABASE_PORT=5432
@@ -14,9 +14,12 @@ services:
   #     - DATABASE_PASSWORD=postgres
   #     - DATABASE_NAME=event_service
   #     - DATABASE_SYNCHRONIZE=true
+  #     - REDIS_HOST=redis # 👈 Use Docker service name
+  #     - REDIS_PORT=6379
   #     - NODE_ENV=production
   #   depends_on:
   #     - postgres
+  #     - redis # 👈 Wait for Redis too
   #   networks:
   #     - app-network
 
@@ -30,6 +33,13 @@ services:
       - POSTGRES_DB=event_service
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
     networks:
       - app-network
 

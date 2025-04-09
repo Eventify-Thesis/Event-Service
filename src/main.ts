@@ -6,6 +6,7 @@ import * as cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
 import * as configAWS from 'aws-sdk';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,12 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor());
   app.use(cookieParser());
 
+  app.enableCors({
+    origin: 'http://localhost:5174',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
   const cors = require('cors');
   const corsOptions = {
     origin: 'http://localhost:5174',
@@ -60,5 +67,16 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('API', app, document, defaultOptions);
   await app.listen(configService.get<number>('PORT'));
+
+  // Set up microservices
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.TCP,
+    options: {
+      host: '127.0.0.1',
+      port: 8081,
+    },
+  });
+
+  await app.startAllMicroservices();
 }
 bootstrap();

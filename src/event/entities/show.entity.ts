@@ -31,6 +31,9 @@ export class Show {
   @Column({ name: 'seating_plan_id', type: 'uuid', nullable: true })
   seatingPlanId: string;
 
+  @Column({ name: 'locked', type: 'boolean', default: false })
+  locked: boolean;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
