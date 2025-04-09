@@ -14,6 +14,7 @@ import { BatchCreateSeatCategoryMappingDto } from '../../dto/create-seat-categor
 import { BatchUpdateSeatCategoryMappingDto } from '../../dto/update-seat-category-mapping.dto';
 import { SeatCategoryMapping } from '../../entities/seat-category-mapping.entity';
 import { EventExists } from 'src/event/pipes/event-exists.pipe';
+import { successResponse } from 'src/common/docs/response.doc';
 
 @ApiTags('Seat Category Mappings')
 @Controller('planner/events/:eventId/shows/:showId/seat-category-mappings')
@@ -68,6 +69,26 @@ export class PlannerSeatCategoryMappingController {
     await this.seatCategoryMappingService.deleteByShowId(eventId, showId);
     return {
       success: true,
+    };
+  }
+
+  @Post(':id/lock')
+  @ApiOkResponse(successResponse)
+  async lockSeatingPlan(
+    @Param('eventId', EventExists) eventId: string,
+    @Param('showId', ParseUUIDPipe) showId: string,
+    @Param('id', ParseUUIDPipe) seatingPlanId: string,
+    @Body() { locked }: { locked: boolean },
+  ) {
+    await this.seatCategoryMappingService.lockAndGenerateSeats(
+      eventId,
+      showId,
+      seatingPlanId,
+      locked,
+    );
+
+    return {
+      message: 'success',
     };
   }
 }

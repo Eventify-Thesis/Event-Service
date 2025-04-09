@@ -11,6 +11,7 @@ import {
 import { Event } from '../../event/entities/event.entity';
 import { SeatCategoryMapping } from './seat-category-mapping.entity';
 import { Show } from '../../event/entities/show.entity';
+import { Seat } from './seat.entity';
 
 @Entity('seating_plans')
 export class SeatingPlan {
@@ -54,4 +55,7 @@ export class SeatingPlan {
   )
   @JoinColumn({ name: 'seating_plan_id' })
   seatCategoryMappings: SeatCategoryMapping[];
+
+  @OneToMany(() => Seat, (seat) => seat.seatingPlan)
+  seats: Seat[];
 }

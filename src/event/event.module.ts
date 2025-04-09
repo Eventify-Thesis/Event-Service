@@ -15,13 +15,14 @@ import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
 import { PlannerEventService } from './services/planner-event.service';
 import { MemberModule } from 'src/member/member.module';
 import { TicketTypeRepository } from './repositories/ticket-type.repository';
+import { PlannerEventMicroservice } from './controllers/planner/event.microservice';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Event, PaymentInfo, Setting, Show, TicketType]),
     MemberModule,
   ],
-  controllers: [PlannerEventController],
+  controllers: [PlannerEventController, PlannerEventMicroservice],
   providers: [
     ClerkClientProvider,
     EventService,

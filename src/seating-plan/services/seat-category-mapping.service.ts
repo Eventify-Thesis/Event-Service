@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { SeatCategoryMappingRepository } from '../repositories/seat-category-mapping.repository';
@@ -6,6 +10,9 @@ import { BatchCreateSeatCategoryMappingDto } from '../dto/create-seat-category-m
 import { BatchUpdateSeatCategoryMappingDto } from '../dto/update-seat-category-mapping.dto';
 import { TicketType } from 'src/event/entities/ticket-type.entity';
 import { Show } from 'src/event/entities/show.entity';
+import { SeatingPlanRepository } from '../repositories/seating-plan.repository';
+import { SeatRepository } from '../repositories/seat.repository';
+import { Seat } from '../entities/seat.entity';
 
 @Injectable()
 export class SeatCategoryMappingService {
@@ -15,6 +22,8 @@ export class SeatCategoryMappingService {
     @InjectRepository(Show)
     private readonly showRepository: Repository<Show>,
     private readonly dataSource: DataSource,
+    private readonly seatingPlanRepository: SeatingPlanRepository,
+    private readonly seatRepository: SeatRepository,
   ) {}
 
   async batchCreate(dto: BatchCreateSeatCategoryMappingDto) {
@@ -142,5 +151,93 @@ export class SeatCategoryMappingService {
 
   async deleteByShowId(eventId: string, showId: string) {
     return this.seatCategoryMappingRepository.delete({ eventId, showId });
+  }
+
+  async lockAndGenerateSeats(
+    eventId: string,
+    showId: string,
+    seatingPlanId: string,
+    lock: boolean,
+  ) {
+    if (lock) {
+      const seatingPlan = await this.seatingPlanRepository.findOne({
+        where: {
+          eventId,
+          id: seatingPlanId,
+        },
+      });
+
+      if (!seatingPlan) {
+        throw new NotFoundException('Seating plan not found');
+      }
+
+      // Remove all previous seat generation
+      await this.seatRepository.delete({ eventId, showId, seatingPlanId });
+
+      // Get seat category mappings for this combination
+      const seatCategoryMappings =
+        await this.seatCategoryMappingRepository.find({
+          where: {
+            eventId,
+            showId,
+            seatingPlanId,
+          },
+        });
+
+      if (!seatCategoryMappings.length) {
+        throw new BadRequestException(
+          'No seat category mappings found for this show',
+        );
+      }
+
+      const plan = JSON.parse(seatingPlan.plan);
+      const seats: Partial<Seat>[] = [];
+
+      // Create a map of zoneId to ticketTypeId for quick lookup
+      const zoneTicketTypeMap = new Map(
+        seatCategoryMappings.map((mapping) => [
+          mapping.category,
+          mapping.ticketTypeId,
+        ]),
+      );
+
+      // Iterate through each zone in the plan
+      for (const zone of plan.zones || []) {
+        // If zone has rows
+        if (zone.rows) {
+          for (const row of zone.rows) {
+            for (const seat of row.seats || []) {
+              const ticketTypeId = zoneTicketTypeMap.get(
+                seat.category || row.category,
+              );
+              seats.push({
+                id: seat.id,
+                seatingPlanId,
+                eventId,
+                showId,
+                zoneId: zone.id,
+                rowLabel: row.label,
+                seatNumber: seat.label,
+                ticketTypeId,
+              });
+            }
+          }
+        }
+      }
+
+      // Save all seats
+      await this.seatRepository.save(seats);
+
+      // update show status to locked
+      await this.showRepository.update(
+        { id: showId, eventId },
+        { locked: true },
+      );
+    } else {
+      await this.showRepository.update(
+        { id: showId, eventId },
+        { locked: false },
+      );
+    }
   }
 }

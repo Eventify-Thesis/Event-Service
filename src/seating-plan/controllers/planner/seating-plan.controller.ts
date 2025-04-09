@@ -14,13 +14,16 @@ import {
   ApiQuery,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { PaginationResponse } from 'src/common/docs/response.doc';
+import {
+  PaginationResponse,
+  successResponse,
+} from 'src/common/docs/response.doc';
 import { EventExists } from 'src/event/pipes/event-exists.pipe';
 import { CreateSeatingPlanDto } from 'src/seating-plan/dto/create-seating-plan.dto';
 import { SeatingPlanListQuery } from 'src/seating-plan/dto/seating-plan.doc.dto';
 import { UpdateSeatingPlanDto } from 'src/seating-plan/dto/update-seating-plan.dto';
 import { SeatingPlan } from 'src/seating-plan/entities/seating-plan.entity';
-import { SeatingPlanService } from 'src/seating-plan/seating-plan.service';
+import { SeatingPlanService } from 'src/seating-plan/services/seating-plan.service';
 
 @Controller('planner/events/:eventId/seating-plan')
 export class PlannerSeatingPlanController {
