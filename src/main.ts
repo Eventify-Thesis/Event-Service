@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import * as configAWS from 'aws-sdk';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
+import { AppExceptionFilter } from './common/exceptions/app-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,19 +16,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor());
   app.use(cookieParser());
 
-  app.enableCors({
-    origin: 'http://localhost:5174',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  });
-  const cors = require('cors');
-  const corsOptions = {
-    origin: 'http://localhost:5174',
-    credentials: true,
-    optionSuccessStatus: 200,
-  };
-  app.use(cors(corsOptions));
+  app.enableCors();
 
   const configService = app.get(ConfigService);
   configAWS.config.update({

@@ -4,12 +4,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
-  OneToMany,
-  JoinColumn,
 } from 'typeorm';
-import { City } from './city.entity';
-import { Ward } from './ward.entity';
 
 @Entity('districts')
 export class District {

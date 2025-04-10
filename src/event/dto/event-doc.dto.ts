@@ -33,15 +33,12 @@ class TicketTypeResponse {
 
   @ApiProperty()
   imageUrl: string;
-
-  @ApiProperty()
-  isDisabled: boolean;
-
-  @ApiProperty()
-  position: number;
 }
 
-class ShowingResponse {
+class ShowResponse {
+  @ApiProperty()
+  id: string;
+
   @ApiProperty({ type: [TicketTypeResponse] })
   ticketTypes: TicketTypeResponse[];
 
@@ -53,9 +50,6 @@ class ShowingResponse {
 }
 
 export class SettingResponse {
-  @ApiProperty()
-  eventId: string;
-
   @ApiProperty()
   url: string;
 
@@ -70,9 +64,6 @@ export class SettingResponse {
 }
 
 export class PaymentInfoResponse {
-  @ApiProperty()
-  eventId: string;
-
   @ApiProperty()
   bankAccount: string;
 
@@ -95,15 +86,7 @@ export class PaymentInfoResponse {
   companyAddress: string;
 
   @ApiProperty()
-  taxNumber: string;
-}
-
-export class ShowResponse {
-  @ApiProperty()
-  eventId: string;
-
-  @ApiProperty({ type: [ShowingResponse] })
-  showings: ShowingResponse[];
+  companyTaxNumber: string;
 }
 
 export class EventBriefResponse {
@@ -158,19 +141,10 @@ export class EventDetailResponse {
   venueName: string;
 
   @ApiProperty()
-  cityId: number;
-
-  @ApiProperty()
-  districtId: number;
-
-  @ApiProperty()
-  wardId: number;
-
-  @ApiProperty()
   street: string;
 
   @ApiProperty()
-  categoriesIds: number[];
+  categoriesIds: string[];
 
   @ApiProperty()
   eventType: string;
@@ -182,7 +156,19 @@ export class EventDetailResponse {
   paymentInfo: PaymentInfoResponse;
 
   @ApiProperty({ type: ShowResponse })
-  show: ShowResponse;
+  shows: ShowResponse[];
+
+  @ApiProperty()
+  address: {
+    addressEn: string;
+    addressVi: string;
+  };
+
+  @ApiProperty()
+  startTime: Date;
+
+  @ApiProperty()
+  endTime: Date;
 }
 
 export class EventListAllQuery {

@@ -16,13 +16,32 @@ import { PlannerEventService } from './services/planner-event.service';
 import { MemberModule } from 'src/member/member.module';
 import { TicketTypeRepository } from './repositories/ticket-type.repository';
 import { PlannerEventMicroservice } from './controllers/planner/event.microservice';
+import { EventController } from './controllers/common/event.controller';
+import { EventMicroservice } from './controllers/common/event.microservice';
+import { City } from 'src/location/entities/city.entity';
+import { District } from 'src/location/entities/district.entity';
+import { Ward } from 'src/location/entities/ward.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Event, PaymentInfo, Setting, Show, TicketType]),
+    TypeOrmModule.forFeature([
+      Event,
+      PaymentInfo,
+      Setting,
+      Show,
+      TicketType,
+      City,
+      District,
+      Ward,
+    ]),
     MemberModule,
   ],
-  controllers: [PlannerEventController, PlannerEventMicroservice],
+  controllers: [
+    PlannerEventController,
+    PlannerEventMicroservice,
+    EventMicroservice,
+    EventController,
+  ],
   providers: [
     ClerkClientProvider,
     EventService,

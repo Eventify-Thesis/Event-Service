@@ -1,42 +1,16 @@
-// import {
-//   Controller,
-//   Get,
-//   Post,
-//   Body,
-//   Patch,
-//   Param,
-//   Delete,
-// } from '@nestjs/common';
-// import { EventService } from './event.service';
-// import { CreateEventDto } from './dto/create-event.dto';
-// import { UpdateEventDto } from './dto/update-event.dto';
+import { Controller, Get, Param } from '@nestjs/common';
+import { ApiResponse } from '@nestjs/swagger';
+import { EventDetailResponse } from 'src/event/dto/event-doc.dto';
+import { EventExists } from 'src/event/pipes/event-exists.pipe';
+import { EventService } from 'src/event/services/event.service';
 
-// @Controller('event')
-// export class EventController {
-//   constructor(private readonly eventService: EventService) {}
+@Controller()
+export class EventController {
+  constructor(private readonly eventService: EventService) {}
 
-//   @Post()
-//   create(@Body() createEventDto: CreateEventDto) {
-//     return this.eventService.create(createEventDto);
-//   }
-
-//   @Get()
-//   findAll() {
-//     return this.eventService.findAll();
-//   }
-
-//   @Get(':id')
-//   findOne(@Param('id') id: string) {
-//     return this.eventService.findOne(+id);
-//   }
-
-//   @Patch(':id')
-//   update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
-//     return this.eventService.update(+id, updateEventDto);
-//   }
-
-//   @Delete(':id')
-//   remove(@Param('id') id: string) {
-//     return this.eventService.remove(+id);
-//   }
-// }
+  @Get(':id')
+  @ApiResponse({ type: EventDetailResponse })
+  findOne(@Param('id', EventExists) id: string) {
+    return this.eventService.findOne(id);
+  }
+}
