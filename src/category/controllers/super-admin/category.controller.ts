@@ -65,4 +65,13 @@ export class SuperAdminCategoryController {
       status: 'success',
     };
   }
+
+  @Delete('code/:code')
+  @ApiOkResponse(successResponse)
+  async removeByCode(@Param('code') code: string) {
+    await this.categoryService.removeByCode(code);
+    return {
+      status: 'success',
+    };
+  }
 }
