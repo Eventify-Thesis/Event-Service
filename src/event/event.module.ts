@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventService } from './services/event.service';
 import { PlannerEventController } from './controllers/planner/event.controller';
+import { SuperAdminEventController } from './controllers/super-admin/event.controller';
 import { Event } from './entities/event.entity';
 import { PaymentInfo } from './entities/payment-info.entity';
 import { Setting } from './entities/setting.entity';
@@ -13,6 +14,7 @@ import { PaymentInfoRepository } from './repositories/payment-info.repository';
 import { ShowRepository } from './repositories/show.repository';
 import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
 import { PlannerEventService } from './services/planner-event.service';
+import { SuperAdminEventService } from './services/superadmin-event.service';
 import { MemberModule } from 'src/member/member.module';
 import { TicketTypeRepository } from './repositories/ticket-type.repository';
 import { PlannerEventMicroservice } from './controllers/planner/event.microservice';
@@ -45,11 +47,13 @@ import { EventDailyStatistics, EventStatistics } from './entities/event-statisti
     PlannerEventMicroservice,
     EventMicroservice,
     EventController,
+    SuperAdminEventController,
   ],
   providers: [
     ClerkClientProvider,
     EventService,
     PlannerEventService,
+    SuperAdminEventService,
     EventRepository,
     SettingRepository,
     PaymentInfoRepository,

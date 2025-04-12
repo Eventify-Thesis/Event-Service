@@ -45,4 +45,14 @@ export const MESSAGE = {
     message: 'Show not found',
     httpStatus: HttpStatus.NOT_FOUND,
   },
+  INVALID_STATUS: {
+    error: 'INVALID_STATUS',
+    message: 'Invalid status',
+    httpStatus: HttpStatus.BAD_REQUEST,
+  },
+  EVENT_ALREADY_CENSORED: {
+    error: 'EVENT_ALREADY_CENSORED',
+    message: 'Event already censored',
+    httpStatus: HttpStatus.BAD_REQUEST,
+  },
 };
