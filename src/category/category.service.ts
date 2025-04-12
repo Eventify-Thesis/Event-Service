@@ -36,6 +36,10 @@ export class CategoryService {
     await this.categoryRepository.delete(id);
   }
 
+  async removeByCode(code: string): Promise<void> {
+    await this.categoryRepository.delete({ code });
+  }
+
   async checkExists(query: Record<string, any>) {
     const entity = await this.categoryRepository.findOne({
       where: query,
