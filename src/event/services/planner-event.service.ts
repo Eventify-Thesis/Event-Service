@@ -117,13 +117,13 @@ export class PlannerEventService {
     };
   }
 
-  async getBrief(user: User, eventId: string) {
+  async getBrief(user: User, eventId: number) {
     const event = await this.eventRepository.findOne({
       where: { id: eventId },
     });
 
     const brief = new EventBriefResponse();
-    brief.id = event.id.toString();
+    brief.id = event.id;
     brief.eventName = event.eventName;
     brief.eventLogoUrl = event.eventLogoUrl;
     brief.eventBannerUrl = event.eventBannerUrl;
@@ -178,9 +178,9 @@ export class PlannerEventService {
       bankAccountNumber: '',
       bankOffice: '',
       businessType: BusinessType.COMPANY,
-      companyName: '',
-      companyAddress: '',
-      companyTaxNumber: '',
+      name: '',
+      address: '',
+      taxNumber: '',
     });
     await this.paymentInfoRepository.save(paymentInfo);
 
@@ -192,7 +192,7 @@ export class PlannerEventService {
   }
 
   async updateSetting(
-    eventId: string,
+    eventId: number,
     updateEventSettingDto: UpdateEventSettingDto,
   ) {
     const setting = await this.settingRepository.findOne({
@@ -207,7 +207,7 @@ export class PlannerEventService {
   }
 
   async updatePaymentInfo(
-    eventId: string,
+    eventId: number,
     updateEventPaymentInfoDto: UpdateEventPaymentInfoDto,
   ) {
     // Update event status
@@ -229,7 +229,7 @@ export class PlannerEventService {
     return await this.paymentInfoRepository.save(paymentInfo);
   }
 
-  async updateShows(eventId: string, updateEventShowDto: UpdateEventShowDto) {
+  async updateShows(eventId: number, updateEventShowDto: UpdateEventShowDto) {
     const event = await this.eventRepository.findOne({
       where: { id: eventId },
       relations: ['shows', 'shows.ticketTypes'],
@@ -305,7 +305,7 @@ export class PlannerEventService {
     return shows;
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     const event = await this.eventRepository.findOne({
       where: { id },
       relations: ['setting', 'paymentInfo', 'shows'],
@@ -318,7 +318,7 @@ export class PlannerEventService {
     return event;
   }
 
-  async findSettings(eventId: string) {
+  async findSettings(eventId: number) {
     const setting = await this.settingRepository.findOne({
       where: { event: { id: eventId } },
       relations: ['event'],
@@ -334,7 +334,7 @@ export class PlannerEventService {
     };
   }
 
-  async findPaymentInfo(eventId: string) {
+  async findPaymentInfo(eventId: number) {
     const paymentInfo = await this.paymentInfoRepository.findOne({
       where: { event: { id: eventId } },
     });
@@ -346,7 +346,7 @@ export class PlannerEventService {
     return paymentInfo;
   }
 
-  async findShows(eventId: string) {
+  async findShows(eventId: number) {
     const show = await this.showRepository
       .createQueryBuilder('shows')
       .leftJoinAndSelect('shows.ticketTypes', 'ticket_types')
@@ -367,13 +367,13 @@ export class PlannerEventService {
     return show;
   }
 
-  async findTicketTypes(eventId: string) {
+  async findTicketTypes(eventId: number) {
     return await this.ticketTypeRepository.find({
       where: { event: { id: eventId } },
     });
   }
 
-  async findTicketTypesOfShow(eventId: string, showId: string) {
+  async findTicketTypesOfShow(eventId: number, showId: number) {
     const ticketTypes = await this.ticketTypeRepository
       .createQueryBuilder('ticket_types')
       .where('ticket_types.show_id = :showId', { showId })
@@ -388,7 +388,7 @@ export class PlannerEventService {
     return ticketTypes;
   }
 
-  async remove(eventId: string) {
+  async remove(eventId: number) {
     await this.eventRepository.delete({ id: eventId });
   }
 }

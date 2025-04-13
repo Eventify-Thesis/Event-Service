@@ -13,7 +13,7 @@ import {
 export class UpdateTicketTypeDto {
   @ApiProperty({ required: false })
   @IsOptional()
-  id?: string;
+  id?: number;
 
   @ApiProperty({ required: true })
   @IsString()
@@ -50,8 +50,7 @@ export class UpdateTicketTypeDto {
 export class ShowDto {
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsUUID()
-  id?: string;
+  id?: number;
 
   @ApiProperty({ type: [UpdateTicketTypeDto], required: true })
   @IsArray()

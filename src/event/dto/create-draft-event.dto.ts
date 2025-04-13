@@ -14,8 +14,7 @@ import { EventType } from '../event.constant';
 export class CreateDraftEventDto {
   @ApiProperty({ required: false, default: null })
   @IsOptional()
-  @IsUUID()
-  id: string;
+  id: number;
 
   @ApiProperty({
     example:

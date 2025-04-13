@@ -1,11 +1,4 @@
-import {
-  IsNotEmpty,
-  IsString,
-  IsUUID,
-  ValidateNested,
-  IsObject,
-  IsJSON,
-} from 'class-validator';
+import { IsNotEmpty, IsString, IsJSON } from 'class-validator';
 
 export class CreateSeatingPlanDto {
   @IsNotEmpty()

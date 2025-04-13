@@ -16,11 +16,11 @@ import { SeatingPlan } from '../../seating-plan/entities/seating-plan.entity';
 
 @Entity('shows')
 export class Show {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ name: 'event_id', type: 'uuid' })
-  eventId: string;
+  eventId: number;
 
   @Column({ name: 'start_time', type: 'timestamp' })
   startTime: Date;
@@ -28,8 +28,8 @@ export class Show {
   @Column({ name: 'end_time', type: 'timestamp' })
   endTime: Date;
 
-  @Column({ name: 'seating_plan_id', type: 'uuid', nullable: true })
-  seatingPlanId: string;
+  @Column({ name: 'seating_plan_id', nullable: true })
+  seatingPlanId: number;
 
   @Column({ name: 'locked', type: 'boolean', default: false })
   locked: boolean;

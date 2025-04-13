@@ -15,7 +15,7 @@ export class Interest {
   userId: string;
 
   @Column({ type: 'uuid', name: 'event_id' })
-  eventId: string;
+  eventId: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

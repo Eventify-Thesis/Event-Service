@@ -9,7 +9,7 @@ import { SeatRepository } from '../repositories/seat.repository';
 export class SeatingPlanService {
   constructor(private readonly seatingPlanRepository: SeatingPlanRepository) {}
 
-  async create(eventId: string, createSeatingPlanDto: CreateSeatingPlanDto) {
+  async create(eventId: number, createSeatingPlanDto: CreateSeatingPlanDto) {
     const seatingPlan = await this.seatingPlanRepository.save({
       ...createSeatingPlanDto,
       eventId,
@@ -19,7 +19,7 @@ export class SeatingPlanService {
   }
 
   async list(
-    eventId: string,
+    eventId: number,
     { page = 1, limit = 10, keyword }: SeatingPlanListQuery,
   ) {
     const queryBuilder = this.seatingPlanRepository
@@ -49,7 +49,7 @@ export class SeatingPlanService {
     };
   }
 
-  async findOne(eventId: string, id: string) {
+  async findOne(eventId: number, id: number) {
     return this.seatingPlanRepository.findOne({
       where: {
         eventId,
@@ -58,7 +58,7 @@ export class SeatingPlanService {
     });
   }
 
-  async getCategories(eventId: string, id: string) {
+  async getCategories(eventId: number, id: number) {
     const seatingPlan = await this.seatingPlanRepository.findOne({
       where: {
         eventId,
@@ -71,8 +71,8 @@ export class SeatingPlanService {
   }
 
   async update(
-    eventId: string,
-    id: string,
+    eventId: number,
+    id: number,
     updateSeatingPlanDto: UpdateSeatingPlanDto,
   ) {
     await this.seatingPlanRepository.update(
@@ -84,10 +84,20 @@ export class SeatingPlanService {
     );
   }
 
-  async remove(eventId: string, id: string) {
+  async remove(eventId: number, id: number) {
     await this.seatingPlanRepository.delete({
       eventId,
       id,
+    });
+  }
+
+  async getEventShowSeatingPlan(eventId: number, seatingPlanId: number) {
+    console.log('getEventShowSeatingPlan', eventId, seatingPlanId);
+    return await this.seatingPlanRepository.findOne({
+      where: {
+        eventId,
+        id: seatingPlanId,
+      },
     });
   }
 }

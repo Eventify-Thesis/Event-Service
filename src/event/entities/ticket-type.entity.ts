@@ -14,8 +14,8 @@ import { SeatCategoryMapping } from '../../seating-plan/entities/seat-category-m
 
 @Entity('ticket_types')
 export class TicketType {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ManyToOne(() => Show)
   @JoinColumn({ name: 'show_id' })
@@ -26,10 +26,10 @@ export class TicketType {
   event: Event;
 
   @Column({ name: 'show_id' })
-  showId: string;
+  showId: number;
 
   @Column({ name: 'event_id' })
-  eventId: string;
+  eventId: number;
 
   @Column()
   name: string;

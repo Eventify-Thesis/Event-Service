@@ -12,16 +12,20 @@ export class InterestService {
     private readonly interestRepository: Repository<Interest>,
   ) {}
 
-  async checkExist(userId: string, eventId: string): Promise<boolean> {
-    const count = await this.interestRepository.count({ where: { userId, eventId } });
+  async checkExist(userId: string, eventId: number): Promise<boolean> {
+    const count = await this.interestRepository.count({
+      where: { userId, eventId },
+    });
     return count > 0;
   }
 
   async create(createInterestDto: CreateInterestDto) {
-    if (await this.checkExist(createInterestDto.userId, createInterestDto.eventId)) {
+    if (
+      await this.checkExist(createInterestDto.userId, createInterestDto.eventId)
+    ) {
       throw new BadRequestException(MESSAGE.INTEREST_ALREADY_EXISTS);
     }
-    
+
     const interest = this.interestRepository.create(createInterestDto);
     return await this.interestRepository.save(interest);
   }
@@ -30,8 +34,10 @@ export class InterestService {
     return await this.interestRepository.find({ where: { userId } });
   }
 
-  async findOne(userId: string, eventId: string) {
-    const interest = await this.interestRepository.findOne({ where: { userId, eventId } });
+  async findOne(userId: string, eventId: number) {
+    const interest = await this.interestRepository.findOne({
+      where: { userId, eventId },
+    });
 
     if (!interest) {
       throw new BadRequestException(MESSAGE.INTEREST_NOT_FOUND);
@@ -40,8 +46,11 @@ export class InterestService {
     return interest;
   }
 
-  async remove(userId: string, eventId: string) {
-    const deleteResult = await this.interestRepository.delete({ userId, eventId });
+  async remove(userId: string, eventId: number) {
+    const deleteResult = await this.interestRepository.delete({
+      userId,
+      eventId,
+    });
 
     if (!deleteResult.affected) {
       throw new BadRequestException(MESSAGE.INTEREST_NOT_FOUND);

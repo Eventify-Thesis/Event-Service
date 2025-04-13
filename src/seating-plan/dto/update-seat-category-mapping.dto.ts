@@ -3,24 +3,20 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateSeatCategoryMappingDto {
   @ApiProperty({ description: 'ID of the seating plan' })
-  @IsUUID()
-  seatingPlanId: string;
+  seatingPlanId: number;
 
   @ApiProperty({ description: 'ID of the event' })
-  @IsUUID()
-  eventId: string;
+  eventId: number;
 
   @ApiProperty({ description: 'ID of the show' })
-  @IsUUID()
-  showId: string;
+  showId: number;
 
   @ApiProperty({ description: 'Category name for the seats' })
   @IsString()
   category: string;
 
   @ApiProperty({ description: 'ID of the ticket type' })
-  @IsUUID()
-  ticketTypeId: string;
+  ticketTypeId: number;
 }
 
 export class BatchUpdateSeatCategoryMappingDto {

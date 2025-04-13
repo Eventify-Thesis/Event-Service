@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import * as configAWS from 'aws-sdk';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
+import { AppExceptionFilter } from './common/exceptions/app-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,20 +17,14 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.enableCors({
-    origin: 'http://localhost:5174',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    origin: (origin, callback) => {
+      callback(null, true); // Reflect request origin
+    },
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
   });
-  const cors = require('cors');
-  const corsOptions = {
-    origin: 'http://localhost:5174',
-    credentials: true,
-    optionSuccessStatus: 200,
-  };
-  app.use(cors(corsOptions));
-
   const configService = app.get(ConfigService);
+  await app.listen(configService.get<number>('PORT'));
+
   configAWS.config.update({
     accessKeyId: configService.get('AWS_ACCESS_KEY_ID'),
     secretAccessKey: configService.get('AWS_SECRET_ACCESS_KEY'),
@@ -66,7 +61,6 @@ async function bootstrap() {
   };
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('API', app, document, defaultOptions);
-  await app.listen(configService.get<number>('PORT'));
 
   // Set up microservices
   app.connectMicroservice<MicroserviceOptions>({

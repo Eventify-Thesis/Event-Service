@@ -28,20 +28,20 @@ export class PlannerQuestionController {
   )
   @Post()
   create(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Body() createQuestionDto: CreateQuestionDto,
   ) {
     return this.questionService.create(eventId, createQuestionDto);
   }
 
   @Get()
-  findAll(@Param('eventId', EventExists) eventId: string) {
+  findAll(@Param('eventId', EventExists) eventId: number) {
     return this.questionService.findAll(eventId);
   }
 
   @Get(':id')
   findOne(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Param('id') id: string,
   ) {
     return this.questionService.findOne(id, eventId);
@@ -49,7 +49,7 @@ export class PlannerQuestionController {
 
   @Patch(':id')
   update(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Param('id') id: string,
     @Body() updateQuestionDto: UpdateQuestionDto,
   ) {
@@ -66,7 +66,7 @@ export class PlannerQuestionController {
 
   @Delete(':id')
   remove(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Param('id') id: string,
   ) {
     return this.questionService.remove(id, eventId);

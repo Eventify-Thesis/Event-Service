@@ -25,11 +25,11 @@ export class UpdateEventPaymentInfoDto {
 
   @ApiProperty({ required: true, default: 'Eventure' })
   @IsString()
-  companyName: string;
+  name: string;
 
   @ApiProperty({ required: true, default: '123 Nguyen Dinh Chieu' })
   @IsString()
-  companyAddress: string;
+  address: string;
 
   @ApiProperty({ required: true, default: '123456789' })
   @IsString()

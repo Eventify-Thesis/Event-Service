@@ -24,7 +24,7 @@ export class Voucher {
   event: Event;
 
   @Column({ name: 'event_id' })
-  eventId: string;
+  eventId: number;
 
   @Column()
   name: string;

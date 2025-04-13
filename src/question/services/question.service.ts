@@ -17,7 +17,7 @@ export class QuestionService {
     return !!entity;
   }
 
-  async create(eventId: string, createQuestionDto: CreateQuestionDto) {
+  async create(eventId: number, createQuestionDto: CreateQuestionDto) {
     const maxOrder = await this.questionRepository
       .createQueryBuilder('question')
       .where('question.event_id = :eventId', { eventId })
@@ -34,20 +34,20 @@ export class QuestionService {
     return await this.questionRepository.save(question);
   }
 
-  async findAll(eventId: string) {
+  async findAll(eventId: number) {
     return await this.questionRepository.find({
       where: { event: { id: eventId } },
       order: { sortOrder: 'ASC' },
     });
   }
 
-  async findAllPublic(eventId: string) {
+  async findAllPublic(eventId: number) {
     return await this.questionRepository.find({
       where: { event: { id: eventId }, isHidden: false },
     });
   }
 
-  async findOne(id: string, eventId: string) {
+  async findOne(id: string, eventId: number) {
     return this.questionRepository.findOne({
       where: { id, event: { id: eventId } },
     });
@@ -55,7 +55,7 @@ export class QuestionService {
 
   async update(
     id: string,
-    eventId: string,
+    eventId: number,
     updateQuestionDto: UpdateQuestionDto,
   ) {
     await this.questionRepository.update(
@@ -65,7 +65,7 @@ export class QuestionService {
     return this.findOne(id, eventId);
   }
 
-  async remove(id: string, eventId: string) {
+  async remove(id: string, eventId: number) {
     await this.questionRepository.delete({ id, event: { id: eventId } });
   }
 

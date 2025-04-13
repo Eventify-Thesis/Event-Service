@@ -97,7 +97,7 @@ export class PlannerEventController {
     },
   })
   async getBrief(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Req() req: RequestWithUser,
   ) {
     return await this.eventService.getBrief(req.user, eventId);
@@ -121,7 +121,7 @@ export class PlannerEventController {
   @ApiOkResponse(successResponse)
   async updateSetting(
     @Body() updateEventSettingDto: UpdateEventSettingDto,
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
   ) {
     await this.eventService.updateSetting(eventId, updateEventSettingDto);
     return {
@@ -138,7 +138,7 @@ export class PlannerEventController {
   @ApiOkResponse(successResponse)
   async updatePaymentInfo(
     @Body() updatePaymentInfoDto: UpdateEventPaymentInfoDto,
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
   ) {
     await this.eventService.updatePaymentInfo(eventId, updatePaymentInfoDto);
     return {
@@ -155,7 +155,7 @@ export class PlannerEventController {
   @ApiOkResponse(successResponse)
   async updateShow(
     @Body() updateShowDto: UpdateEventShowDto,
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
   ) {
     await this.eventService.updateShows(eventId, updateShowDto);
     return {
@@ -165,33 +165,33 @@ export class PlannerEventController {
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @Get(':eventId')
-  async findOne(@Param('eventId', EventExists) eventId: string) {
+  async findOne(@Param('eventId', EventExists) eventId: number) {
     return await this.eventService.findOne(eventId);
   }
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @Get(':eventId/settings')
-  async findSettings(@Param('eventId', EventExists) eventId: string) {
+  async findSettings(@Param('eventId', EventExists) eventId: number) {
     return await this.eventService.findSettings(eventId);
   }
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @Get(':eventId/payment-info')
-  async findPaymentInfo(@Param('eventId', EventExists) eventId: string) {
+  async findPaymentInfo(@Param('eventId', EventExists) eventId: number) {
     return await this.eventService.findPaymentInfo(eventId);
   }
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @ApiOkResponse()
   @Get(':eventId/shows')
-  async findShows(@Param('eventId', EventExists) eventId: string) {
+  async findShows(@Param('eventId', EventExists) eventId: number) {
     return await this.eventService.findShows(eventId);
   }
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @ApiOkResponse()
   @Get(':eventId/ticket-types')
-  async findTickets(@Param('eventId', EventExists) eventId: string) {
+  async findTickets(@Param('eventId', EventExists) eventId: number) {
     return await this.eventService.findTicketTypes(eventId);
   }
 
@@ -199,8 +199,8 @@ export class PlannerEventController {
   @ApiOkResponse()
   @Get(':eventId/shows/:showId/ticket-types')
   async findTicketTypesOfShow(
-    @Param('eventId', EventExists) eventId: string,
-    @Param('showId') showId: string,
+    @Param('eventId', EventExists) eventId: number,
+    @Param('showId') showId: number,
   ) {
     return await this.eventService.findTicketTypesOfShow(eventId, showId);
   }
@@ -208,7 +208,7 @@ export class PlannerEventController {
   @UseGuards(EventRoleGuard(EventRole.OWNER))
   @ApiOkResponse(successResponse)
   @Delete(':eventId')
-  async remove(@Param('eventId', EventExists) eventId: string) {
+  async remove(@Param('eventId', EventExists) eventId: number) {
     await this.eventService.remove(eventId);
     return {
       status: 'success',
