@@ -10,5 +10,5 @@ export class CreateInterestDto {
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
-  eventId: string;
+  eventId: number;
 }

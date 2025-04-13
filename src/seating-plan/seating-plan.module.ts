@@ -11,12 +11,14 @@ import { SeatCategoryMapping } from './entities/seat-category-mapping.entity';
 import { PlannerSeatCategoryMappingController } from './controllers/planner/seat-category-mapping.controller';
 import { SeatCategoryMappingService } from './services/seat-category-mapping.service';
 import { SeatCategoryMappingRepository } from './repositories/seat-category-mapping.repository';
+import { SeatingPlanMicroservice } from './controllers/common/seating-plan.microservice';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([SeatingPlan, SeatCategoryMapping, Show, Seat]),
   ],
   controllers: [
+    SeatingPlanMicroservice,
     PlannerSeatingPlanController,
     PlannerSeatCategoryMappingController,
   ],

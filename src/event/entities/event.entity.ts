@@ -16,8 +16,8 @@ import { SeatCategoryMapping } from '../../seating-plan/entities/seat-category-m
 
 @Entity('events')
 export class Event {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ name: 'organization_id' })
   organizationId: string;

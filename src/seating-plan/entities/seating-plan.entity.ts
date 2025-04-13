@@ -15,11 +15,11 @@ import { Seat } from './seat.entity';
 
 @Entity('seating_plans')
 export class SeatingPlan {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ name: 'event_id' })
-  eventId: string;
+  eventId: number;
 
   @Column()
   name: string;

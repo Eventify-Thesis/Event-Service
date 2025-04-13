@@ -15,11 +15,11 @@ export class VoucherService {
     private readonly eventCommonService: EventCommonService,
   ) {}
 
-  async findAllShowings(eventId: string) {
+  async findAllShowings(eventId: number) {
     return await this.eventCommonService.findAllShowings(eventId);
   }
 
-  async create(eventId: string, createVoucherDto: CreateVoucherDto) {
+  async create(eventId: number, createVoucherDto: CreateVoucherDto) {
     const voucher = this.voucherRepository.create({
       ...createVoucherDto,
       event: { id: eventId },
@@ -27,7 +27,7 @@ export class VoucherService {
     return await this.voucherRepository.save(voucher);
   }
 
-  async list(eventId: string, paramPagination, { keyword }: any) {
+  async list(eventId: number, paramPagination, { keyword }: any) {
     const queryBuilder = this.voucherRepository
       .createQueryBuilder('voucher')
       .where('voucher.eventId = :eventId', { eventId });
@@ -55,14 +55,14 @@ export class VoucherService {
     };
   }
 
-  async findOne(eventId: string, id: string) {
+  async findOne(eventId: number, id: string) {
     return await this.voucherRepository.findOne({
       where: { event: { id: eventId }, id },
     });
   }
 
   async update(
-    eventId: string,
+    eventId: number,
     id: string,
     updateVoucherDto: UpdateVoucherDto,
   ) {
@@ -74,7 +74,7 @@ export class VoucherService {
   }
 
   async changeStatus(
-    eventId: string,
+    eventId: number,
     id: string,
     updateVoucherDto: UpdateVoucherActiveDto,
   ) {
@@ -85,7 +85,7 @@ export class VoucherService {
     return this.findOne(eventId, id);
   }
 
-  async remove(eventId: string, id: string) {
+  async remove(eventId: number, id: string) {
     await this.voucherRepository.delete({ event: { id: eventId }, id });
   }
 }

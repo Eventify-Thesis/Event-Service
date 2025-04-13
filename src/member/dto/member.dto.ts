@@ -39,7 +39,7 @@ export class MemberResponse {
   lastName: string;
 
   @ApiProperty()
-  eventId: string;
+  eventId: number;
 
   @ApiProperty({ enum: EventRole })
   role: EventRole;

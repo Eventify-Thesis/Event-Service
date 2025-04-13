@@ -8,7 +8,17 @@ export class EventMicroservice {
   constructor(private readonly eventService: EventService) {}
 
   @MessagePattern('getEventDetails')
-  async getEventDetails(@Payload() id: string) {
+  async getEventDetails(@Payload() id: number) {
     return await this.eventService.findOne(id);
+  }
+
+  @MessagePattern('getEventShowDetails')
+  async getEventShowDetails(
+    @Payload() payload: { eventId: number; showId: number },
+  ) {
+    return await this.eventService.getEventShowDetails(
+      payload.eventId,
+      payload.showId,
+    );
   }
 }

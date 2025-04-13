@@ -65,7 +65,7 @@ export class VoucherDetailResponse {
   id: string;
 
   @ApiProperty()
-  eventId: string;
+  eventId: number;
 
   @ApiProperty()
   name: string;

@@ -19,7 +19,5 @@ export class SeatingPlanListQuery {
   keyword?: string;
 
   @ApiProperty({ required: false })
-  @IsOptional()
-  @IsUUID()
-  eventId?: string;
+  eventId?: number;
 }

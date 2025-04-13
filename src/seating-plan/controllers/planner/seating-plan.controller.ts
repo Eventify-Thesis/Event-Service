@@ -33,7 +33,7 @@ export class PlannerSeatingPlanController {
   @ApiOkResponse({ type: SeatingPlan })
   @ApiBody({ type: CreateSeatingPlanDto })
   async create(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Body() createSeatingPlanDto: CreateSeatingPlanDto,
   ) {
     return await this.seatingPlanService.create(eventId, createSeatingPlanDto);
@@ -63,7 +63,7 @@ export class PlannerSeatingPlanController {
   })
   @ApiQuery({ type: SeatingPlanListQuery })
   async findAll(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Query() query: SeatingPlanListQuery,
   ) {
     return await this.seatingPlanService.list(eventId, query);
@@ -72,17 +72,17 @@ export class PlannerSeatingPlanController {
   @Get(':id')
   @ApiOkResponse({ type: SeatingPlan })
   async findOne(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Param('id') id: string,
   ) {
     if (id === 'new') return null;
-    return await this.seatingPlanService.findOne(eventId, id);
+    return await this.seatingPlanService.findOne(eventId, +id);
   }
 
   @Get(':id/categories')
   async getCategories(
-    @Param('eventId', EventExists) eventId: string,
-    @Param('id') id: string,
+    @Param('eventId', EventExists) eventId: number,
+    @Param('id') id: number,
   ) {
     return await this.seatingPlanService.getCategories(eventId, id);
   }
@@ -91,8 +91,8 @@ export class PlannerSeatingPlanController {
   @ApiOkResponse({ type: SeatingPlan })
   @ApiBody({ type: UpdateSeatingPlanDto })
   async update(
-    @Param('eventId', EventExists) eventId: string,
-    @Param('id') id: string,
+    @Param('eventId', EventExists) eventId: number,
+    @Param('id') id: number,
     @Body() updateSeatingPlanDto: UpdateSeatingPlanDto,
   ) {
     return await this.seatingPlanService.update(
@@ -105,8 +105,8 @@ export class PlannerSeatingPlanController {
   @Delete(':id')
   @ApiOkResponse({ type: SeatingPlan })
   async remove(
-    @Param('eventId', EventExists) eventId: string,
-    @Param('id') id: string,
+    @Param('eventId', EventExists) eventId: number,
+    @Param('id') id: number,
   ) {
     await this.seatingPlanService.remove(eventId, id);
     return {

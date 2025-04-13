@@ -19,7 +19,7 @@ export class EventCommonService {
     private readonly paymentInfoRepository: Repository<PaymentInfo>,
   ) {}
 
-  async findAllShowings(eventId: string) {
+  async findAllShowings(eventId: number) {
     const show = await this.showRepository.findOne({
       where: { event: { id: eventId } },
       relations: ['ticketTypes'],

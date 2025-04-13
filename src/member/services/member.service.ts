@@ -38,7 +38,7 @@ export class MemberService {
 
   async assignOwner(
     user: User,
-    eventId: string,
+    eventId: number,
     eventName: string,
   ): Promise<Organization> {
     const organization =
@@ -80,7 +80,7 @@ export class MemberService {
     return organization;
   }
 
-  async addMember(user: User, eventId: string, dto: AddMemberDto) {
+  async addMember(user: User, eventId: number, dto: AddMemberDto) {
     const userRole = await this.getMemberRole(user.id, eventId);
 
     if (!this.canManageRole(userRole, dto.role)) {
@@ -137,7 +137,7 @@ export class MemberService {
     return member;
   }
 
-  async deleteMember(user: User, eventId: string, userId: string) {
+  async deleteMember(user: User, eventId: number, userId: string) {
     const member = await this.memberRepository.findOne({
       where: {
         userId: userId,
@@ -169,7 +169,7 @@ export class MemberService {
   }
 
   async listMembers(
-    eventId: string,
+    eventId: number,
     { page = 1, limit = 10, keyword }: MemberListQuery,
   ) {
     const queryBuilder = this.memberRepository
@@ -200,7 +200,7 @@ export class MemberService {
     };
   }
 
-  async getMemberRole(userId: string, eventId: string): Promise<EventRole> {
+  async getMemberRole(userId: string, eventId: number): Promise<EventRole> {
     const member = await this.memberRepository.findOne({
       where: {
         userId,
@@ -216,7 +216,7 @@ export class MemberService {
 
   async updateMemberRole(
     currentUser: User,
-    eventId: string,
+    eventId: number,
     userId: string,
     newRole: EventRole,
   ) {

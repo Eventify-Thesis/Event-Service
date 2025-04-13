@@ -41,7 +41,7 @@ export class PlannerVoucherController {
   constructor(private readonly voucherService: VoucherService) {}
 
   @Get('showings')
-  async findAllShowings(@Param('eventId', EventExists) eventId: string) {
+  async findAllShowings(@Param('eventId', EventExists) eventId: number) {
     return await this.voucherService.findAllShowings(eventId);
   }
 
@@ -49,7 +49,7 @@ export class PlannerVoucherController {
   @ApiOkResponse({ type: CreateVoucherDto })
   @Post()
   async create(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Body() createVoucherDto: CreateVoucherDto,
   ) {
     return await this.voucherService.create(eventId, createVoucherDto);
@@ -82,7 +82,7 @@ export class PlannerVoucherController {
   })
   @ApiOkResponse({ type: CreateVoucherDto })
   async findAll(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @pagination() paramPagination,
     @Query() query,
   ) {
@@ -91,7 +91,7 @@ export class PlannerVoucherController {
 
   @Get(':id')
   async findOne(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Param('id') id: string,
   ) {
     return await this.voucherService.findOne(eventId, id);
@@ -99,7 +99,7 @@ export class PlannerVoucherController {
 
   @Post(':id/status')
   async changeStatus(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Param('id') id: string,
     @Body() updateVoucherDto: UpdateVoucherActiveDto,
   ) {
@@ -112,7 +112,7 @@ export class PlannerVoucherController {
 
   @Patch(':id')
   async update(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Param('id') id: string,
     @Body() updateVoucherDto: UpdateVoucherDto,
   ) {
@@ -121,7 +121,7 @@ export class PlannerVoucherController {
 
   @Delete(':id')
   async remove(
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Param('id') id: string,
   ) {
     return await this.voucherService.remove(eventId, id);

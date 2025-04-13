@@ -10,7 +10,7 @@ export class EventExists implements PipeTransform<any> {
     const eventService = this.moduleRef.get(EventService, {
       strict: false,
     });
-    const isExists = await eventService.checkExists(value);
+    const isExists = await eventService.checkExists(+value);
 
     if (!isExists) {
       throw new AppException(MESSAGE.EVENT_NOT_FOUND);

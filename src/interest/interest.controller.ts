@@ -29,12 +29,18 @@ export class InterestController {
   }
 
   @Get('users/:userId/events/:eventId')
-  async findOne(@Param('userId') userId: string, @Param('eventId') eventId: string) {
+  async findOne(
+    @Param('userId') userId: string,
+    @Param('eventId') eventId: number,
+  ) {
     return await this.interestService.findOne(userId, eventId);
   }
 
   @Delete('users/:userId/events/:eventId')
-  async remove(@Param('userId') userId: string, @Param('eventId') eventId: string) {
+  async remove(
+    @Param('userId') userId: string,
+    @Param('eventId') eventId: number,
+  ) {
     return await this.interestService.remove(userId, eventId);
   }
 }

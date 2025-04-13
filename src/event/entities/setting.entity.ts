@@ -12,8 +12,8 @@ import { Event } from './event.entity';
 
 @Entity('settings')
 export class Setting {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @OneToOne(() => Event, (event) => event.setting)
   @JoinColumn({ name: 'event_id' })

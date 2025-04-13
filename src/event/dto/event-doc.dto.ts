@@ -37,7 +37,7 @@ class TicketTypeResponse {
 
 class ShowResponse {
   @ApiProperty()
-  id: string;
+  id: number;
 
   @ApiProperty({ type: [TicketTypeResponse] })
   ticketTypes: TicketTypeResponse[];
@@ -80,18 +80,18 @@ export class PaymentInfoResponse {
   businessType: string;
 
   @ApiProperty()
-  companyName: string;
+  name: string;
 
   @ApiProperty()
-  companyAddress: string;
+  address: string;
 
   @ApiProperty()
-  companyTaxNumber: string;
+  taxNumber: string;
 }
 
 export class EventBriefResponse {
   @ApiProperty()
-  id: string;
+  id: number;
 
   @ApiProperty()
   eventName: string;
@@ -111,7 +111,7 @@ export class EventBriefResponse {
 
 export class EventDetailResponse {
   @ApiProperty()
-  id: string;
+  id: number;
 
   @ApiProperty()
   eventLogoUrl: string;

@@ -16,9 +16,15 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor());
   app.use(cookieParser());
 
-  app.enableCors();
-
+  app.enableCors({
+    origin: (origin, callback) => {
+      callback(null, true); // Reflect request origin
+    },
+    credentials: true,
+  });
   const configService = app.get(ConfigService);
+  await app.listen(configService.get<number>('PORT'));
+
   configAWS.config.update({
     accessKeyId: configService.get('AWS_ACCESS_KEY_ID'),
     secretAccessKey: configService.get('AWS_SECRET_ACCESS_KEY'),
@@ -55,7 +61,6 @@ async function bootstrap() {
   };
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('API', app, document, defaultOptions);
-  await app.listen(configService.get<number>('PORT'));
 
   // Set up microservices
   app.connectMicroservice<MicroserviceOptions>({

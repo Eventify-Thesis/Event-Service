@@ -26,8 +26,8 @@ export class PlannerSeatCategoryMappingController {
   @Get()
   @ApiOkResponse({ type: [SeatCategoryMapping] })
   async findAll(
-    @Param('eventId', EventExists) eventId: string,
-    @Param('showId', ParseUUIDPipe) showId: string,
+    @Param('eventId', EventExists) eventId: number,
+    @Param('showId') showId: number,
   ) {
     return this.seatCategoryMappingService.findByShowId(eventId, showId);
   }
@@ -36,8 +36,8 @@ export class PlannerSeatCategoryMappingController {
   @ApiOkResponse({ type: [SeatCategoryMapping] })
   @ApiBody({ type: BatchCreateSeatCategoryMappingDto })
   async batchCreate(
-    @Param('eventId', EventExists) eventId: string,
-    @Param('showId', ParseUUIDPipe) showId: string,
+    @Param('eventId', EventExists) eventId: number,
+    @Param('showId') showId: number,
     @Body() dto: BatchCreateSeatCategoryMappingDto,
   ) {
     // Ensure all mappings have the correct eventId and showId
@@ -53,8 +53,8 @@ export class PlannerSeatCategoryMappingController {
   @ApiOkResponse({ type: [SeatCategoryMapping] })
   @ApiBody({ type: BatchUpdateSeatCategoryMappingDto })
   async batchUpdate(
-    @Param('eventId', EventExists) eventId: string,
-    @Param('showId', ParseUUIDPipe) showId: string,
+    @Param('eventId', EventExists) eventId: number,
+    @Param('showId') showId: number,
     @Body() dto: BatchUpdateSeatCategoryMappingDto,
   ) {
     return this.seatCategoryMappingService.batchUpdate(dto);
@@ -63,8 +63,8 @@ export class PlannerSeatCategoryMappingController {
   @Delete()
   @ApiOkResponse({ type: Object })
   async deleteByShowId(
-    @Param('eventId', EventExists) eventId: string,
-    @Param('showId', ParseUUIDPipe) showId: string,
+    @Param('eventId', EventExists) eventId: number,
+    @Param('showId') showId: number,
   ) {
     await this.seatCategoryMappingService.deleteByShowId(eventId, showId);
     return {
@@ -75,9 +75,9 @@ export class PlannerSeatCategoryMappingController {
   @Post(':id/lock')
   @ApiOkResponse(successResponse)
   async lockSeatingPlan(
-    @Param('eventId', EventExists) eventId: string,
-    @Param('showId', ParseUUIDPipe) showId: string,
-    @Param('id', ParseUUIDPipe) seatingPlanId: string,
+    @Param('eventId', EventExists) eventId: number,
+    @Param('showId') showId: number,
+    @Param('id') seatingPlanId: number,
     @Body() { locked }: { locked: boolean },
   ) {
     await this.seatCategoryMappingService.lockAndGenerateSeats(

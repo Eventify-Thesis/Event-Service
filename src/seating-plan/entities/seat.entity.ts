@@ -16,16 +16,16 @@ export class Seat {
   id: string;
 
   @ApiProperty()
-  @Column({ name: 'seating_plan_id', type: 'uuid' })
-  seatingPlanId: string;
+  @Column({ name: 'seating_plan_id' })
+  seatingPlanId: number;
 
   @ApiProperty()
-  @Column({ name: 'event_id', type: 'uuid' })
-  eventId: string;
+  @Column({ name: 'event_id' })
+  eventId: number;
 
   @ApiProperty()
-  @Column({ name: 'show_id', type: 'uuid' })
-  showId: string;
+  @Column({ name: 'show_id' })
+  showId: number;
 
   @ApiProperty()
   @Column({ name: 'zone_id', nullable: true })
@@ -40,8 +40,8 @@ export class Seat {
   seatNumber: string;
 
   @ApiProperty()
-  @Column({ name: 'ticket_type_id', type: 'uuid' })
-  ticketTypeId: string;
+  @Column({ name: 'ticket_type_id' })
+  ticketTypeId: number;
 
   @ApiProperty({ enum: SeatStatus })
   @Column({

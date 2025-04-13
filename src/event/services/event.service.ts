@@ -23,6 +23,8 @@ export class EventService {
     private readonly districtRepository: Repository<District>,
     @InjectRepository(Ward)
     private readonly wardRepository: Repository<Ward>,
+    @InjectRepository(Show)
+    private readonly showRepository: Repository<Show>,
   ) {}
 
   async findAll(): Promise<Event[]> {
@@ -31,7 +33,7 @@ export class EventService {
     });
   }
 
-  async findOne(id: string): Promise<EventDetailResponse> {
+  async findOne(id: number): Promise<EventDetailResponse> {
     try {
       const event = await this.eventRepository.findOne({
         where: { id },
@@ -91,7 +93,7 @@ export class EventService {
     }
   }
 
-  async checkExists(id: string) {
+  async checkExists(id: number) {
     try {
       const event = await this.eventRepository.findOne({
         where: { id },
@@ -99,6 +101,19 @@ export class EventService {
       return !!event;
     } catch (error) {
       return false;
+    }
+  }
+
+  async getEventShowDetails(eventId: number, showId: number) {
+    try {
+      const show = await this.showRepository.findOne({
+        where: { eventId, id: showId },
+        relations: ['ticketTypes'],
+      });
+
+      return show;
+    } catch (error) {
+      return null;
     }
   }
 }

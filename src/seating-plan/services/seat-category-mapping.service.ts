@@ -142,21 +142,21 @@ export class SeatCategoryMappingService {
     }
   }
 
-  async findByShowId(eventId: string, showId: string) {
+  async findByShowId(eventId: number, showId: number) {
     return this.seatCategoryMappingRepository.find({
       where: { eventId, showId },
       relations: ['ticketType', 'seatingPlan'],
     });
   }
 
-  async deleteByShowId(eventId: string, showId: string) {
+  async deleteByShowId(eventId: number, showId: number) {
     return this.seatCategoryMappingRepository.delete({ eventId, showId });
   }
 
   async lockAndGenerateSeats(
-    eventId: string,
-    showId: string,
-    seatingPlanId: string,
+    eventId: number,
+    showId: number,
+    seatingPlanId: number,
     lock: boolean,
   ) {
     if (lock) {
@@ -191,6 +191,7 @@ export class SeatCategoryMappingService {
       }
 
       const plan = JSON.parse(seatingPlan.plan);
+
       const seats: Partial<Seat>[] = [];
 
       // Create a map of zoneId to ticketTypeId for quick lookup
@@ -210,8 +211,9 @@ export class SeatCategoryMappingService {
               const ticketTypeId = zoneTicketTypeMap.get(
                 seat.category || row.category,
               );
+
               seats.push({
-                id: seat.id,
+                id: seat.uuid,
                 seatingPlanId,
                 eventId,
                 showId,

@@ -47,7 +47,7 @@ export class PlannerMemberController {
   @ApiOkResponse({ type: MemberResponse })
   async addMember(
     @Req() req: RequestWithUser,
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Body() dto: AddMemberDto,
   ) {
     return await this.memberService.addMember(req.user, eventId, {
@@ -62,7 +62,7 @@ export class PlannerMemberController {
   @ApiOkResponse(successResponse)
   async deleteMember(
     @Req() req: RequestWithUser,
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Param('userId') userId: string,
   ) {
     await this.memberService.deleteMember(req.user, eventId, userId);
@@ -102,7 +102,7 @@ export class PlannerMemberController {
   })
   async listMembers(
     @pagination() paramPagination,
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Query() query: MemberListQuery,
   ) {
     return await this.memberService.listMembers(eventId, {
@@ -118,7 +118,7 @@ export class PlannerMemberController {
   @ApiOkResponse(successResponse)
   async updateMemberRole(
     @Req() req: RequestWithUser,
-    @Param('eventId', EventExists) eventId: string,
+    @Param('eventId', EventExists) eventId: number,
     @Param('userId') userId: string,
     @Body() dto: UpdateMemberRoleDto,
   ) {
