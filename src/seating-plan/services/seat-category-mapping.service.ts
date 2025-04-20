@@ -24,7 +24,7 @@ export class SeatCategoryMappingService {
     private readonly dataSource: DataSource,
     private readonly seatingPlanRepository: SeatingPlanRepository,
     private readonly seatRepository: SeatRepository,
-  ) {}
+  ) { }
 
   async batchCreate(dto: BatchCreateSeatCategoryMappingDto) {
     const queryRunner = this.dataSource.createQueryRunner();
@@ -219,7 +219,7 @@ export class SeatCategoryMappingService {
                 showId,
                 zoneId: zone.id,
                 rowLabel: row.label,
-                seatNumber: seat.label,
+                seatNumber: seat.number,
                 ticketTypeId,
               });
             }

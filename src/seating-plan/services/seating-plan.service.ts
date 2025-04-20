@@ -7,7 +7,7 @@ import { SeatRepository } from '../repositories/seat.repository';
 
 @Injectable()
 export class SeatingPlanService {
-  constructor(private readonly seatingPlanRepository: SeatingPlanRepository) {}
+  constructor(private readonly seatingPlanRepository: SeatingPlanRepository) { }
 
   async create(eventId: number, createSeatingPlanDto: CreateSeatingPlanDto) {
     const seatingPlan = await this.seatingPlanRepository.save({
@@ -92,7 +92,6 @@ export class SeatingPlanService {
   }
 
   async getEventShowSeatingPlan(eventId: number, seatingPlanId: number) {
-    console.log('getEventShowSeatingPlan', eventId, seatingPlanId);
     return await this.seatingPlanRepository.findOne({
       where: {
         eventId,

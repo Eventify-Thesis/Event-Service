@@ -1,13 +1,13 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class MigrateUuidToIntForeignKeys1743826889496
-  implements MigrationInterface
-{
-  name = 'MigrateUuidToIntForeignKeys1743826889496';
+export class UpdateIdsToAutoIncrement1743826889555
+  implements MigrationInterface {
+  name = 'UpdateIdsToAutoIncrement1743826889555';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       DROP TABLE IF EXISTS 
+        events,
         seats,
         seat_category_mappings,
         seating_plans,
@@ -20,6 +20,29 @@ export class MigrateUuidToIntForeignKeys1743826889496
         settings,
         payment_info
       CASCADE;
+
+      CREATE TABLE "events" (
+        "id" SERIAL PRIMARY KEY,
+        "organization_id" varchar NOT NULL,
+        "event_name" varchar NOT NULL,
+        "event_description" text,
+        "event_type" event_type_enum NOT NULL,
+        "status" event_status_enum NOT NULL DEFAULT 'DRAFT',
+        "org_name" varchar NOT NULL,
+        "org_description" text NOT NULL,
+        "org_logo_url" varchar NOT NULL,
+        "event_logo_url" varchar NOT NULL,
+        "event_banner_url" varchar NOT NULL,
+        "venue_name" varchar,
+        "city_id" varchar,
+        "district_id" varchar,
+        "ward_id" varchar,
+        "street" varchar,
+        "categories" text[] NOT NULL,
+        "categories_ids" text[] NOT NULL,
+        "created_at" TIMESTAMP NOT NULL DEFAULT now(),
+        "updated_at" TIMESTAMP NOT NULL DEFAULT now()
+      );
 
       CREATE TABLE "payment_info" (
         "id" SERIAL PRIMARY KEY,
@@ -200,6 +223,7 @@ export class MigrateUuidToIntForeignKeys1743826889496
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       DROP TABLE IF EXISTS 
+        events,
         seats,
         seat_category_mappings,
         seating_plans,
@@ -210,7 +234,8 @@ export class MigrateUuidToIntForeignKeys1743826889496
         ticket_types,
         shows,
         settings,
-        payment_info;
+        payment_info
+      CASCADE;
     `);
   }
 }
