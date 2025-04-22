@@ -17,13 +17,19 @@ export class CreateBookingTables1743826889556 implements MigrationInterface {
         show_id INTEGER NOT NULL,
         booking_code UUID NOT NULL,
         status order_status_enum DEFAULT 'PENDING',
+        stripe_payment_intent_id VARCHAR,
+        stripe_payment_status VARCHAR,
+        stripe_payment_error_message VARCHAR,
+        stripe_customer_id VARCHAR,
         subtotal_amount NUMERIC(10, 2),
+        platform_discount_amount NUMERIC(10, 2),
         total_amount NUMERIC(10, 2),
         reserved_until TIMESTAMP NOT NULL,
+        paid_at TIMESTAMP,
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW(),
-        CONSTRAINT "fk_orders_event" FOREIGN KEY ("event_id") REFERENCES "events"("id") ON DELETE CASCADE,
-        CONSTRAINT "fk_orders_show" FOREIGN KEY ("show_id") REFERENCES "shows"("id") ON DELETE CASCADE
+        CONSTRAINT "fk_orders_event" FOREIGN KEY ("event_id") REFERENCES "events"("id"),
+        CONSTRAINT "fk_orders_show" FOREIGN KEY ("show_id") REFERENCES "shows"("id")
       );
 
       CREATE TABLE order_items (
@@ -39,8 +45,7 @@ export class CreateBookingTables1743826889556 implements MigrationInterface {
         price NUMERIC(10, 2),
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW(),
-        CONSTRAINT "fk_order_items_ticket_type" FOREIGN KEY (ticket_type_id) REFERENCES ticket_types(id),
-        CONSTRAINT "fk_order_items_order" FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+        CONSTRAINT "fk_order_items_order" FOREIGN KEY (order_id) REFERENCES orders(id)
       );
       
       CREATE INDEX idx_orders_booking_code ON orders(booking_code);
