@@ -13,6 +13,9 @@ export class CreateBookingTables1743826889556 implements MigrationInterface {
       CREATE TABLE orders (
         id SERIAL PRIMARY KEY,
         user_id VARCHAR NOT NULL,
+        first_name VARCHAR,
+        last_name VARCHAR,
+        email VARCHAR,
         event_id INTEGER NOT NULL,
         show_id INTEGER NOT NULL,
         booking_code UUID NOT NULL,
