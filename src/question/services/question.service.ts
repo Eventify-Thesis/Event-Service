@@ -10,7 +10,7 @@ export class QuestionService {
   constructor(
     @InjectRepository(Question)
     private readonly questionRepository: Repository<Question>,
-  ) {}
+  ) { }
 
   async checkExists(query: Record<string, any>) {
     const entity = await this.questionRepository.findOne({ where: query });
@@ -47,14 +47,14 @@ export class QuestionService {
     });
   }
 
-  async findOne(id: string, eventId: number) {
+  async findOne(id: number, eventId: number) {
     return this.questionRepository.findOne({
       where: { id, event: { id: eventId } },
     });
   }
 
   async update(
-    id: string,
+    id: number,
     eventId: number,
     updateQuestionDto: UpdateQuestionDto,
   ) {
@@ -65,11 +65,11 @@ export class QuestionService {
     return this.findOne(id, eventId);
   }
 
-  async remove(id: string, eventId: number) {
+  async remove(id: number, eventId: number) {
     await this.questionRepository.delete({ id, event: { id: eventId } });
   }
 
-  async updateOrder(sortedQuestionIds: { id: string; sortOrder: number }[]) {
+  async updateOrder(sortedQuestionIds: { id: number; sortOrder: number }[]) {
     const queryRunner =
       this.questionRepository.manager.connection.createQueryRunner();
     await queryRunner.connect();

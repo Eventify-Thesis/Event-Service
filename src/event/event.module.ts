@@ -21,6 +21,8 @@ import { EventMicroservice } from './controllers/common/event.microservice';
 import { City } from 'src/location/entities/city.entity';
 import { District } from 'src/location/entities/district.entity';
 import { Ward } from 'src/location/entities/ward.entity';
+import { EventStatsService } from './services/event-stats.service';
+import { EventDailyStatistics, EventStatistics } from './entities/event-statistics.entity';
 
 @Module({
   imports: [
@@ -33,6 +35,8 @@ import { Ward } from 'src/location/entities/ward.entity';
       City,
       District,
       Ward,
+      EventStatistics,
+      EventDailyStatistics
     ]),
     MemberModule,
   ],
@@ -51,6 +55,7 @@ import { Ward } from 'src/location/entities/ward.entity';
     PaymentInfoRepository,
     ShowRepository,
     TicketTypeRepository,
+    EventStatsService,
   ],
   exports: [
     EventService,
@@ -59,4 +64,4 @@ import { Ward } from 'src/location/entities/ward.entity';
     PaymentInfoRepository,
   ],
 })
-export class EventModule {}
+export class EventModule { }

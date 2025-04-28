@@ -6,7 +6,7 @@ import { EventService } from 'src/event/services/event.service';
 
 @Controller('events/')
 export class EventController {
-  constructor(private readonly eventService: EventService) {}
+  constructor(private readonly eventService: EventService) { }
 
   @Get(':id')
   @ApiResponse({ type: EventDetailResponse })
