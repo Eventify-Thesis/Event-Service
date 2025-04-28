@@ -8,10 +8,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AttendeeErrorMessages, AttendeeSuccessMessages } from './attendee.constants';
 import { AttendeeListQuery, AttendeeListResponse } from './dto/attendee-list.dto';
 import { EventExists } from 'src/event/pipes/event-exists.pipe';
-<<<<<<< HEAD
 import * as ExcelJS from 'exceljs';
-=======
->>>>>>> db07fdf816c06999cd1af3e0ba4aba01c15b5376
 
 @ApiTags('Attendees')
 @Controller('planner/events/:eventId/attendees')
@@ -173,7 +170,6 @@ export class AttendeeController {
     @Res() res: Response,
   ) {
     try {
-<<<<<<< HEAD
       const attendees = await this.attendeeService.findAll(eventId, {
         page: 1,
         limit: 1000,
@@ -218,9 +214,6 @@ export class AttendeeController {
 
       await workbook.xlsx.write(res);
       res.end();
-=======
-      await this.attendeeService.export(eventId, res);
->>>>>>> db07fdf816c06999cd1af3e0ba4aba01c15b5376
     } catch (error) {
       throw new HttpException(
         AttendeeErrorMessages.EXPORT_FAILED(error.message),

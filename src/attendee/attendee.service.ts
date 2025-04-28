@@ -136,7 +136,6 @@ export class AttendeeService {
     }
 
     // Apply sorting
-<<<<<<< HEAD
     // if (query.sort) {
     //   const sorts = query.sort.split(' ');
     //   sorts.forEach(sort => {
@@ -149,20 +148,6 @@ export class AttendeeService {
     // } else {
     //   qb.orderBy('attendee.createdAt', 'DESC');
     // }
-=======
-    if (query.sort) {
-      const sorts = query.sort.split(' ');
-      sorts.forEach(sort => {
-        const [field, direction] = sort.split('.');
-        const validFields = ['firstName', 'lastName', 'email', 'createdAt', 'checkedInAt'];
-        if (validFields.includes(field)) {
-          qb.addOrderBy(`attendee.${field}`, direction.toUpperCase() as 'ASC' | 'DESC');
-        }
-      });
-    } else {
-      qb.orderBy('attendee.createdAt', 'DESC');
-    }
->>>>>>> db07fdf816c06999cd1af3e0ba4aba01c15b5376
 
     // Apply pagination
     const skip = (query.page - 1) * query.limit;
