@@ -108,7 +108,7 @@ export class CreateVoucherDto {
   @ValidateNested({ each: true })
   @Type(() => ShowingDto)
   @IsNotEmpty()
-  showings: ShowingDto[];
+  showingConfigs: ShowingDto[];
 
   @ApiProperty()
   @IsBoolean()

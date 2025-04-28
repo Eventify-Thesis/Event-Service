@@ -13,6 +13,7 @@ import { Setting } from './setting.entity';
 import { Show } from './show.entity';
 import { Question } from '../../question/entities/question.entity';
 import { SeatCategoryMapping } from '../../seating-plan/entities/seat-category-mapping.entity';
+import { Message } from '../../message/entities/message.entity';
 
 @Entity('events')
 export class Event {
@@ -103,4 +104,7 @@ export class Event {
     (seatCategoryMapping) => seatCategoryMapping.event,
   )
   seatCategoryMappings: SeatCategoryMapping[];
+
+  @OneToMany(() => Message, (message) => message.event)
+  messages: Message[];
 }

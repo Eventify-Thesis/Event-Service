@@ -21,7 +21,7 @@ import { QuestionService } from 'src/question/services/question.service';
 @UseGuards(ClerkAuthGuard)
 @ApiBearerAuth()
 export class PlannerQuestionController {
-  constructor(private readonly questionService: QuestionService) {}
+  constructor(private readonly questionService: QuestionService) { }
 
   @UseGuards(
     EventRoleGuard([EventRole.ADMIN, EventRole.OWNER, EventRole.MANAGER]),
@@ -42,7 +42,7 @@ export class PlannerQuestionController {
   @Get(':id')
   findOne(
     @Param('eventId', EventExists) eventId: number,
-    @Param('id') id: string,
+    @Param('id') id: number,
   ) {
     return this.questionService.findOne(id, eventId);
   }
@@ -50,7 +50,7 @@ export class PlannerQuestionController {
   @Patch(':id')
   update(
     @Param('eventId', EventExists) eventId: number,
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateQuestionDto: UpdateQuestionDto,
   ) {
     console.log(updateQuestionDto);
@@ -67,7 +67,7 @@ export class PlannerQuestionController {
   @Delete(':id')
   remove(
     @Param('eventId', EventExists) eventId: number,
-    @Param('id') id: string,
+    @Param('id') id: number,
   ) {
     return this.questionService.remove(id, eventId);
   }

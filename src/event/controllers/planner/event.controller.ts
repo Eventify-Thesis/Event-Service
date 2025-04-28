@@ -39,6 +39,8 @@ import {
   EventListAllQuery,
   EventListAllResponse,
 } from 'src/event/dto/event-doc.dto';
+import { EventStatsService } from '../../services/event-stats.service';
+import { EventStatsResponseDto } from 'src/event/dto/event-stats.dto';
 
 @Controller({
   path: 'planner/events',
@@ -46,7 +48,10 @@ import {
 @ApiBearerAuth()
 @UseGuards(ClerkAuthGuard)
 export class PlannerEventController {
-  constructor(private readonly eventService: PlannerEventService) {}
+  constructor(
+    private readonly eventService: PlannerEventService,
+    private readonly eventStatsService: EventStatsService,
+  ) { }
 
   @Get('')
   @ApiOkResponse({
@@ -213,5 +218,12 @@ export class PlannerEventController {
     return {
       status: 'success',
     };
+  }
+
+  @UseGuards(EventRoleGuard(EventRole.OWNER))
+  @ApiOkResponse({ type: EventStatsResponseDto })
+  @Get(':eventId/stats')
+  async getStats(@Param('eventId', EventExists) eventId: number) {
+    return await this.eventStatsService.getEventStats(eventId);
   }
 }

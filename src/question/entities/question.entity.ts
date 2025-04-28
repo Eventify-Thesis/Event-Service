@@ -1,21 +1,24 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
+  Entity,
   JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { QuestionType, QuestionBelongsTo } from '../enums/question-type.enum';
 import { Event } from '../../event/entities/event.entity';
 
 @Entity('questions')
 export class Question {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @ManyToOne(() => Event, (event) => event.questions)
+  @Column({ name: 'event_id' })
+  eventId: number;
+
+  @ManyToOne(() => Event)
   @JoinColumn({ name: 'event_id' })
   event: Event;
 
