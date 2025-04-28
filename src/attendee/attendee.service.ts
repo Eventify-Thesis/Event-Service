@@ -39,11 +39,7 @@ export class AttendeeService {
         throw new Error(AttendeeErrorMessages.TICKET_QUANTITY_EXCEEDED);
       }
 
-<<<<<<< HEAD
-      console.log('here here ', ticketType)
 
-=======
->>>>>>> db07fdf816c06999cd1af3e0ba4aba01c15b5376
       // Create attendee
       const attendee = manager.create(Attendee, createAttendeeDto);
       await manager.save(attendee);
@@ -94,10 +90,6 @@ export class AttendeeService {
           1
         );
 
-<<<<<<< HEAD
-
-=======
->>>>>>> db07fdf816c06999cd1af3e0ba4aba01c15b5376
         // Increment new ticket type quantity
         await manager.increment(
           TicketType,
