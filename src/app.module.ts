@@ -21,6 +21,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { EmailModule } from './email/email.module';
 import { MessageModule } from './message/message.module';
 import { AttendeeModule } from './attendee/attendee.module';
+import { CheckInListModule } from './check-in-list/check-in-list.module';
 import * as handlebarsHelpers from 'handlebars-helpers';
 
 @Module({
@@ -80,6 +81,7 @@ import * as handlebarsHelpers from 'handlebars-helpers';
     EmailModule,
     MessageModule,
     AttendeeModule,
+    CheckInListModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],
