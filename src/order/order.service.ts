@@ -104,7 +104,6 @@ export class OrderService {
     const order = await this.getDetail(orderId);
     const event = await this.dataSource.getRepository(Event).findOneByOrFail({ id: eventId });
 
-    console.log(order, event);
     return this.emailService.sendConfirmation(order, event);
   }
 }
