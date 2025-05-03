@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { CreateCheckInListDto } from './dto/create-check-in-list.dto';
-import { UpdateCheckInListDto } from './dto/update-check-in-list.dto';
-import { CheckInList } from './entities/check-in-list.entity';
-import { TicketCheckInList } from './entities/ticket-check-in-list.entity';
-import { IdHelper } from '../common/helper/id-helper';
-import { CheckInListListQuery } from './dto/check-in-list-list.query';
+import { CreateCheckInListDto } from '../dto/create-check-in-list.dto';
+import { UpdateCheckInListDto } from '../dto/update-check-in-list.dto';
+import { CheckInList } from '../entities/check-in-list.entity';
+import { TicketCheckInList } from '../entities/ticket-check-in-list.entity';
+import { IdHelper } from '../../common/helper/id-helper';
+import { CheckInListListQuery } from '../dto/check-in-list-list.query';
 
 @Injectable()
 export class CheckInListService {
@@ -123,7 +123,8 @@ export class CheckInListService {
       .leftJoinAndSelect('checkInList.ticketTypes', 'ticketTypes')
       .leftJoinAndSelect('checkInList.show', 'show')
       .leftJoin('attendees', 'attendees', 'attendees.ticket_type_id IN (ticketTypes.id)')
-      .addSelect('COUNT(DISTINCT CASE WHEN attendees.checked_in_at IS NOT NULL THEN attendees.id END)', 'checkedInAttendees')
+      .leftJoin('attendee_check_ins', 'ac', 'ac.attendee_id = attendees.id AND ac.deleted_at IS NULL')
+      .addSelect('COUNT(DISTINCT CASE WHEN ac.id IS NOT NULL THEN attendees.id END)', 'checkedInAttendees')
       .addSelect('COUNT(DISTINCT attendees.id)', 'totalAttendees')
       .groupBy('checkInList.id')
       .addGroupBy('ticketTypes.id')

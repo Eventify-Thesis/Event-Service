@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Put, Body, Param, Delete, Query } from '@nestjs/common';
-import { CheckInListService } from '../../check-in-list.service';
+import { CheckInListService } from '../../services/check-in-list.service';
 import { CreateCheckInListDto } from '../../dto/create-check-in-list.dto';
 import { UpdateCheckInListDto } from '../../dto/update-check-in-list.dto';
 import { CheckInListQuery } from 'src/check-in-list/dto/check-in-list.dto';

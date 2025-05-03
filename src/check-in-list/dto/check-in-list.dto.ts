@@ -31,3 +31,20 @@ export class CheckInListQuery {
   @IsOptional()
   showId?: string;
 }
+
+export class CheckInAttendeeQuery {
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @Transform(({ value }) => parseInt(value))
+  page?: number = 1;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @Transform(({ value }) => parseInt(value))
+  limit?: number = 10;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  keyword?: string;
+}

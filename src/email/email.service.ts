@@ -8,7 +8,6 @@ export class EmailService {
   constructor(private readonly mailer: MailerService) { }
 
   async sendConfirmation(order: any, event: any) {
-    console.log('event', event)
     const subject = `Order Confirmation - ${event.eventName}`;
     const html = generateOrderConfirmationEmail(order, event);
 
