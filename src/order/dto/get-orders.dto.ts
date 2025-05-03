@@ -30,6 +30,30 @@ export type QueryFilterFields = {
   [key: string]: QueryFilterCondition | QueryFilterCondition[] | undefined;
 };
 
+export enum OrderTime {
+  UPCOMING = 'upcoming',
+  PAST = 'past',
+}
+
+/**
+ * Order status
+ *
+ * PENDING: The order is created but payment is not completed
+ * PAID: The order is paid
+ * PAYMENT_FAILED: The payment failed
+ * CANCELLED: The order is cancelled
+ * ALL: All orders
+ * EXPIRED: The order is expired
+ */
+export enum OrderStatus {
+  PENDING = 'PENDING',
+  PAID = 'PAID',
+  PAYMENT_FAILED = 'PAYMENT_FAILED',
+  CANCELLED = 'CANCELLED',
+  ALL = 'ALL',
+  EXPIRED = 'EXPIRED'
+}
+
 export class GetOrdersQuery {
   @IsOptional()
   @Transform(({ value }) => parseInt(value))
@@ -63,4 +87,12 @@ export class GetOrdersQuery {
   @IsOptional()
   @IsString()
   sortDirection?: 'asc' | 'desc';
+
+  @IsOptional()
+  @IsEnum(OrderTime)
+  time?: OrderTime;
+
+  @IsOptional()
+  @IsEnum(OrderStatus)
+  status?: OrderStatus;
 }

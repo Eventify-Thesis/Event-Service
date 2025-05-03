@@ -83,6 +83,7 @@ export class PlannerEventController {
     @Query() query,
     @Req() req: RequestWithUser,
   ) {
+    console.log(JSON.stringify(req.user.publicMetadata.organizations, null, 2));
     return await this.eventService.list(
       req.user.publicMetadata.organizations,
       paramPagination,

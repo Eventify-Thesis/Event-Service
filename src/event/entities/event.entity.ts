@@ -14,6 +14,7 @@ import { Show } from './show.entity';
 import { Question } from '../../question/entities/question.entity';
 import { SeatCategoryMapping } from '../../seating-plan/entities/seat-category-mapping.entity';
 import { Message } from '../../message/entities/message.entity';
+import { Order } from 'src/order/entities/order.entity';
 
 @Entity('events')
 export class Event {
@@ -107,4 +108,7 @@ export class Event {
 
   @OneToMany(() => Message, (message) => message.event)
   messages: Message[];
+
+  @OneToMany(() => Order, (order) => order.event)
+  orders: Order[];
 }
