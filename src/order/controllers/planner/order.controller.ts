@@ -1,5 +1,4 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Res } from '@nestjs/common';
-import { OrderService } from '../../order.service';
 import { GetOrdersQuery } from '../../dto/get-orders.dto';
 import EventRole from 'src/auth/event-role/event-roles.enum';
 import EventRoleGuard from 'src/auth/event-role/event-roles.guards';
@@ -7,11 +6,12 @@ import { ApiQuery } from '@nestjs/swagger';
 import { EventExists } from 'src/event/pipes/event-exists.pipe';
 import { Response } from 'express';
 import * as ExcelJS from 'exceljs';
+import { PlannerOrderService } from 'src/order/services/planner/order.service';
 
 @Controller('planner/events/:eventId/orders')
 @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
 export class PlannerOrderController {
-  constructor(private readonly orderService: OrderService) { }
+  constructor(private readonly orderService: PlannerOrderService) { }
 
   @Get('list')
   @ApiQuery({

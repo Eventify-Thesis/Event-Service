@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import * as fs from 'fs';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
@@ -10,7 +11,11 @@ import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import { AppExceptionFilter } from './common/exceptions/app-exception.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const httpsOptions = {
+    key: fs.readFileSync('localhost-key.pem'),
+    cert: fs.readFileSync('localhost.pem'),
+  };
+  const app = await NestFactory.create(AppModule, { httpsOptions });
   app.setGlobalPrefix('event');
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());

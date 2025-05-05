@@ -25,7 +25,7 @@ export class EventService {
     private readonly wardRepository: Repository<Ward>,
     @InjectRepository(Show)
     private readonly showRepository: Repository<Show>,
-  ) {}
+  ) { }
 
   async findAll(): Promise<Event[]> {
     return this.eventRepository.find({

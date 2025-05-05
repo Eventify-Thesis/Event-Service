@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { GetOrdersQuery } from './dto/get-orders.dto';
+import { GetOrdersQuery } from '../../dto/get-orders.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { Order } from './entities/order.entity';
+import { Order } from '../../entities/order.entity';
 import { EmailService } from 'src/email/email.service';
 import { Event } from 'src/event/entities/event.entity';
 
 @Injectable()
-export class OrderService {
+export class PlannerOrderService {
   constructor(
     @InjectRepository(Order)
     private readonly orderRepository: Repository<Order>,
@@ -104,7 +104,6 @@ export class OrderService {
     const order = await this.getDetail(orderId);
     const event = await this.dataSource.getRepository(Event).findOneByOrFail({ id: eventId });
 
-    console.log(order, event);
     return this.emailService.sendConfirmation(order, event);
   }
 }

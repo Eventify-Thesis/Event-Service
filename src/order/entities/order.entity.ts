@@ -10,6 +10,8 @@ import {
 } from "typeorm";
 import { BookingAnswer } from "./booking-answer.entity";
 import { Attendee } from "../../attendee/entities/attendees.entity";
+import { Event } from "../../event/entities/event.entity";
+import { Show } from "../../event/entities/show.entity";
 
 export enum OrderStatus {
     PENDING = "PENDING",
@@ -96,6 +98,14 @@ export class Order {
 
     @OneToMany(() => OrderItem, (item) => item.order)
     items: OrderItem[];
+
+    @ManyToOne(() => Event, (event) => event.orders)
+    @JoinColumn({ name: "event_id" })
+    event: Event;
+
+    @ManyToOne(() => Show, (show) => show.orders)
+    @JoinColumn({ name: "show_id" })
+    show: Show;
 
     @CreateDateColumn({ name: "created_at" })
     createdAt: Date;

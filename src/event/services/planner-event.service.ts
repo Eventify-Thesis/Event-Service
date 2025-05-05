@@ -31,7 +31,7 @@ export class PlannerEventService {
     private readonly showRepository: ShowRepository,
     private readonly ticketTypeRepository: TicketTypeRepository,
     private readonly memberService: MemberService,
-  ) {}
+  ) { }
 
   async checkExists(query: Record<string, any>) {
     const entity = await this.eventRepository.findOne({
@@ -41,10 +41,19 @@ export class PlannerEventService {
   }
 
   async list(organizations: any, paramPagination, { keyword, status }: any) {
-    const iDs = Object.keys(organizations);
-    console.log(iDs);
-    const orgIds = iDs.map((id) => id.split(':')[1]);
+    let ids: string[] = [];
+    if (!organizations) ids = [];
+    else ids = Object.keys(organizations);
+    const orgIds = ids.length > 0 ? ids.map((id) => id.split(':')[1]) : [];
     if (!status) status = EventStatus.UPCOMING;
+
+    if (orgIds.length === 0) return {
+      docs: [],
+      totalDocs: 0,
+      limit: paramPagination.limit,
+      totalPages: 0,
+      currentPage: paramPagination.page,
+    };
 
     const queryBuilder = this.eventRepository
       .createQueryBuilder('event')
@@ -52,7 +61,6 @@ export class PlannerEventService {
       .leftJoinAndSelect('event.shows', 'shows', 'shows.event_id = event.id')
       .where('event.status = :status', { status })
       .andWhere('event.organization_id IN (:...orgIds)', { orgIds });
-
     if (keyword) {
       const searchKeyword = `%${keyword.trim()}%`;
       queryBuilder.andWhere(
@@ -114,7 +122,7 @@ export class PlannerEventService {
       limit: paramPagination.limit,
       totalPages: Math.ceil(total / paramPagination.limit),
       currentPage: paramPagination.page,
-    };
+    };;
   }
 
   async getBrief(user: User, eventId: number) {
