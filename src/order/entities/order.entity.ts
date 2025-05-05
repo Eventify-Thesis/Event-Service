@@ -10,8 +10,8 @@ import {
 } from "typeorm";
 import { BookingAnswer } from "./booking-answer.entity";
 import { Attendee } from "../../attendee/entities/attendees.entity";
-import { Event } from "src/event/entities/event.entity";
-import { Show } from "src/event/entities/show.entity";
+import { Event } from "../../event/entities/event.entity";
+import { Show } from "../../event/entities/show.entity";
 
 export enum OrderStatus {
     PENDING = "PENDING",

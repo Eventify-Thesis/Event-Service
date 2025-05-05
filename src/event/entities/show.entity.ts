@@ -13,7 +13,7 @@ import { Event } from './event.entity';
 import { TicketType } from './ticket-type.entity';
 import { SeatCategoryMapping } from '../../seating-plan/entities/seat-category-mapping.entity';
 import { SeatingPlan } from '../../seating-plan/entities/seating-plan.entity';
-import { Order } from 'src/order/entities/order.entity';
+import { Order } from '../../order/entities/order.entity';
 
 @Entity('shows')
 export class Show {

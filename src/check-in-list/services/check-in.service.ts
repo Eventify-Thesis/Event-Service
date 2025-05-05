@@ -189,7 +189,7 @@ export class CheckInService {
   async deleteCheckIn(
     eventId: number,
     checkInListShortId: string,
-    checkInShortId: string,
+    attendeePublicId: string,
   ) {
     const checkInList = await this.getCheckInList(eventId, checkInListShortId);
     if (!checkInList) {
@@ -198,17 +198,28 @@ export class CheckInService {
 
     await this.validateCheckInListIsActive(checkInList);
 
+    const attendee = await this.dataSource
+      .getRepository(Attendee)
+      .createQueryBuilder('attendee')
+      .where('attendee.publicId = :attendeePublicId', { attendeePublicId })
+      .andWhere('attendee.eventId = :eventId', { eventId })
+      .getOne();
+
+    if (!attendee) {
+      throw new CannotCheckInException('Attendee not found');
+    }
+
     const checkIn = await this.dataSource
       .getRepository(AttendeeCheckIn)
       .createQueryBuilder('checkIn')
-      .where('checkIn.shortId = :checkInShortId', { checkInShortId })
+      .where('checkIn.attendeeId = :attendeeId', { attendeeId: attendee.id })
       .andWhere('checkIn.checkInListId = :checkInListId', {
         checkInListId: checkInList.id,
       })
       .getOne();
 
     if (!checkIn) {
-      throw new CannotCheckInException('Check-in not found');
+      throw new CannotCheckInException(`Attendee ${attendee.firstName} ${attendee.lastName} is not checked in`);
     }
 
     await this.dataSource.getRepository(AttendeeCheckIn).softDelete(checkIn.id);

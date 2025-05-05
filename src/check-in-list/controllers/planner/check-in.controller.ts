@@ -66,17 +66,17 @@ export class PlannerCheckInController {
     );
   }
 
-  @Delete(':checkInListShortId/check-ins/:checkInShortId')
+  @Delete(':checkInListShortId/check-ins/:attendeePublicId')
   @ApiOperation({ summary: 'Delete check-in' })
   async deleteCheckIn(
     @Param('eventId') eventId: number,
     @Param('checkInListShortId') checkInListShortId: string,
-    @Param('checkInShortId') checkInShortId: string,
+    @Param('attendeePublicId') attendeePublicId: string,
   ) {
     return await this.checkInService.deleteCheckIn(
       eventId,
       checkInListShortId,
-      checkInShortId,
+      attendeePublicId,
     );
   }
 }
