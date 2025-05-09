@@ -1,15 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Quiz } from './quiz.entity';
+import { QuizAnswer } from './quiz-answer.entity';
 
 @Entity('quiz_questions')
 export class QuizQuestion {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ name: 'quiz_id' })
-  quizId: string;
-
-  @ManyToOne(() => Quiz, { nullable: false })
+  @ManyToOne(() => Quiz, (quiz) => quiz.questions)
   @JoinColumn({ name: 'quiz_id' })
   quiz: Quiz;
 
@@ -19,9 +17,12 @@ export class QuizQuestion {
   @Column('jsonb')
   options: { id: number; text: string }[];
 
-  @Column()
+  @Column({ name: 'correct_option' })
   correctOption: number;
 
-  @Column({ default: 30 })
-  timeLimit: number;
+  @Column({ name: 'time_limit', nullable: true })
+  timeLimit?: number;
+
+  @OneToMany(() => QuizAnswer, (answer) => answer.question)
+  answers: QuizAnswer[];
 }

@@ -5,8 +5,8 @@ import { QuizResult } from './quiz-result.entity';
 
 @Entity('quizzes')
 export class Quiz {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ name: 'show_id' })
   showId: number;
@@ -18,13 +18,13 @@ export class Quiz {
   @Column()
   title: string;
 
-  @Column({ default: false })
+  @Column({name: 'is_completed', default: false })
   isCompleted: boolean;
 
-  @Column({ default: 70 })
+  @Column({name: 'passing_score', default: 70 })
   passingScore: number;
 
-  @Column({ default: 1 })
+  @Column({name: 'max_attempts', default: 1 })
   maxAttempts: number;
 
   @OneToMany(() => QuizQuestion, question => question.quiz)

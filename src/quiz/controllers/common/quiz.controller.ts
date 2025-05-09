@@ -16,42 +16,39 @@ import { SubmitAnswerDto } from '../../dto/submit-answer.dto';
 export class QuizController {
   constructor(private readonly quizService: QuizService) {}
 
-  @MessagePattern('getShowQuiz')
-  getShowQuiz(@Payload() showId: number) {
-    return this.quizService.findByShow(showId);
+  @MessagePattern('quiz.getShowQuizPublic')
+  async getShowQuizPublic(@Payload() payload: { showId: number }) {
+    return await this.quizService.findByShow(payload.showId);
   }
 
-  @Get('shows/:showId')
-  getShowQuizPublic(@Param('showId') showId: number) {
-    return this.quizService.findByShow(showId);
-  }
-
-  @Post('questions/:questionId/answer')
+  @MessagePattern('quiz.submitAnswer') 
   async submitAnswer(
-    @Param('questionId') questionId: string,
-    @Body() { selectedOption }: SubmitAnswerDto,
-    @Req() req: any
+    @Payload() payload: { 
+      questionId: number;
+      selectedOption: number;
+      userId: string;
+      timeTaken?: number;
+    }
   ) {
-    return this.quizService.submitAnswer(
-      questionId,
-      selectedOption,
-      req.auth.userId,
-      0 // Default timeTaken value of 0 for now
+    return await this.quizService.submitAnswer(
+      payload.questionId,
+      payload.selectedOption,
+      payload.userId,
+      payload.timeTaken || 0
     );
   }
 
-  @Get('shows/:showId/results')
+  @MessagePattern('quiz.getResults')
   async getQuizResults(
-    @Param('showId') showId: number,
-    @Req() req: any
+    @Payload() payload: { showId: number, userId: string }
   ) {
-    return this.quizService.getResults(showId, req.auth.userId);
+    return await this.quizService.getResults(payload.showId, payload.userId);
   }
 
-  @Get('shows/:showId/leaderboard')
+  @MessagePattern('quiz.getLeaderboard')
   async getLeaderboard(
-    @Param('showId') showId: number
+    @Payload() payload: { showId: number }
   ) {
-    return this.quizService.getLeaderboard(showId);
+    return await this.quizService.getLeaderboard(payload.showId);
   }
 }

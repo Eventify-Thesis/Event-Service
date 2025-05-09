@@ -3,24 +3,21 @@ import { QuizQuestion } from './quiz-question.entity';
 
 @Entity('quiz_answers')
 export class QuizAnswer {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @ManyToOne(() => QuizQuestion)
+  @ManyToOne(() => QuizQuestion, (question) => question.answers)
   question: QuizQuestion;
 
-  @Column()
+  @Column({ name: 'user_id' })
   userId: string;
 
-  @Column()
+  @Column({ name: 'selected_option' })
   selectedOption: number;
 
-  @Column()
+  @Column({ name: 'is_correct' })
   isCorrect: boolean;
 
-  @Column()
-  score: number;
-
-  @Column({ default: () => 'CURRENT_TIMESTAMP' })
-  answeredAt: Date;
+  @Column({ name: 'time_taken' })
+  timeTaken: number; // in seconds
 }

@@ -3,28 +3,28 @@ import { Quiz } from './quiz.entity';
 
 @Entity('quiz_results')
 export class QuizResult {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ManyToOne(() => Quiz, (quiz) => quiz.results)
   quiz: Quiz;
 
-  @Column()
+  @Column({ name: 'user_id' })
   userId: string;
 
   @Column()
   score: number;
 
-  @Column()
+  @Column({ name: 'total_questions' })
   totalQuestions: number;
 
-  @Column()
+  @Column({ name: 'correct_answers' })
   correctAnswers: number;
 
   @Column({ type: 'float' })
   timeTaken: number;
 
-  @Column({ default: false })
+  @Column({ name: 'is_passed', default: false })
   isPassed: boolean;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

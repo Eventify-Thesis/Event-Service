@@ -95,7 +95,14 @@ export class QuizService {
     });
   }
 
-  async submitAnswer(questionId: string, selectedOption: number, userId: string, timeTaken: number) {
+  async findById(id: number): Promise<Quiz> {
+    return this.quizRepository.findOne({ 
+      where: { id },
+      relations: ['questions', 'results'] 
+    });
+  }
+
+  async submitAnswer(questionId: number, selectedOption: number, userId: string, timeTaken: number) {
     const question = await this.quizQuestionRepository.findOne({
       where: { id: questionId },
       relations: ['quiz']
@@ -187,21 +194,21 @@ export class QuizService {
     return Math.floor(100 * (0.5 + 0.5 * timeRatio)); // Base 50 + up to 50 bonus for speed
   }
 
-  async update(quizId: string, updateQuizDto: UpdateQuizDto) {
+  async update(quizId: number, updateQuizDto: UpdateQuizDto) {
     await this.quizRepository.update(quizId, updateQuizDto);
     return this.quizRepository.findOneBy({ id: quizId });
   }
   
-  async updateStatus(quizId: string, isCompleted: boolean) {
+  async updateStatus(quizId: number, isCompleted: boolean) {
     return this.quizRepository.update(quizId, { isCompleted });
   }
   
-  async delete(quizId: string) {
+  async delete(quizId: number) {
     await this.quizRepository.softDelete(quizId);
     return { deleted: true };
   }
   
-  async getQuizAnalytics(quizId: string) {
+  async getQuizAnalytics(quizId: number) {
     const [answers, stats] = await Promise.all([
       this.quizAnswerRepository.find({
         where: { question: { quiz: { id: quizId } } },
@@ -222,7 +229,7 @@ export class QuizService {
     };
   }
 
-  async submitQuizAnswers(quizId: string, userId: string, answers: SubmitAnswerDto[]) {
+  async submitQuizAnswers(quizId: number, userId: string, answers: SubmitAnswerDto[]) {
     const previousAttempts = await this.quizResultRepository.count({ 
       where: { quiz: { id: quizId }, userId }
     });
@@ -271,7 +278,7 @@ export class QuizService {
     return result;
   }
 
-  async getQuizResults(quizId: string, userId?: string) {
+  async getQuizResults(quizId: number, userId?: string) {
     const where: any = { quiz: { id: quizId } };
     if (userId) where.userId = userId;
     
