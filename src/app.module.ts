@@ -24,6 +24,7 @@ import { AttendeeModule } from './attendee/attendee.module';
 import { CheckInListModule } from './check-in-list/check-in-list.module';
 import { MarketingModule } from './marketing/marketing.module';
 import { FacebookModule } from './facebook/facebook.module';
+import { QuizModule } from './quiz/quiz.module';
 import * as handlebarsHelpers from 'handlebars-helpers';
 
 @Module({
@@ -86,6 +87,7 @@ import * as handlebarsHelpers from 'handlebars-helpers';
     CheckInListModule,
     MarketingModule,
     FacebookModule,
+    QuizModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],
