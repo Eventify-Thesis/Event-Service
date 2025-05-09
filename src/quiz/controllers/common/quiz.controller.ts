@@ -4,13 +4,11 @@ import {
   Get, 
   Post, 
   Body, 
-  UseGuards,
   Req
 } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { QuizService } from '../../services/quiz.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { ClerkAuthGuard } from '../../../auth/clerk-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 import { SubmitAnswerDto } from '../../dto/submit-answer.dto';
 
 @Controller('quiz')
@@ -28,8 +26,6 @@ export class QuizController {
     return this.quizService.findByShow(showId);
   }
 
-  @UseGuards(ClerkAuthGuard)
-  @ApiBearerAuth()
   @Post('questions/:questionId/answer')
   async submitAnswer(
     @Param('questionId') questionId: string,
@@ -44,8 +40,6 @@ export class QuizController {
     );
   }
 
-  @UseGuards(ClerkAuthGuard)
-  @ApiBearerAuth()
   @Get('shows/:showId/results')
   async getQuizResults(
     @Param('showId') showId: number,
@@ -54,8 +48,6 @@ export class QuizController {
     return this.quizService.getResults(showId, req.auth.userId);
   }
 
-  @UseGuards(ClerkAuthGuard)
-  @ApiBearerAuth()
   @Get('shows/:showId/leaderboard')
   async getLeaderboard(
     @Param('showId') showId: number
