@@ -284,7 +284,7 @@ export class KanbanService {
 
     task.title = updateKanbanTaskDto.title;
     task.description = updateKanbanTaskDto.description;
-    task.dueDate = updateKanbanTaskDto.dueDate;
+    task.dueDate = new Date(updateKanbanTaskDto.dueDate);
     task.priority = updateKanbanTaskDto.priority;
     task.labels = updateKanbanTaskDto.labels;
     return await this.kanbanTaskRepository.save(task);
