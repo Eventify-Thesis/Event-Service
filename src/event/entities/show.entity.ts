@@ -14,6 +14,7 @@ import { TicketType } from './ticket-type.entity';
 import { SeatCategoryMapping } from '../../seating-plan/entities/seat-category-mapping.entity';
 import { SeatingPlan } from '../../seating-plan/entities/seating-plan.entity';
 import { Order } from '../../order/entities/order.entity';
+import { ShowSchedule } from '../../show-schedule/entities/show-schedule.entity';
 
 @Entity('shows')
 export class Show {
@@ -61,4 +62,7 @@ export class Show {
 
   @OneToMany(() => Order, (order) => order.show)
   orders: Order[];
+  
+  @OneToMany(() => ShowSchedule, (schedule) => schedule.show)
+  schedules: ShowSchedule[];
 }

@@ -26,6 +26,8 @@ import { MarketingModule } from './marketing/marketing.module';
 import { FacebookModule } from './facebook/facebook.module';
 import { QuizModule } from './quiz/quiz.module';
 import * as handlebarsHelpers from 'handlebars-helpers';
+import { ShowScheduleModule } from './show-schedule/show-schedule.module';
+import { KanbanModule } from './kanban/kanban.module';
 
 @Module({
   imports: [
@@ -88,6 +90,8 @@ import * as handlebarsHelpers from 'handlebars-helpers';
     MarketingModule,
     FacebookModule,
     QuizModule,
+    ShowScheduleModule,
+    KanbanModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],
