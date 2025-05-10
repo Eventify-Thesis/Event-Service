@@ -24,6 +24,7 @@ import { AttendeeModule } from './attendee/attendee.module';
 import { CheckInListModule } from './check-in-list/check-in-list.module';
 import { MarketingModule } from './marketing/marketing.module';
 import { FacebookModule } from './facebook/facebook.module';
+import { QuizModule } from './quiz/quiz.module';
 import * as handlebarsHelpers from 'handlebars-helpers';
 import { ShowScheduleModule } from './show-schedule/show-schedule.module';
 import { KanbanModule } from './kanban/kanban.module';
@@ -88,6 +89,7 @@ import { KanbanModule } from './kanban/kanban.module';
     CheckInListModule,
     MarketingModule,
     FacebookModule,
+    QuizModule,
     ShowScheduleModule,
     KanbanModule,
   ],
