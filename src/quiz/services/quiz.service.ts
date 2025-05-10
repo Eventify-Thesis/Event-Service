@@ -54,7 +54,6 @@ export class QuizService {
         "explanation": "brief explanation"
       }
     `;
-
     try {
       const result = await this.model.generateContent(prompt);
       const response = await result.response;
@@ -256,7 +255,6 @@ export class QuizService {
     await this.quizRepository.softDelete(quizId);
     return { deleted: true };
   }
-
   async getQuizAnalytics(quizId: number) {
     const [answers, stats] = await Promise.all([
       this.quizAnswerRepository.find({
@@ -271,7 +269,6 @@ export class QuizService {
         .where('question.quizId = :quizId', { quizId })
         .getRawOne()
     ]);
-
     return {
       stats,
       answers
@@ -289,7 +286,6 @@ export class QuizService {
     const questions = await this.quizQuestionRepository.find({ where: { quiz: { id: quizId } } });
     const totalQuestions = questions.length;
     let correctAnswers = 0;
-
     // Save answers and check correctness
     for (const answer of answers) {
       const question = questions.find(q => q.id === answer.questionId);
