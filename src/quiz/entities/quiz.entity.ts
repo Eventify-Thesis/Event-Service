@@ -8,6 +8,9 @@ export class Quiz {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ name: 'event_id' })
+  eventId: number;
+
   @Column({ name: 'show_id' })
   showId: number;
 
@@ -18,14 +21,8 @@ export class Quiz {
   @Column()
   title: string;
 
-  @Column({name: 'is_completed', default: false })
+  @Column({ name: 'is_completed', default: false })
   isCompleted: boolean;
-
-  @Column({name: 'passing_score', default: 70 })
-  passingScore: number;
-
-  @Column({name: 'max_attempts', default: 1 })
-  maxAttempts: number;
 
   @OneToMany(() => QuizQuestion, question => question.quiz)
   questions: QuizQuestion[];

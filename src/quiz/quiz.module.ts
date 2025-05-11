@@ -8,11 +8,12 @@ import { QuizController as PlannerQuizController } from './controllers/planner/q
 import { QuizService } from './services/quiz.service';
 import { QuizRepository } from './repositories/quiz.repository';
 import { Show } from '../event/entities/show.entity';
+import { QuizResult } from './entities/quiz-result.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Quiz, QuizQuestion, QuizAnswer, Show])],
+  imports: [TypeOrmModule.forFeature([Quiz, QuizQuestion, QuizAnswer, Show, QuizResult])],
   controllers: [QuizController, PlannerQuizController],
   providers: [QuizService, QuizRepository],
   exports: [QuizService]
 })
-export class QuizModule {}
+export class QuizModule { }
