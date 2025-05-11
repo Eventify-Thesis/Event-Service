@@ -13,6 +13,9 @@ import { QuizQuestion } from '../entities/quiz-question.entity';
 import { UpdateQuizDto } from '../dto/update-quiz.dto';
 import { QuizResult } from '../entities/quiz-result.entity';
 import { SubmitAnswerDto } from '../dto/submit-answer.dto';
+import { CreateQuizQuestionDto } from '../dto/create-quiz-question.dto';
+import { UpdateQuizQuestionDto } from '../dto/update-quiz-question.dto';
+import { QuizListQuery } from '../dto/quiz.query';
 
 @Injectable()
 export class QuizService {
@@ -44,18 +47,27 @@ export class QuizService {
     const prompt = `Generate ${count} ${difficulty} difficulty quiz questions about ${topic}.
       Format as JSON array with:
       {
+        "id": "unique id",
         "text": "question text",
         "options": ["option1", "option2", "option3", "option4"],
         "correctOption": index (0-3),
         "explanation": "brief explanation"
       }
     `;
-    
+
     try {
       const result = await this.model.generateContent(prompt);
       const response = await result.response;
       const text = response.text();
-      return this.parseGeminiResponse(text);
+      const parsedResponse = this.parseGeminiResponse(text);
+
+      parsedResponse.forEach((question) => {
+        question.options = question.options.map((option, index) => ({
+          id: index,
+          text: option,
+        }));
+      });
+      return parsedResponse;
     } catch (error) {
       console.error('Gemini API error:', error);
       throw new Error('Failed to generate quiz questions');
@@ -75,30 +87,74 @@ export class QuizService {
     }
   }
 
-  async create(createQuizDto: CreateQuizDto) {
-    const show = await this.showRepository.findOne({
-      where: { id: createQuizDto.showId }
-    });
-    
+  async create(eventId: number, createQuizDto: CreateQuizDto) {
     const quiz = this.quizRepository.create({
-      show,
-      questions: createQuizDto.questions
+      eventId,
+      ...createQuizDto
     });
 
     return this.quizRepository.save(quiz);
   }
 
-  async findByShow(showId: number) {
-    return this.quizRepository.find({
-      where: { show: { id: showId } },
-      relations: ['questions']
-    });
+  async findAll(query: QuizListQuery) {
+    const queryBuilder = this.quizRepository
+      .createQueryBuilder('quiz')
+      .leftJoinAndSelect('quiz.questions', 'questions')
+      .leftJoinAndSelect('quiz.show', 'show')
+      .groupBy('quiz.id')
+      .addGroupBy('show.id')
+      .addGroupBy('questions.id')
+      .orderBy('quiz.createdAt', 'DESC');
+
+    if (query.eventId) {
+      queryBuilder.andWhere('quiz.eventId = :eventId', { eventId: query.eventId });
+    }
+
+    if (query.showId) {
+      queryBuilder.andWhere('quiz.showId = :showId', { showId: query.showId });
+    }
+
+    if (query.keyword) {
+      queryBuilder.andWhere('quiz.title ILIKE :keyword', {
+        keyword: `%${query.keyword}%`,
+      });
+    }
+
+    const [docs] = await Promise.all([
+      queryBuilder
+        .skip((query.page - 1) * query.limit)
+        .take(query.limit)
+        .getRawAndEntities(),
+      queryBuilder.getCount(),
+    ]);
+
+    const totalDocs = await queryBuilder.getCount();
+
+    const totalPages = Math.ceil(totalDocs / query.limit);
+    const pagingCounter = (query.page - 1) * query.limit + 1;
+
+    return {
+      docs: docs.entities.map((entity, i) => ({
+        ...entity,
+        checkedInAttendees: parseInt(docs.raw[i].checkedInAttendees) || 0,
+        totalAttendees: parseInt(docs.raw[i].totalAttendees) || 0,
+      })),
+      totalDocs,
+      limit: query.limit,
+      totalPages,
+      page: query.page,
+      pagingCounter,
+      hasPrevPage: query.page > 1,
+      hasNextPage: query.page < totalPages,
+      prevPage: query.page > 1 ? query.page - 1 : null,
+      nextPage: query.page < totalPages ? query.page + 1 : null,
+    };
   }
 
   async findById(id: number): Promise<Quiz> {
-    return this.quizRepository.findOne({ 
+    return this.quizRepository.findOne({
       where: { id },
-      relations: ['questions', 'results'] 
+      relations: ['questions', 'results']
     });
   }
 
@@ -113,7 +169,7 @@ export class QuizService {
 
     await this.quizAnswerRepository.save({
       question,
-      user: { id: userId },
+      userId,
       selectedOption,
       isCorrect,
       score,
@@ -165,7 +221,7 @@ export class QuizService {
 
       answers.push({
         question,
-        user: { id: userId },
+        userId,
         selectedOption: answer.selectedOption,
         isCorrect,
         score,
@@ -176,15 +232,8 @@ export class QuizService {
     // Save all answers
     await this.quizAnswerRepository.save(answers);
 
-    // Mark quiz as completed if passing score achieved
-    if (totalScore >= quiz.passingScore) {
-      await this.quizRepository.update(quiz.id, { isCompleted: true });
-    }
-
     return {
       totalScore,
-      isCompleted: totalScore >= quiz.passingScore,
-      passingScore: quiz.passingScore
     };
   }
 
@@ -198,21 +247,21 @@ export class QuizService {
     await this.quizRepository.update(quizId, updateQuizDto);
     return this.quizRepository.findOneBy({ id: quizId });
   }
-  
+
   async updateStatus(quizId: number, isCompleted: boolean) {
     return this.quizRepository.update(quizId, { isCompleted });
   }
-  
+
   async delete(quizId: number) {
     await this.quizRepository.softDelete(quizId);
     return { deleted: true };
   }
-  
+
   async getQuizAnalytics(quizId: number) {
     const [answers, stats] = await Promise.all([
       this.quizAnswerRepository.find({
         where: { question: { quiz: { id: quizId } } },
-        relations: ['question', 'user']
+        relations: ['question']
       }),
       this.quizAnswerRepository
         .createQueryBuilder('answer')
@@ -222,7 +271,7 @@ export class QuizService {
         .where('question.quizId = :quizId', { quizId })
         .getRawOne()
     ]);
-  
+
     return {
       stats,
       answers
@@ -230,27 +279,24 @@ export class QuizService {
   }
 
   async submitQuizAnswers(quizId: number, userId: string, answers: SubmitAnswerDto[]) {
-    const previousAttempts = await this.quizResultRepository.count({ 
+    const previousAttempts = await this.quizResultRepository.count({
       where: { quiz: { id: quizId }, userId }
     });
-    
+
     const quiz = await this.quizRepository.findOneBy({ id: quizId });
-    if (previousAttempts >= quiz.maxAttempts) {
-      throw new BadRequestException('Maximum attempts reached');
-    }
 
     // Calculate score
     const questions = await this.quizQuestionRepository.find({ where: { quiz: { id: quizId } } });
     const totalQuestions = questions.length;
     let correctAnswers = 0;
-    
+
     // Save answers and check correctness
     for (const answer of answers) {
       const question = questions.find(q => q.id === answer.questionId);
       const isCorrect = question?.correctOption === answer.selectedOption;
-      
+
       if (isCorrect) correctAnswers++;
-      
+
       await this.quizAnswerRepository.save({
         question: { id: answer.questionId },
         userId,
@@ -259,11 +305,10 @@ export class QuizService {
         timeTaken: answer.timeTaken
       });
     }
-    
+
     // Calculate score and pass status
     const score = Math.round((correctAnswers / totalQuestions) * 100);
-    const isPassed = score >= quiz.passingScore;
-    
+
     // Save quiz result
     const result = await this.quizResultRepository.save({
       quiz: { id: quizId },
@@ -272,19 +317,40 @@ export class QuizService {
       totalQuestions,
       correctAnswers,
       timeTaken: answers.reduce((sum, a) => sum + a.timeTaken, 0),
-      isPassed
     });
-    
+
     return result;
   }
 
   async getQuizResults(quizId: number, userId?: string) {
     const where: any = { quiz: { id: quizId } };
     if (userId) where.userId = userId;
-    
-    return this.quizResultRepository.find({ 
+
+    return this.quizResultRepository.find({
       where,
-      order: { completedAt: 'DESC' } 
+      order: { completedAt: 'DESC' }
     });
+  }
+
+  async createQuestion(quizId: number, questionData: CreateQuizQuestionDto) {
+    const question = this.quizQuestionRepository.create({ ...questionData, quizId });
+    return this.quizQuestionRepository.save(question);
+  }
+
+  async getQuestions(quizId: number) {
+    return this.quizQuestionRepository.find({ where: { quiz: { id: quizId } } });
+  }
+
+  async getQuestion(questionId: number) {
+    return this.quizQuestionRepository.findOne({ where: { id: questionId } });
+  }
+
+  async updateQuestion(quizId: number, questionId: number, questionData: UpdateQuizQuestionDto) {
+    const question = await this.quizQuestionRepository.findOne({ where: { id: questionId } });
+    return this.quizQuestionRepository.update(questionId, questionData);
+  }
+
+  async deleteQuestion(questionId: number) {
+    return this.quizQuestionRepository.delete(questionId);
   }
 }

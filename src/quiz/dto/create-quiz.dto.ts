@@ -1,4 +1,4 @@
-import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateQuizQuestionDto } from './create-quiz-question.dto';
 import { ApiProperty } from '@nestjs/swagger';
@@ -15,15 +15,16 @@ export class CreateQuizDto {
     description: 'Show ID this quiz belongs to',
     example: 1
   })
+  @IsOptional()
   @IsNumber()
   showId: number;
 
-  @ApiProperty({
-    description: 'Quiz questions',
-    example: []
-  })
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => CreateQuizQuestionDto)
-  questions: CreateQuizQuestionDto[];
+  // @ApiProperty({
+  //   description: 'Quiz questions',
+  //   example: []
+  // })
+  // @IsArray()
+  // @ValidateNested({ each: true })
+  // @Type(() => CreateQuizQuestionDto)
+  // questions: CreateQuizQuestionDto[];
 }
