@@ -11,11 +11,17 @@ export class QuizQuestion {
   @JoinColumn({ name: 'quiz_id' })
   quiz: Quiz;
 
+  @Column({ name: 'quiz_id' })
+  quizId: number;
+
   @Column()
   text: string;
 
   @Column('jsonb')
   options: { id: number; text: string }[];
+
+  @Column()
+  explanation: string;
 
   @Column({ name: 'correct_option' })
   correctOption: number;
