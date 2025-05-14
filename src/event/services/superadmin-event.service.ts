@@ -89,7 +89,7 @@ export class SuperAdminEventService {
     };
   }
 
-  async findOne(eventId: string) {
+  async findOne(eventId: number) {
     const event = await this.eventRepository.findOne({
       where: { id: eventId },
       relations: ['setting', 'paymentInfo', 'shows'],
@@ -102,7 +102,7 @@ export class SuperAdminEventService {
     return event;
   }
 
-  async findShows(eventId: string) {
+  async findShows(eventId: number) {
     const show = await this.showRepository
       .createQueryBuilder('shows')
       .leftJoinAndSelect('shows.ticketTypes', 'ticket_types')
@@ -123,7 +123,7 @@ export class SuperAdminEventService {
     return show;
   }
 
-  async censorEvent(eventId: string, status: EventStatus, currentStatus: EventStatus) {
+  async censorEvent(eventId: number, status: EventStatus, currentStatus: EventStatus) {
     const validStatuses = [EventStatus.PUBLISHED, EventStatus.CANCELLED];
     if (!validStatuses.includes(status)) {
       throw new AppException(MESSAGE.INVALID_STATUS);
