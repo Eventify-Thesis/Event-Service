@@ -39,14 +39,14 @@ export class SuperAdminEventController {
     
   //can chinh lai role tuong ung
     @Get(':id')
-    async getEventDetail(@Param('id', EventExists) eventId: string) {
+    async getEventDetail(@Param('id', EventExists) eventId: number) {
         return await this.SuperAdminEventService.findOne(eventId);
     }
     
     @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
       @ApiOkResponse()
       @Get(':eventId/shows')
-      async findShows(@Param('eventId', EventExists) eventId: string) {
+      async findShows(@Param('eventId', EventExists) eventId: number) {
         return await this.SuperAdminEventService.findShows(eventId);
       }
 
@@ -54,7 +54,7 @@ export class SuperAdminEventController {
     @Put(':id/censor')
     @ApiOperation({ summary: 'Censor an event (approve/decline)' })
     async censorEvent(
-        @Param('id') eventId: string,
+        @Param('id') eventId: number,
         @Body() body: { status: EventStatus; currentStatus: EventStatus},
     ) {
         return await this.SuperAdminEventService.censorEvent(eventId, body.status, body.currentStatus);
