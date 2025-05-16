@@ -18,7 +18,9 @@ import {
 } from '../event.constant';
 import { MemberService } from 'src/member/services/member.service';
 import { TicketTypeRepository } from '../repositories/ticket-type.repository';
-import { Brackets } from 'typeorm';
+import { Brackets, In } from 'typeorm';
+import { DataSource } from 'typeorm';
+import { Event } from '../entities/event.entity';
 
 @Injectable()
 export class PlannerEventService {
@@ -31,6 +33,7 @@ export class PlannerEventService {
     private readonly showRepository: ShowRepository,
     private readonly ticketTypeRepository: TicketTypeRepository,
     private readonly memberService: MemberService,
+    private readonly dataSource: DataSource,
   ) { }
 
   async checkExists(query: Record<string, any>) {
@@ -46,6 +49,7 @@ export class PlannerEventService {
     else ids = Object.keys(organizations);
     const orgIds = ids.length > 0 ? ids.map((id) => id.split(':')[1]) : [];
     if (!status) status = EventStatus.UPCOMING;
+    else if(status === "PAST") status = EventStatus.PUBLISHED;
 
     if (orgIds.length === 0) return {
       docs: [],
@@ -238,79 +242,81 @@ export class PlannerEventService {
   }
 
   async updateShows(eventId: number, updateEventShowDto: UpdateEventShowDto) {
-    const event = await this.eventRepository.findOne({
-      where: { id: eventId },
-      relations: ['shows', 'shows.ticketTypes'],
+    // Using transaction to update shows and ticket types
+    return await this.dataSource.transaction(async (entityManager) => {
+      const event = await entityManager.getRepository(Event).findOne({
+        where: { id: eventId },
+        relations: ['shows', 'shows.ticketTypes'],
+      });
+
+      if (!event) {
+        throw new AppException(MESSAGE.EVENT_NOT_FOUND);
+      }
+
+      // Process each show
+      const shows = [];
+      for (const showDto of updateEventShowDto.shows) {
+        let show;
+        if (showDto.id) {
+          // Update existing show
+          show = await entityManager.getRepository(this.showRepository.target).findOne({
+            where: { id: showDto.id },
+            relations: ['ticketTypes'],
+          });
+          show.startTime = showDto.startTime;
+          show.endTime = showDto.endTime;
+        } else {
+          // Create new show
+          show = entityManager.getRepository(this.showRepository.target).create({
+            event,
+            startTime: showDto.startTime,
+            endTime: showDto.endTime,
+          });
+        }
+
+        // Save the show to get an ID if it's new
+        show = await entityManager.getRepository(this.showRepository.target).save(show);
+
+        // Update/delete ticket types for this show
+        const ticketTypeIds = showDto.ticketTypes.map((ticketDto) => ticketDto.id).filter(Boolean);
+        // Delete ticket types not present in the request
+        await entityManager.getRepository(this.ticketTypeRepository.target)
+          .createQueryBuilder()
+          .delete()
+          .where('show.id = :showId', { showId: show.id })
+          .andWhere(ticketTypeIds.length > 0 ? 'id NOT IN (:...ticketTypeIds)' : '1=1', {
+            ticketTypeIds,
+          })
+          .execute();
+
+        const ticketTypes = [];
+        for (const ticketDto of showDto.ticketTypes) {
+          let ticketType;
+          if (ticketDto.id) {
+            // Update existing ticket type
+            ticketType = await entityManager.getRepository(this.ticketTypeRepository.target).findOne({
+              where: { id: ticketDto.id },
+            });
+            ticketType.name = ticketDto.name;
+            ticketType.price = ticketDto.price;
+            ticketType.quantity = ticketDto.quantity;
+          } else {
+            // Create new ticket type
+            ticketType = entityManager.getRepository(this.ticketTypeRepository.target).create({
+              ...ticketDto,
+              show,
+              event,
+            });
+          }
+          ticketTypes.push(await entityManager.getRepository(this.ticketTypeRepository.target).save(ticketType));
+        }
+
+        show.ticketTypes = ticketTypes;
+        shows.push(show);
+      }
+
+      return shows;
     });
-
-    if (!event) {
-      throw new AppException(MESSAGE.EVENT_NOT_FOUND);
-    }
-
-    // Delete existing shows and tickets that are not in the update
-    await this.ticketTypeRepository
-      .createQueryBuilder()
-      .delete()
-      .from('ticket_types')
-      .where('event_id = :eventId', {
-        eventId,
-      })
-      .execute();
-
-    await this.showRepository
-      .createQueryBuilder()
-      .delete()
-      .from('shows')
-      .where('event_id = :eventId', {
-        eventId,
-      })
-      .execute();
-
-    // Process each show
-    const shows = [];
-    for (const showDto of updateEventShowDto.shows) {
-      let show;
-      if (showDto.id) {
-        // Update existing show
-        show = await this.showRepository.findOne({
-          where: { id: showDto.id },
-          relations: ['ticketTypes'],
-        });
-        show.startTime = showDto.startTime;
-        show.endTime = showDto.endTime;
-      } else {
-        // Create new show
-        show = this.showRepository.create({
-          event,
-          startTime: showDto.startTime,
-          endTime: showDto.endTime,
-        });
-      }
-
-      // Save the show to get an ID if it's new
-      show = await this.showRepository.save(show);
-
-      // Process tickets for this show
-      const ticketTypes = [];
-      for (const ticketDto of showDto.ticketTypes) {
-        let ticketType;
-        // Create new ticket
-        delete ticketDto.id;
-
-        ticketType = this.ticketTypeRepository.create({
-          ...ticketDto,
-          show,
-          event,
-        });
-
-        ticketTypes.push(await this.ticketTypeRepository.save(ticketType));
-      }
-
-      show.ticketTypes = ticketTypes;
-      shows.push(show);
-    }
-
-    return shows;
   }
 
   async findOne(id: number) {
