@@ -15,7 +15,7 @@ export enum EventStatus {
 
 export enum BusinessType {
   COMPANY = 'COMPANY',
-  INDIVIDUAL = 'INDIVIDUAL',
+  PERSONAL = 'PERSONAL',
 }
 
 export enum AgeRestriction {
