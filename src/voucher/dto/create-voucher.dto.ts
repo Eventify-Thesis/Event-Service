@@ -20,18 +20,17 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 
 class ShowingDto {
-  @IsUUID()
+  @IsNumber()
   @IsNotEmpty()
-  id: string;
+  id: number;
 
   @IsBoolean()
   @IsNotEmpty()
   isAllTicketTypes: boolean;
 
+  @ApiProperty()
   @IsArray()
-  @IsUUID()
-  @IsNotEmpty()
-  ticketTypeIds: string[];
+  ticketTypeIds: number[];
 }
 
 export class CreateVoucherDto {

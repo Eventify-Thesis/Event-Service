@@ -77,9 +77,9 @@ export class Voucher {
 
   @Column('jsonb', { nullable: true, name: 'showing_configs' })
   showingConfigs: {
-    id: string;
+    id: number;
     isAllTicketTypes: boolean;
-    ticketTypeIds: string[];
+    ticketTypeIds: number[];
   }[];
   @Column({ name: 'is_all_showings' })
   isAllShowings: boolean;

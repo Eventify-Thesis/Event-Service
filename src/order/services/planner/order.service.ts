@@ -2,9 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { GetOrdersQuery } from '../../dto/get-orders.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { Order } from '../../entities/order.entity';
+import { Order, OrderStatus } from '../../entities/order.entity';
 import { EmailService } from 'src/email/email.service';
 import { Event } from 'src/event/entities/event.entity';
+import { Seat, SeatStatus } from 'src/seating-plan/entities/seat.entity';
+import { TicketType } from 'src/event/entities/ticket-type.entity';
 
 @Injectable()
 export class PlannerOrderService {
@@ -13,34 +15,49 @@ export class PlannerOrderService {
     private readonly orderRepository: Repository<Order>,
     private readonly dataSource: DataSource,
     private readonly emailService: EmailService,
-  ) { }
+  ) {}
 
   async findAll(eventId, query: GetOrdersQuery) {
-    const { limit = 10, page = 1, keyword, filterFields, showId, ticketTypeId, sortBy, sortDirection } = query;
+    const {
+      limit = 10,
+      page = 1,
+      keyword,
+      filterFields,
+      showId,
+      ticketTypeId,
+      sortBy,
+      sortDirection,
+    } = query;
     const skip = (page - 1) * limit;
 
-    const queryBuilder = this.orderRepository.createQueryBuilder('order')
+    const queryBuilder = this.orderRepository
+      .createQueryBuilder('order')
       .leftJoinAndSelect('order.items', 'items')
-      .leftJoinAndSelect('order.attendees', 'attendees')
+      .leftJoinAndSelect('order.attendees', 'attendees');
 
     queryBuilder.where('order.eventId = :eventId', { eventId });
 
     if (keyword) {
       queryBuilder.andWhere(
         '(order.firstName ILIKE :keyword OR order.lastName ILIKE :keyword OR order.email ILIKE :keyword OR order.bookingCode ILIKE :keyword)',
-        { keyword: `%${keyword}%` }
+        { keyword: `%${keyword}%` },
       );
     }
 
     if (filterFields) {
-      Object.keys(filterFields).forEach(field => {
+      Object.keys(filterFields).forEach((field) => {
         const condition = filterFields[field];
         if (Array.isArray(condition)) {
-          condition.forEach(cond => {
-            queryBuilder.andWhere(`order.${field} ${cond.operator} :${field}`, { [field]: cond.value });
+          condition.forEach((cond) => {
+            queryBuilder.andWhere(`order.${field} ${cond.operator} :${field}`, {
+              [field]: cond.value,
+            });
           });
         } else {
-          queryBuilder.andWhere(`order.${field} ${condition.operator} :${field}`, { [field]: condition.value });
+          queryBuilder.andWhere(
+            `order.${field} ${condition.operator} :${field}`,
+            { [field]: condition.value },
+          );
         }
       });
     }
@@ -50,11 +67,16 @@ export class PlannerOrderService {
     }
 
     if (ticketTypeId) {
-      queryBuilder.andWhere('items.ticketTypeId = :ticketTypeId', { ticketTypeId });
+      queryBuilder.andWhere('items.ticketTypeId = :ticketTypeId', {
+        ticketTypeId,
+      });
     }
 
     if (sortBy) {
-      queryBuilder.orderBy(`order.${sortBy}`, sortDirection === 'desc' ? 'DESC' : 'ASC');
+      queryBuilder.orderBy(
+        `order.${sortBy}`,
+        sortDirection === 'desc' ? 'DESC' : 'ASC',
+      );
     } else {
       queryBuilder.orderBy('order.createdAt', 'DESC'); // Default sorting
     }
@@ -79,7 +101,8 @@ export class PlannerOrderService {
   }
 
   async getDetail(orderId: number) {
-    const order = this.orderRepository.createQueryBuilder('order')
+    const order = this.orderRepository
+      .createQueryBuilder('order')
       .where('order.id = :orderId', { orderId })
       .leftJoinAndSelect('order.items', 'items')
       .leftJoinAndSelect('order.bookingAnswers', 'bookingAnswers')
@@ -90,7 +113,8 @@ export class PlannerOrderService {
   }
 
   async exportOrders(eventId: number) {
-    const queryBuilder = this.orderRepository.createQueryBuilder('order')
+    const queryBuilder = this.orderRepository
+      .createQueryBuilder('order')
       .leftJoinAndSelect('order.items', 'items')
       .leftJoinAndSelect('order.attendees', 'attendees')
       .leftJoinAndSelect('order.bookingAnswers', 'bookingAnswers')
@@ -102,8 +126,43 @@ export class PlannerOrderService {
 
   async sendConfirmation(eventId: number, orderId: number) {
     const order = await this.getDetail(orderId);
-    const event = await this.dataSource.getRepository(Event).findOneByOrFail({ id: eventId });
+    const event = await this.dataSource
+      .getRepository(Event)
+      .findOneByOrFail({ id: eventId });
 
     return this.emailService.sendConfirmation(order, event);
+  }
+
+  async cancelOrder(eventId: number, orderId: number) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    queryRunner.connect();
+    queryRunner.startTransaction();
+    try {
+      const order = await this.getDetail(orderId);
+      const event = await this.dataSource
+        .getRepository(Event)
+        .findOneByOrFail({ id: eventId });
+
+      for (const item of order.items) {
+        if (item.seatId) {
+          await this.dataSource
+            .getRepository(Seat)
+            .update(item.seatId, { status: SeatStatus.AVAILABLE });
+        }
+
+        await this.dataSource
+          .getRepository(TicketType)
+          .decrement({ id: item.ticketTypeId }, 'soldQuantity', item.quantity);
+      }
+
+      order.status = OrderStatus.CANCELLED;
+      await this.orderRepository.save(order);
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
   }
 }
