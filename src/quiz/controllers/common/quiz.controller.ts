@@ -4,51 +4,120 @@ import {
   Get,
   Post,
   Body,
-  Req
+  Req,
+  UseGuards,
+  Query,
+  ParseIntPipe,
 } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
 import { QuizService } from '../../services/quiz.service';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { SubmitAnswerDto } from '../../dto/submit-answer.dto';
+import { QuizUserService } from '../../services/quiz-user.service';
+import { QuizRedisService } from '../../services/quiz-redis.service';
+import { ClerkAuthGuard } from '../../../auth/clerk-auth.guard';
+import RequestWithUser from 'src/auth/role/requestWithUser.interface';
 
-@Controller('quiz')
+@Controller('quizzes')
 @ApiTags('Quiz (Common)')
 export class QuizController {
-  constructor(private readonly quizService: QuizService) { }
+  constructor(
+    private readonly quizService: QuizService,
+    private readonly quizUserService: QuizUserService,
+    private readonly quizRedisService: QuizRedisService,
+  ) {}
 
-  // @MessagePattern('quiz.getShowQuizPublic')
-  // async getShowQuizPublic(@Payload() payload: { showId: number }) {
-  //   return await this.quizService.findByShow(payload.showId);
+  @Get('verify-code/:code')
+  @ApiOperation({ summary: 'Verify a quiz join code' })
+  @ApiParam({ name: 'code', description: 'Join code (6 digits)', type: String })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns whether the code is valid and the quiz ID if valid',
+  })
+  async verifyJoinCode(@Param('code') code: string) {
+    return this.quizRedisService.verifyJoinCode(code);
+  }
+
+  // @Get(':quizId/question/:index')
+  // @ApiOperation({ summary: 'Get a specific question by index' })
+  // @ApiParam({ name: 'quizId', description: 'Quiz ID', type: Number })
+  // @ApiParam({ name: 'index', description: 'Question index', type: Number })
+  // @ApiResponse({
+  //   status: 200,
+  //   description: 'Returns the question at specified index',
+  // })
+  // async getQuestionByIndex(
+  //   @Param('quizId', ParseIntPipe) quizId: number,
+  //   @Param('index', ParseIntPipe) index: number,
+  // ) {
+  //   return this.quizUserService.getCurrentQuestion(quizId, index);
   // }
 
-  // @MessagePattern('quiz.submitAnswer') 
+  // @Post('answer/submit')
+  // @UseGuards(ClerkAuthGuard)
+  // @ApiOperation({ summary: 'Submit an answer to a quiz question' })
+  // @ApiResponse({ status: 200, description: 'Returns answer result' })
   // async submitAnswer(
-  //   @Payload() payload: { 
-  //     questionId: number;
-  //     selectedOption: number;
-  //     userId: string;
-  //     timeTaken?: number;
-  //   }
+  //   @Body() dto: SubmitAnswerDto,
+  //   @Req() req: RequestWithUser,
   // ) {
-  //   return await this.quizService.submitAnswer(
-  //     payload.questionId,
-  //     payload.selectedOption,
-  //     payload.userId,
-  //     payload.timeTaken || 0
+  //   const userId = req.user.id;
+  //   return this.quizUserService.submitAnswer(dto, userId);
+  // }
+
+  // @Get(':quizId/progress')
+  // @UseGuards(ClerkAuthGuard)
+  // @ApiOperation({ summary: 'Get user quiz progress' })
+  // @ApiParam({ name: 'quizId', description: 'Quiz ID', type: Number })
+  // @ApiResponse({
+  //   status: 200,
+  //   description: 'Returns user progress in the quiz',
+  // })
+  // async getProgress(
+  //   @Param('quizId', ParseIntPipe) quizId: number,
+  //   @Req() req: RequestWithUser,
+  // ) {
+  //   const userId = req.user.id;
+  //   return this.quizUserService.getQuizProgress(quizId, userId);
+  // }
+
+  // @Get(':quizId/leaderboard')
+  // @ApiOperation({ summary: 'Get quiz leaderboard' })
+  // @ApiParam({ name: 'quizId', description: 'Quiz ID', type: Number })
+  // @ApiQuery({
+  //   name: 'limit',
+  //   required: false,
+  //   description: 'Number of results to return',
+  // })
+  // @ApiResponse({ status: 200, description: 'Returns quiz leaderboard' })
+  // async getLeaderboard(
+  //   @Param('quizId', ParseIntPipe) quizId: number,
+  //   @Query('limit') limit?: number,
+  // ) {
+  //   return this.quizUserService.getLeaderboardSnapshot(
+  //     quizId,
+  //     limit ? parseInt(limit.toString()) : 10,
   //   );
   // }
 
-  // @MessagePattern('quiz.getResults')
-  // async getQuizResults(
-  //   @Payload() payload: { showId: number, userId: string }
+  // @Get(':quizId/results')
+  // @UseGuards(ClerkAuthGuard)
+  // @ApiOperation({ summary: 'Get user quiz results' })
+  // @ApiParam({ name: 'quizId', description: 'Quiz ID', type: Number })
+  // @ApiResponse({
+  //   status: 200,
+  //   description: 'Returns user results for the quiz',
+  // })
+  // async getResults(
+  //   @Param('quizId', ParseIntPipe) quizId: number,
+  //   @Req() req: RequestWithUser,
   // ) {
-  //   return await this.quizService.getResults(payload.showId, payload.userId);
-  // }
-
-  // @MessagePattern('quiz.getLeaderboard')
-  // async getLeaderboard(
-  //   @Payload() payload: { showId: number }
-  // ) {
-  //   return await this.quizService.getLeaderboard(payload.showId);
+  //   const userId = req.user.id;
+  //   return this.quizService.getQuizResults(quizId, userId);
   // }
 }

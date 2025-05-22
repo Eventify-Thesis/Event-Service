@@ -6,14 +6,35 @@ import { QuizAnswer } from './entities/quiz-answer.entity';
 import { QuizController } from './controllers/common/quiz.controller';
 import { QuizController as PlannerQuizController } from './controllers/planner/quiz.controller';
 import { QuizService } from './services/quiz.service';
+import { QuizUserService } from './services/quiz-user.service';
+import { QuizRedisService } from './services/quiz-redis.service';
 import { QuizRepository } from './repositories/quiz.repository';
 import { Show } from '../event/entities/show.entity';
 import { QuizResult } from './entities/quiz-result.entity';
+import { QuizGateway } from './gateways/quiz.gateway';
+import { RedisModule } from '../redis/redis.module';
+import { QuizPlannerGateway } from './gateways/quiz-planner.gateway';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Quiz, QuizQuestion, QuizAnswer, Show, QuizResult])],
+  imports: [
+    TypeOrmModule.forFeature([
+      Quiz,
+      QuizQuestion,
+      QuizAnswer,
+      Show,
+      QuizResult,
+    ]),
+    RedisModule,
+  ],
   controllers: [QuizController, PlannerQuizController],
-  providers: [QuizService, QuizRepository],
-  exports: [QuizService]
+  providers: [
+    QuizService,
+    QuizUserService,
+    QuizRedisService,
+    QuizRepository,
+    QuizGateway,
+    QuizPlannerGateway,
+  ],
+  exports: [QuizService, QuizUserService, QuizRedisService],
 })
-export class QuizModule { }
+export class QuizModule {}

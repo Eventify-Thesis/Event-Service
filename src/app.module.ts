@@ -28,6 +28,7 @@ import { QuizModule } from './quiz/quiz.module';
 import * as handlebarsHelpers from 'handlebars-helpers';
 import { ShowScheduleModule } from './show-schedule/show-schedule.module';
 import { KanbanModule } from './kanban/kanban.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -92,8 +93,9 @@ import { KanbanModule } from './kanban/kanban.module';
     QuizModule,
     ShowScheduleModule,
     KanbanModule,
+    RedisModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],
 })
-export class AppModule { }
+export class AppModule {}
