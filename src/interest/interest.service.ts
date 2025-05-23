@@ -10,6 +10,16 @@ export class InterestService {
   constructor(
     @InjectRepository(Interest)
     private readonly interestRepository: Repository<Interest>,
+    @InjectRepository(require('../event/entities/ticket-type.entity').TicketType)
+    private readonly ticketTypeRepository: Repository<any>,
+    @InjectRepository(require('../event/entities/show.entity').Show)
+    private readonly showRepository: Repository<any>,
+    @InjectRepository(require('../location/entities/city.entity').City)
+    private readonly cityRepository: Repository<any>,
+    @InjectRepository(require('../location/entities/district.entity').District)
+    private readonly districtRepository: Repository<any>,
+    @InjectRepository(require('../location/entities/ward.entity').Ward)
+    private readonly wardRepository: Repository<any>,
   ) {}
 
   async checkExist(userId: string, eventId: number): Promise<boolean> {
@@ -30,20 +40,95 @@ export class InterestService {
     return await this.interestRepository.save(interest);
   }
 
-  async findAllFavourite(userId: string) {
-    return await this.interestRepository.find({ where: { userId } });
-  }
+  async findAllInterest(userId: string, paramPagination: { page?: number; limit?: number }) {
+    const page = paramPagination?.page ?? 1;
+    const limit = paramPagination?.limit ?? 10;
+    const skip = (page - 1) * limit;
 
-  async findOne(userId: string, eventId: number) {
-    const interest = await this.interestRepository.findOne({
-      where: { userId, eventId },
-    });
+    const queryBuilder = this.interestRepository.createQueryBuilder('interest')
+      .leftJoin('interest.event', 'event')
+      .where('interest.userId = :userId', { userId })
+      .select([
+        'interest.id',
+        'interest.userId',
+        'interest.eventId',
+        'interest.createdAt',
+        'interest.updatedAt',
+        'event.eventName',
+        'event.eventDescription',
+        'event.eventType',
+        'event.status',
+        'event.eventLogoUrl',
+        'event.eventBannerUrl',
+        'event.venueName',
+        'event.street',
+        'event.categories',
+        'event.cityId',
+        'event.districtId',
+        'event.wardId',
+      ])
+      .orderBy('interest.createdAt', 'DESC')
+      .skip(skip)
+      .take(limit);
 
-    if (!interest) {
-      throw new BadRequestException(MESSAGE.INTEREST_NOT_FOUND);
-    }
+    const [docs, totalDocs] = await queryBuilder.getManyAndCount();
 
-    return interest;
+    // Enrich each event with lowest_price and soonest_start_time
+    const enrichedDocs = await Promise.all(docs.map(async (doc: any) => {
+      // Get all ticket types for this event
+      const ticketTypes = await this.ticketTypeRepository.find({ where: { eventId: doc.eventId } });
+      let lowest_price = null;
+      if (ticketTypes.some(t => t.isFree)) {
+        lowest_price = 0;
+      } else {
+        lowest_price = ticketTypes.length > 0 ? Math.min(...ticketTypes.map(t => Number(t.price))) : null;
+      }
+
+      // Get all shows for this event
+      const shows = await this.showRepository.find({ where: { eventId: doc.eventId } });
+      let soonest_start_time = null;
+      if (shows.length > 0) {
+        soonest_start_time = Math.min(...shows.map(s => new Date(s.startTime).getTime()));
+        soonest_start_time = new Date(soonest_start_time);
+      }
+
+      // Get city, district, ward names
+      let cityNameEn = null, districtNameEn = null, wardNameEn = null;
+      if (doc.event && doc.event.cityId) {
+        const city = await this.cityRepository.findOne({ where: { originId: doc.event.cityId } });
+        cityNameEn = city?.nameEn || null;
+      }
+      if (doc.event && doc.event.districtId) {
+        const district = await this.districtRepository.findOne({ where: { originId: doc.event.districtId } });
+        districtNameEn = district?.nameEn || null;
+      }
+      if (doc.event && doc.event.wardId) {
+        const ward = await this.wardRepository.findOne({ where: { originId: doc.event.wardId } });
+        wardNameEn = ward?.nameEn || null;
+      }
+
+      return {
+        ...doc,
+        lowest_price,
+        soonest_start_time,
+        city: cityNameEn,
+        district: districtNameEn,
+        ward: wardNameEn,
+      };
+    }));
+
+    return {
+      docs: enrichedDocs,
+      totalDocs,
+      limit,
+      totalPages: Math.ceil(totalDocs / limit),
+      page,
+      pagingCounter: skip + 1,
+      hasPrevPage: page > 1,
+      hasNextPage: skip + limit < totalDocs,
+      prevPage: page > 1 ? page - 1 : null,
+      nextPage: skip + limit < totalDocs ? page + 1 : null,
+    };
   }
 
   async remove(userId: string, eventId: number) {
