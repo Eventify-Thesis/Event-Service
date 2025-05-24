@@ -73,23 +73,23 @@ export class InterestService {
 
     const [docs, totalDocs] = await queryBuilder.getManyAndCount();
 
-    // Enrich each event with lowest_price and soonest_start_time
+    // Enrich each event with minimumPrice and startTime
     const enrichedDocs = await Promise.all(docs.map(async (doc: any) => {
       // Get all ticket types for this event
       const ticketTypes = await this.ticketTypeRepository.find({ where: { eventId: doc.eventId } });
-      let lowest_price = null;
+      let minimumPrice = null;
       if (ticketTypes.some(t => t.isFree)) {
-        lowest_price = 0;
+        minimumPrice = 0;
       } else {
-        lowest_price = ticketTypes.length > 0 ? Math.min(...ticketTypes.map(t => Number(t.price))) : null;
+        minimumPrice = ticketTypes.length > 0 ? Math.min(...ticketTypes.map(t => Number(t.price))) : null;
       }
 
       // Get all shows for this event
       const shows = await this.showRepository.find({ where: { eventId: doc.eventId } });
-      let soonest_start_time = null;
+      let startTime = null;
       if (shows.length > 0) {
-        soonest_start_time = Math.min(...shows.map(s => new Date(s.startTime).getTime()));
-        soonest_start_time = new Date(soonest_start_time);
+        startTime = Math.min(...shows.map(s => new Date(s.startTime).getTime()));
+        startTime = new Date(startTime);
       }
 
       // Get city, district, ward names
@@ -109,8 +109,8 @@ export class InterestService {
 
       return {
         ...doc,
-        lowest_price,
-        soonest_start_time,
+        minimumPrice,
+        startTime,
         city: cityNameEn,
         district: districtNameEn,
         ward: wardNameEn,
