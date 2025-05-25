@@ -9,7 +9,7 @@ export class OrderService {
   constructor(
     @InjectRepository(Order)
     private readonly orderRepository: Repository<Order>,
-  ) { }
+  ) {}
 
   async getUserOrders(userId: string, query: GetOrdersQuery) {
     const {
@@ -20,29 +20,33 @@ export class OrderService {
       sortBy,
       sortDirection,
       time,
-      status
+      status,
     } = query;
     const skip = (page - 1) * limit;
 
     // Initialize query builder with necessary joins
-    const queryBuilder = this.orderRepository.createQueryBuilder('order')
+    const queryBuilder = this.orderRepository
+      .createQueryBuilder('order')
       .leftJoin('order.show', 'show')
       .leftJoin('order.event', 'event')
+      .leftJoin('event.setting', 'setting')
       .select([
         'order.id',
+        'order.eventId',
         'order.publicId',
         'order.createdAt',
         'order.status',
+        'show.id',
         'show.startTime',
         'show.endTime',
         'event.eventName',
         'event.venueName',
-        'event.eventBannerUrl'
+        'event.eventBannerUrl',
+        'setting.url',
       ])
       .where('order.userId = :userId', { userId });
 
-
-    if (status && status !== "ALL") {
+    if (status && status !== 'ALL') {
       queryBuilder.andWhere('order.status = :status', { status });
     }
 
@@ -60,7 +64,7 @@ export class OrderService {
     if (keyword) {
       queryBuilder.andWhere(
         '(order.firstName ILIKE :keyword OR order.lastName ILIKE :keyword OR order.email ILIKE :keyword OR order.bookingCode ILIKE :keyword)',
-        { keyword: `%${keyword}%` }
+        { keyword: `%${keyword}%` },
       );
     }
 
@@ -72,13 +76,13 @@ export class OrderService {
             const paramName = `${field}_${index}`;
             queryBuilder.andWhere(
               `order.${field} ${cond.operator} :${paramName}`,
-              { [paramName]: cond.value }
+              { [paramName]: cond.value },
             );
           });
         } else {
           queryBuilder.andWhere(
             `order.${field} ${conditions.operator} :${field}`,
-            { [field]: conditions.value }
+            { [field]: conditions.value },
           );
         }
       });
@@ -86,7 +90,10 @@ export class OrderService {
 
     // Apply sorting
     if (sortBy) {
-      queryBuilder.orderBy(`order.${sortBy}`, sortDirection === 'desc' ? 'DESC' : 'ASC');
+      queryBuilder.orderBy(
+        `order.${sortBy}`,
+        sortDirection === 'desc' ? 'DESC' : 'ASC',
+      );
     } else {
       queryBuilder.orderBy('order.createdAt', 'DESC');
     }
@@ -113,7 +120,8 @@ export class OrderService {
   }
 
   async getOrderDetail(orderPublicId: string) {
-    const order = this.orderRepository.createQueryBuilder('order')
+    const order = this.orderRepository
+      .createQueryBuilder('order')
       .where('order.publicId = :orderPublicId', { orderPublicId })
       .leftJoinAndSelect('order.items', 'items')
       .leftJoinAndSelect('order.attendees', 'attendees')

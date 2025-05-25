@@ -12,7 +12,6 @@ import { Server, Socket } from 'socket.io';
 import { QuizUserService } from '../services/quiz-user.service';
 import { QuizRedisService } from '../services/quiz-redis.service';
 import { SubmitAnswerDto } from '../dto/submit-answer.dto';
-import { UseGuards, Inject } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
 
 interface AuthenticatedSocket extends Socket {
@@ -42,20 +41,45 @@ export class QuizPlannerGateway
 
   async handleConnection(client: AuthenticatedSocket) {
     try {
-      // Authentication would be handled here in a real app
-      // For now, we just use the client ID as user ID
+      if (!client.handshake.auth.isHost) {
+        return;
+      }
+
+      // Set up user data from auth information
       client.user = {
-        userId: client.id,
-        username: `User-${client.id.substring(0, 5)}`,
+        userId: client.handshake.auth.userId || client.id,
+        username:
+          client.handshake.auth.username || `Host-${client.id.substring(0, 5)}`,
         code: client.handshake.auth.code,
-        isHost: client.handshake.auth.isHost,
+        isHost: true, // Force isHost to true for this gateway
       };
 
+      const quizState = await this.quizRedisService.getQuizState(
+        client.user.code,
+      );
 
-      this.logger.log(`Client connected: ${client.id}`);
+      if (quizState.isActive) {
+        client.emit('updateGameState', {
+          code: client.user.code,
+          questionIndex: quizState.currentQuestionIndex,
+          question: quizState.questions[quizState.currentQuestionIndex],
+          timeLimit:
+            quizState.questions[quizState.currentQuestionIndex].timeLimit,
+          participants: quizState.participants,
+          currentQuestionStartTime: quizState.currentQuestionStartTime,
+        });
+      }
+
+      if (client.user.code && quizState) {
+        client.join(client.user.code);
+      }
+
+      this.logger.log(
+        `Host connected: ${client.id} for quiz code: ${client.user.code}`,
+      );
     } catch (error) {
       this.logger.error(
-        `Error handling connection: ${error.message}`,
+        `Error handling host connection: ${error.message}`,
         error.stack,
       );
       client.disconnect();
@@ -63,34 +87,105 @@ export class QuizPlannerGateway
   }
 
   handleDisconnect(client: AuthenticatedSocket) {
-    console.log('Client disconnected: ', client.user);
-    if (client.user) {
-      if (client.user.isHost) {
-        this.server.to(client.user.code).emit('hostDisconnected');
-        this.quizRedisService.clearQuizState(client.user.code);
-        this.logger.log(`Host disconnected: ${client.id}`);
+    try {
+      if (client.user && client.user.code) {
+        // Always treat disconnections in this gateway as host disconnections
+        this.server.to(client.user.code).emit('hostDisconnected', {
+          message: 'The quiz host has disconnected',
+          timestamp: Date.now(),
+        });
+
+        // Optionally clear quiz state - commented out to allow reconnection
+        // this.quizRedisService.clearQuizState(client.user.code);
+
+        this.logger.log(
+          `Host disconnected: ${client.id} from quiz code: ${client.user.code}`,
+        );
       } else {
-        this.logger.log(`Client disconnected: ${client.id}`);
+        this.logger.log(`Unknown client disconnected: ${client.id}`);
       }
+    } catch (error) {
+      this.logger.error(
+        `Error handling host disconnection: ${error.message}`,
+        error.stack,
+      );
+    }
+  }
+
+  @SubscribeMessage('hostJoinedQuiz')
+  async handleHostJoinedQuiz(
+    @ConnectedSocket() client: AuthenticatedSocket,
+    @MessageBody() data: { code: string },
+  ) {
+    try {
+      // Verify this is a host
+      if (!client.user || !client.user.isHost) {
+        throw new WsException('Unauthorized: Only hosts can initialize a quiz');
+      }
+
+      // Make sure we have a code
+      if (!data.code) {
+        throw new WsException('Quiz code is required');
+      }
+
+      // Ensure the client's code matches the event code
+      if (client.user.code !== data.code) {
+        client.user.code = data.code;
+        client.join(data.code);
+      }
+
+      // Initialize or retrieve the quiz state in Redis
+      let quizState = await this.quizRedisService.getQuizState(data.code);
+
+      if (!quizState) {
+        // Initialize new quiz state if none exists
+        await this.quizRedisService.updateQuizState(data.code, {
+          isActive: true,
+          startTime: Date.now(),
+          currentQuestionIndex: 0,
+          participants: [],
+        });
+
+        quizState = await this.quizRedisService.getQuizState(data.code);
+      }
+
+      // Notify all clients in the room that the host has joined
+      this.server.to(data.code).emit('hostJoinedQuiz', {
+        code: data.code,
+        quizState,
+        timestamp: Date.now(),
+      });
+
+      this.logger.log(`Host initialized quiz: ${data.code}`);
+      return { event: 'hostJoinedQuiz', data: { success: true, quizState } };
+    } catch (error) {
+      this.logger.error(
+        `Error in hostJoinedQuiz: ${error.message}`,
+        error.stack,
+      );
+      return { event: 'error', data: { message: error.message } };
     }
   }
 
   @SubscribeMessage('startQuiz')
   async handleStartQuiz(
     @ConnectedSocket() client: AuthenticatedSocket,
-    @MessageBody() data: { quizId: number; code: string },
+    @MessageBody() data: { code: string },
   ) {
     try {
+      this.logger.log(`Host started quiz: ${data.code}`);
       // Initialize the quiz state in Redis
       await this.quizRedisService.updateQuizState(data.code, {
         isActive: true,
         startTime: Date.now(),
         currentQuestionIndex: 0,
+        currentQuestionStartTime: Date.now(),
       });
 
-      // Notify all clients in the room that the quiz has started
+      this.logger.log(`Quiz started: ${data.code}`);
+
       this.server.to(data.code).emit('quizStarted', {
-        quizId: data.quizId,
+        code: data.code,
         startTime: Date.now(),
       });
 
@@ -131,14 +226,80 @@ export class QuizPlannerGateway
     }
   }
 
+  @SubscribeMessage('questionTimeUp')
+  async handleQuestionTimeUp(
+    @ConnectedSocket() client: AuthenticatedSocket,
+    @MessageBody() data: { code: string; questionIndex: number },
+  ) {
+    try {
+      const quizState = await this.quizRedisService.getQuizState(data.code);
+      if (!quizState) {
+        throw new WsException('Quiz not found');
+      }
+
+      const questionIndex = data.questionIndex;
+      const question = quizState.questions[questionIndex];
+
+      this.server.to(data.code).emit('questionTimeUp', {
+        code: data.code,
+        questionIndex,
+        question,
+      });
+    } catch (error) {
+      this.logger.error(
+        `Error handling question time up: ${error.message}`,
+        error.stack,
+      );
+    }
+  }
+
+  @SubscribeMessage('endQuestion')
+  async handleEndQuestion(
+    @ConnectedSocket() client: AuthenticatedSocket,
+    @MessageBody() data: { code: string },
+  ) {
+    try {
+      const quizState = await this.quizRedisService.getQuizState(data.code);
+      if (!quizState) {
+        throw new WsException('Quiz not found');
+      }
+
+      const leaderboard = await this.quizRedisService.getLeaderboard(data.code);
+
+      this.server.to(data.code).emit('questionEnded', {
+        code: data.code,
+        leaderboard,
+        participants: quizState.participants,
+      });
+
+      this.server.to(data.code).emit('updateGameState', {
+        code: data.code,
+        questionIndex: quizState.currentQuestionIndex,
+        question: quizState.questions[quizState.currentQuestionIndex],
+        timeLimit:
+          quizState.questions[quizState.currentQuestionIndex].timeLimit,
+        currentQuestionStartTime: quizState.currentQuestionStartTime,
+        participants: quizState.participants,
+      });
+    } catch (error) {
+      this.logger.error(`Error ending question: ${error.message}`, error.stack);
+    }
+  }
+
   @SubscribeMessage('nextQuestion')
   async handleNextQuestion(
     @ConnectedSocket() client: AuthenticatedSocket,
     @MessageBody() data: { code: string },
   ) {
     try {
+      // Validate that this is a host
       if (!client.user || !client.user.isHost) {
         throw new WsException('Unauthorized: Only hosts can advance questions');
+      }
+
+      // Ensure we have a code
+      if (!data.code) {
+        throw new WsException('Quiz code is required');
       }
 
       // Get current quiz state
@@ -151,7 +312,10 @@ export class QuizPlannerGateway
       const nextQuestionIndex = quizState.currentQuestionIndex + 1;
 
       // Check if we're at the end of the quiz
-      if (nextQuestionIndex >= quizState.questions.length) {
+      if (
+        !quizState.questions ||
+        nextQuestionIndex >= quizState.questions.length
+      ) {
         // End the quiz
         await this.quizRedisService.endQuiz(data.code);
 
@@ -165,9 +329,11 @@ export class QuizPlannerGateway
           code: data.code,
           endTime: Date.now(),
           leaderboard,
+          message: 'Quiz has ended',
         });
 
-        return { event: 'quizEnded', data: { success: true } };
+        this.logger.log(`Quiz ended: ${data.code}`);
+        return { event: 'quizEnded', data: { success: true, leaderboard } };
       }
 
       // Update the current question index
@@ -181,19 +347,36 @@ export class QuizPlannerGateway
       const timeLimit = nextQuestion.timeLimit || 30;
 
       // Notify all clients
-      this.server.to(data.code).emit('questionStarted', {
+      this.server.to(data.code).emit('nextQuestion', {
+        code: data.code,
         questionIndex: nextQuestionIndex,
         question: nextQuestion,
         timeLimit,
         totalQuestions: quizState.questions.length,
+        currentQuestionStartTime: quizState.currentQuestionStartTime,
+        timestamp: Date.now(),
       });
 
+      this.server.to(data.code).emit('updateGameState', {
+        code: data.code,
+        questionIndex: nextQuestionIndex,
+        question: nextQuestion,
+        timeLimit,
+        participants: quizState.participants,
+        totalQuestions: quizState.questions.length,
+        currentQuestionStartTime: quizState.currentQuestionStartTime,
+      });
+
+      this.logger.log(
+        `Advanced to question ${nextQuestionIndex + 1} for quiz: ${data.code}`,
+      );
       return {
-        event: 'nextQuestion',
+        event: 'nextQuestionStarted',
         data: {
           success: true,
           currentQuestionIndex: nextQuestionIndex,
           timeLimit,
+          totalQuestions: quizState.questions.length,
         },
       };
     } catch (error) {

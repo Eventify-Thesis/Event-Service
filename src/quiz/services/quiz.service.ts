@@ -33,9 +33,11 @@ export class QuizService {
     @InjectRepository(QuizAnswer)
     private readonly quizAnswerRepository: Repository<QuizAnswer>,
     @InjectRepository(QuizResult)
-    private readonly quizResultRepository: Repository<QuizResult>
+    private readonly quizResultRepository: Repository<QuizResult>,
   ) {
-    this.genAI = new GoogleGenerativeAI(this.configService.get('GEMINI_API_KEY'));
+    this.genAI = new GoogleGenerativeAI(
+      this.configService.get('GEMINI_API_KEY'),
+    );
     this.model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
   }
 
@@ -90,7 +92,7 @@ export class QuizService {
   async create(eventId: number, createQuizDto: CreateQuizDto) {
     const quiz = this.quizRepository.create({
       eventId,
-      ...createQuizDto
+      ...createQuizDto,
     });
 
     return this.quizRepository.save(quiz);
@@ -107,7 +109,9 @@ export class QuizService {
       .orderBy('quiz.createdAt', 'DESC');
 
     if (query.eventId) {
-      queryBuilder.andWhere('quiz.eventId = :eventId', { eventId: query.eventId });
+      queryBuilder.andWhere('quiz.eventId = :eventId', {
+        eventId: query.eventId,
+      });
     }
 
     if (query.showId) {
@@ -154,38 +158,17 @@ export class QuizService {
   async findById(id: number): Promise<Quiz> {
     return this.quizRepository.findOne({
       where: { id },
-      relations: ['questions', 'results']
+      relations: ['questions', 'results'],
     });
-  }
-
-  async submitAnswer(questionId: number, selectedOption: number, userId: string, timeTaken: number) {
-    const question = await this.quizQuestionRepository.findOne({
-      where: { id: questionId },
-      relations: ['quiz']
-    });
-
-    const isCorrect = selectedOption === question.correctOption;
-    const score = isCorrect ? this.calculateScore(question.timeLimit, timeTaken) : 0;
-
-    await this.quizAnswerRepository.save({
-      question,
-      userId,
-      selectedOption,
-      isCorrect,
-      score,
-      timeTaken
-    });
-
-    return { isCorrect, score };
   }
 
   async getResults(showId: number, userId: string) {
     return this.quizAnswerRepository.find({
       where: {
         question: { quiz: { show: { id: showId } } },
-        userId: userId
+        userId: userId,
       },
-      relations: ['question']
+      relations: ['question'],
     });
   }
 
@@ -201,46 +184,6 @@ export class QuizService {
       .orderBy('totalScore', 'DESC')
       .limit(10)
       .getRawMany();
-  }
-
-  async submitQuiz(submitQuizDto: SubmitQuizDto, userId: string) {
-    const quiz = await this.quizRepository.findOne({
-      where: { id: submitQuizDto.quizId },
-      relations: ['questions']
-    });
-
-    // Calculate total score
-    let totalScore = 0;
-    const answers = [];
-
-    for (const answer of submitQuizDto.answers) {
-      const question = quiz.questions.find(q => q.id === answer.questionId);
-      const isCorrect = answer.selectedOption === question.correctOption;
-      const score = isCorrect ? this.calculateScore(question.timeLimit, answer.timeTaken) : 0;
-      totalScore += score;
-
-      answers.push({
-        question,
-        userId,
-        selectedOption: answer.selectedOption,
-        isCorrect,
-        score,
-        timeTaken: answer.timeTaken
-      });
-    }
-
-    // Save all answers
-    await this.quizAnswerRepository.save(answers);
-
-    return {
-      totalScore,
-    };
-  }
-
-  private calculateScore(timeLimit: number, timeTaken: number): number {
-    // Calculate score based on speed (faster = higher score)
-    const timeRatio = Math.max(0, (timeLimit - timeTaken) / timeLimit);
-    return Math.floor(100 * (0.5 + 0.5 * timeRatio)); // Base 50 + up to 50 bonus for speed
   }
 
   async update(quizId: number, updateQuizDto: UpdateQuizDto) {
@@ -261,7 +204,7 @@ export class QuizService {
     const [answers, stats] = await Promise.all([
       this.quizAnswerRepository.find({
         where: { question: { quiz: { id: quizId } } },
-        relations: ['question']
+        relations: ['question'],
       }),
       this.quizAnswerRepository
         .createQueryBuilder('answer')
@@ -269,57 +212,13 @@ export class QuizService {
         .addSelect('AVG(answer.score)', 'averageScore')
         .innerJoin('answer.question', 'question')
         .where('question.quizId = :quizId', { quizId })
-        .getRawOne()
+        .getRawOne(),
     ]);
 
     return {
       stats,
-      answers
+      answers,
     };
-  }
-
-  async submitQuizAnswers(quizId: number, userId: string, answers: SubmitAnswerDto[]) {
-    const previousAttempts = await this.quizResultRepository.count({
-      where: { quiz: { id: quizId }, userId }
-    });
-
-    const quiz = await this.quizRepository.findOneBy({ id: quizId });
-
-    // Calculate score
-    const questions = await this.quizQuestionRepository.find({ where: { quiz: { id: quizId } } });
-    const totalQuestions = questions.length;
-    let correctAnswers = 0;
-
-    // Save answers and check correctness
-    for (const answer of answers) {
-      const question = questions.find(q => q.id === answer.questionId);
-      const isCorrect = question?.correctOption === answer.selectedOption;
-
-      if (isCorrect) correctAnswers++;
-
-      await this.quizAnswerRepository.save({
-        question: { id: answer.questionId },
-        userId,
-        selectedOption: answer.selectedOption,
-        isCorrect,
-        timeTaken: answer.timeTaken
-      });
-    }
-
-    // Calculate score and pass status
-    const score = Math.round((correctAnswers / totalQuestions) * 100);
-
-    // Save quiz result
-    const result = await this.quizResultRepository.save({
-      quiz: { id: quizId },
-      userId,
-      score,
-      totalQuestions,
-      correctAnswers,
-      timeTaken: answers.reduce((sum, a) => sum + a.timeTaken, 0),
-    });
-
-    return result;
   }
 
   async getQuizResults(quizId: number, userId?: string) {
@@ -328,25 +227,36 @@ export class QuizService {
 
     return this.quizResultRepository.find({
       where,
-      order: { completedAt: 'DESC' }
+      order: { completedAt: 'DESC' },
     });
   }
 
   async createQuestion(quizId: number, questionData: CreateQuizQuestionDto) {
-    const question = this.quizQuestionRepository.create({ ...questionData, quizId });
+    const question = this.quizQuestionRepository.create({
+      ...questionData,
+      quizId,
+    });
     return this.quizQuestionRepository.save(question);
   }
 
   async getQuestions(quizId: number) {
-    return this.quizQuestionRepository.find({ where: { quiz: { id: quizId } } });
+    return this.quizQuestionRepository.find({
+      where: { quiz: { id: quizId } },
+    });
   }
 
   async getQuestion(questionId: number) {
     return this.quizQuestionRepository.findOne({ where: { id: questionId } });
   }
 
-  async updateQuestion(quizId: number, questionId: number, questionData: UpdateQuizQuestionDto) {
-    const question = await this.quizQuestionRepository.findOne({ where: { id: questionId } });
+  async updateQuestion(
+    quizId: number,
+    questionId: number,
+    questionData: UpdateQuizQuestionDto,
+  ) {
+    const question = await this.quizQuestionRepository.findOne({
+      where: { id: questionId },
+    });
     return this.quizQuestionRepository.update(questionId, questionData);
   }
 

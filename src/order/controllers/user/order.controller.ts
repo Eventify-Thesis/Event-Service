@@ -5,12 +5,10 @@ import { Controller } from '@nestjs/common';
 
 @Controller()
 export class OrderController {
-  constructor(private readonly orderService: OrderService) { }
+  constructor(private readonly orderService: OrderService) {}
 
   @MessagePattern('getUserOrders')
-  findAll(
-    @Payload() data: { userId: string, query: GetOrdersQuery },
-  ) {
+  findAll(@Payload() data: { userId: string; query: GetOrdersQuery }) {
     return this.orderService.getUserOrders(data.userId, data.query);
   }
 

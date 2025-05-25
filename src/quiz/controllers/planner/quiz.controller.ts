@@ -151,19 +151,6 @@ export class QuizController {
     return await this.quizService.getQuizAnalytics(quizId);
   }
 
-  @Post(':quizId/submit')
-  async submitAnswers(
-    @Param('quizId') quizId: number,
-    @Body() submitAnswerDto: SubmitAnswerDto[],
-  ) {
-    const userId = 'temp-user-id';
-    return await this.quizService.submitQuizAnswers(
-      quizId,
-      userId,
-      submitAnswerDto,
-    );
-  }
-
   @Get(':quizId/results')
   async getResults(@Param('quizId') quizId: number) {
     return await this.quizService.getQuizResults(quizId);
