@@ -2,6 +2,11 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Interest } from './entities/interest.entity';
+import { TicketType } from '../event/entities/ticket-type.entity';
+import { Show } from '../event/entities/show.entity';
+import { City } from '../location/entities/city.entity';
+import { District } from '../location/entities/district.entity';
+import { Ward } from '../location/entities/ward.entity';
 import { CreateInterestDto } from './dto/create-interest.dto';
 import { MESSAGE } from './interest.constant';
 
@@ -10,16 +15,16 @@ export class InterestService {
   constructor(
     @InjectRepository(Interest)
     private readonly interestRepository: Repository<Interest>,
-    @InjectRepository(require('../event/entities/ticket-type.entity').TicketType)
-    private readonly ticketTypeRepository: Repository<any>,
-    @InjectRepository(require('../event/entities/show.entity').Show)
-    private readonly showRepository: Repository<any>,
-    @InjectRepository(require('../location/entities/city.entity').City)
-    private readonly cityRepository: Repository<any>,
-    @InjectRepository(require('../location/entities/district.entity').District)
-    private readonly districtRepository: Repository<any>,
-    @InjectRepository(require('../location/entities/ward.entity').Ward)
-    private readonly wardRepository: Repository<any>,
+    @InjectRepository(TicketType)
+    private readonly ticketTypeRepository: Repository<TicketType>,
+    @InjectRepository(Show)
+    private readonly showRepository: Repository<Show>,
+    @InjectRepository(City)
+    private readonly cityRepository: Repository<City>,
+    @InjectRepository(District)
+    private readonly districtRepository: Repository<District>,
+    @InjectRepository(Ward)
+    private readonly wardRepository: Repository<Ward>,
   ) {}
 
   async checkExist(userId: string, eventId: number): Promise<boolean> {
