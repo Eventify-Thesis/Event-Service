@@ -5,13 +5,12 @@ import { PlannerShowScheduleController } from './controllers/planner/show-schedu
 import { ShowSchedule } from './entities/show-schedule.entity';
 import { Show } from 'src/event/entities/show.entity';
 import { ShowService } from './show.service';
+import { CommonShowScheduleController } from './controllers/common/show-schedule.controller';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([ShowSchedule, Show]),
-  ],
-  controllers: [PlannerShowScheduleController],
+  imports: [TypeOrmModule.forFeature([ShowSchedule, Show])],
+  controllers: [PlannerShowScheduleController, CommonShowScheduleController],
   providers: [ShowScheduleService, ShowService],
   exports: [ShowScheduleService],
 })
-export class ShowScheduleModule { }
+export class ShowScheduleModule {}

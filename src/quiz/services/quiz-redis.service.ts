@@ -12,6 +12,7 @@ export interface QuizGameState {
   startTime: number;
   endTime?: number;
   isActive: boolean;
+  currentQuestionStartTime: number;
   participants: {
     userId: string;
     username?: string;
@@ -165,7 +166,8 @@ export class QuizRedisService {
       quizId,
       currentQuestionIndex: 0,
       startTime: Date.now(),
-      isActive: true,
+      isActive: false,
+      currentQuestionStartTime: 0,
       participants: [],
       questions: [],
     };
@@ -232,9 +234,7 @@ export class QuizRedisService {
     code: string,
     questionId: number,
     selectedOption: number,
-    isCorrect: boolean,
     timeTaken: number,
-    score: number,
   ): Promise<UserGameState> {
     const userState = (await this.getUserState(userId, code)) || {
       userId,
@@ -245,16 +245,26 @@ export class QuizRedisService {
       answers: [],
     };
 
+    const currentQuestion = await this.getCurrentQuestion(code);
+    if (!currentQuestion) {
+      throw new NotFoundException(
+        `Current question not found for quiz ${code}`,
+      );
+    }
+
     // Add the new answer
     userState.answers.push({
       questionId,
       selectedOption,
-      isCorrect,
+      isCorrect: currentQuestion.correctOption === selectedOption,
       timeTaken,
     });
 
     // Update the score
-    userState.score += score;
+    userState.score +=
+      currentQuestion.correctOption === selectedOption
+        ? currentQuestion.timeLimit - timeTaken
+        : 0;
 
     // Move to next question
     userState.currentQuestionIndex += 1;
@@ -300,7 +310,11 @@ export class QuizRedisService {
     }
 
     // Only add if not already in participants array
-    if (!quizState.participants.some((p) => p.userId === userId)) {
+    if (
+      !quizState.participants.some(
+        (p) => p.userId == userId && p.username == username,
+      )
+    ) {
       quizState.participants.push({
         userId,
         username,
@@ -371,8 +385,20 @@ export class QuizRedisService {
       .slice(0, limit);
   }
 
+  async getCurrentQuestion(code: string): Promise<QuizQuestion | null> {
+    const quizState = await this.getQuizState(code);
+    if (!quizState) {
+      return null;
+    }
+
+    return quizState.questions[quizState.currentQuestionIndex];
+  }
+
   async setActiveQuestion(code: string, questionIndex: number): Promise<void> {
-    await this.updateQuizState(code, { currentQuestionIndex: questionIndex });
+    await this.updateQuizState(code, {
+      currentQuestionIndex: questionIndex,
+      currentQuestionStartTime: Date.now(),
+    });
   }
 
   async endQuiz(code: string): Promise<void> {

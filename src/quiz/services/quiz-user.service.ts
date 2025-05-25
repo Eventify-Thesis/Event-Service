@@ -62,10 +62,11 @@ export class QuizUserService {
   }
 
   async submitAnswer(dto: SubmitAnswerDto, userId: string) {
-    const result = await this.quizService.submitAnswer(
-      dto.questionId,
-      dto.selectedOption,
+    const result = await this.quizRedisService.recordUserAnswer(
       userId,
+      dto.code,
+      dto.questionIndex,
+      dto.selectedOption,
       dto.timeTaken || 0,
     );
 
