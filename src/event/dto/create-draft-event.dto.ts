@@ -88,6 +88,29 @@ export class CreateDraftEventDto {
   @IsString()
   street: string;
 
+  @ApiProperty({ example: 40.7128, required: false })
+  @IsOptional()
+  @IsNumber()
+  latitude: number;
+
+  @ApiProperty({ example: -74.006, required: false })
+  @IsOptional()
+  @IsNumber()
+  longitude: number;
+
+  @ApiProperty({
+    example: '123 Main St, New York, NY 10001, USA',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  formattedAddress: string;
+
+  @ApiProperty({ example: 'ChIJN1t_tDeuEmsRUsoyG83frY4', required: false })
+  @IsOptional()
+  @IsString()
+  placeId: string;
+
   @ApiProperty({ example: [1], required: true })
   @IsArray()
   @Type(() => String)

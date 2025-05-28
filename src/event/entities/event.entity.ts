@@ -75,6 +75,18 @@ export class Event {
   @Column({ nullable: true })
   street: string;
 
+  @Column({ type: 'double precision', nullable: true })
+  latitude: number;
+
+  @Column({ type: 'double precision', nullable: true })
+  longitude: number;
+
+  @Column({ name: 'formatted_address', nullable: true })
+  formattedAddress: string;
+
+  @Column({ name: 'place_id', nullable: true })
+  placeId: string;
+
   @Column('text', { array: true, name: 'categories' })
   categories: string[];
 
