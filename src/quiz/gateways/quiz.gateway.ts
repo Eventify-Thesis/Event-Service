@@ -76,40 +76,67 @@ export class QuizGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
   }
 
-  handleDisconnect(client: AuthenticatedSocket) {
+  async handleDisconnect(client: AuthenticatedSocket) {
     try {
-      if (client.user) {
-        const { code, userId, username, isHost } = client.user;
+      if (!client.user) {
+        return; // No user data, nothing to clean up
+      }
 
-        // Update Redis to remove the participant
-        if (code && userId) {
-          this.quizRedisService.removeParticipant(code, userId);
-        }
+      const { code, userId, username, isHost } = client.user;
+      
+      // Clear the user data to prevent duplicate processing
+      client.user = null;
 
-        // If by chance a host is using this gateway, handle it
-        if (isHost) {
-          this.server.to(code).emit('hostDisconnected', {
-            message: 'The quiz host has disconnected',
-            timestamp: Date.now(),
-          });
-          // Don't clear the quiz state to allow reconnection
-          // this.quizRedisService.clearQuizState(code);
-          this.logger.log(
-            `Host disconnected from player gateway: ${client.id}`,
-          );
-        }
+      // Check if this user is already disconnected
+      const isDisconnected = await this.quizRedisService.isUserDisconnected(code, userId);
+      if (isDisconnected) {
+        this.logger.log(`Duplicate disconnection detected for user ${userId} in quiz ${code}`);
+        return; // Already processed this disconnection
+      }
 
-        // Notify room that participant left
-        this.server.to(code).emit('participantLeft', {
-          userId,
-          username,
+      // Mark as disconnected in Redis with a short TTL
+      await this.quizRedisService.markUserDisconnected(code, userId, 10); // 10 seconds TTL
+
+      // Update Redis to remove the participant
+      if (code && userId) {
+        await this.quizRedisService.removeParticipant(code, userId);
+      }
+
+      // If by chance a host is using this gateway, handle it
+      if (isHost) {
+        this.server.to(code).emit('hostDisconnected', {
+          message: 'The quiz host has disconnected',
           timestamp: Date.now(),
         });
-
-        this.logger.log(
-          `Client disconnected: ${client.id} (${username}) from quiz: ${code}`,
-        );
+        this.logger.log(`Host disconnected from player gateway: ${client.id}`);
       }
+      
+      // Notify room that participant left
+      this.server.to(code).emit('participantLeft', {
+        userId,
+        username,
+        timestamp: Date.now(),
+      });
+
+      // Get user state from Redis
+      const userState = await this.quizRedisService.getUserState(userId, code);
+      
+      // Notify host that a participant left
+      this.server.to(code).emit('participantLeftForHost', {
+        userId,
+        username,
+        answerQuestionIndex: userState?.answers?.length > 0 
+          ? userState.answers[userState.answers.length - 1]?.questionId 
+          : null,
+        selectedOption: userState?.answers?.length > 0 
+          ? userState.answers[userState.answers.length - 1]?.selectedOption 
+          : null,
+        timestamp: Date.now(),
+      });
+
+      this.logger.log(
+        `Client disconnected: ${client.id} (${username}) from quiz: ${code}`,
+      );
     } catch (error) {
       this.logger.error(
         `Error handling disconnection: ${error.message}`,
@@ -129,6 +156,24 @@ export class QuizGateway implements OnGatewayConnection, OnGatewayDisconnect {
         throw new WsException('Quiz code is required');
       }
 
+      // Check if user is already in participants
+      const participants = await this.quizRedisService.getParticipants(data.code);
+      const quizState = await this.quizRedisService.getQuizState(data.code);
+
+      if (participants.some(p => p.userId === data.userId)) {
+        this.logger.warn(`User ${data.userId} attempted to join quiz ${data.code} but is already joined.`);
+        return {
+          event: 'alreadyJoined',
+          data: {
+            message: 'You have already joined this quiz in another session/tab.',
+            participants,
+          },
+        };
+      }
+
+      // Add user to participants
+      await this.quizRedisService.addParticipant(data.code, data.userId, data.username);
+      
       // Update user data on the socket if needed
       if (!client.user) {
         client.user = {
@@ -162,11 +207,6 @@ export class QuizGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
       // Make sure client is in the correct room
       client.join(code);
-
-      // Get the current quiz state
-      const quizState = await this.quizRedisService.getQuizState(code);
-      const activeUsers = quizState?.participants || [];
-
       this.logger.log(
         `User joined quiz: ${username} (${userId}) joined quiz: ${code}`,
       );
@@ -182,7 +222,7 @@ export class QuizGateway implements OnGatewayConnection, OnGatewayDisconnect {
         event: 'joinedQuiz',
         data: {
           ...result,
-          activeUsers,
+          participants,
           currentState: quizState,
         },
       };
@@ -242,6 +282,7 @@ export class QuizGateway implements OnGatewayConnection, OnGatewayDisconnect {
         client.user.userId,
         data.code,
       );
+      const leaderboard = await this.quizRedisService.getLeaderboard(data.code);
 
       // Notify everyone about the current question
       client.emit('updateGameStateUser', {
@@ -251,6 +292,7 @@ export class QuizGateway implements OnGatewayConnection, OnGatewayDisconnect {
         timeLimit: currentQuestion.timeLimit || 30,
         currentQuestionStartTime: quizState.currentQuestionStartTime,
         totalQuestions,
+        leaderboard,
         userState,
       });
 
@@ -259,6 +301,18 @@ export class QuizGateway implements OnGatewayConnection, OnGatewayDisconnect {
         code: data.code,
         userId: client.user.userId,
         username: client.user.username,
+        timestamp: Date.now(),
+      });
+
+      // Notify host that a new user joined
+      this.server.to(client.user.code).emit('userJoinedQuizForHost',{
+        code: data.code,
+        userId: client.user.userId,
+        score: userState.score,
+        questionsAnswered: userState.questionsAnswered,
+        username: client.user.username,
+        answerQuestionIndex: userState.answers[userState.answers.length - 1]?.questionId,
+        selectedOption: userState.answers[userState.answers.length - 1]?.selectedOption,
         timestamp: Date.now(),
       });
 
@@ -271,6 +325,7 @@ export class QuizGateway implements OnGatewayConnection, OnGatewayDisconnect {
           question: currentQuestion,
           timeLimit: currentQuestion.timeLimit || 30,
           totalQuestions,
+          leaderboard,
         },
       };
     } catch (error) {
@@ -298,32 +353,9 @@ export class QuizGateway implements OnGatewayConnection, OnGatewayDisconnect {
       this.server.to(client.user.code).emit('answerSubmitted', {
         userId: client.user.userId,
         username: client.user.username,
-        questionIndex: data.questionIndex,
+        answerQuestionIndex: data.answerQuestionIndex,
         selectedOption: data.selectedOption,
       });
-
-      // Get updated leaderboard from Redis
-      const leaderboard = await this.quizRedisService.getLeaderboard(
-        client.user.code,
-      );
-
-      // Check if this was the last question
-      const quizState = await this.quizRedisService.getQuizState(
-        client.user.code,
-      );
-      const isLastQuestion =
-        data.questionIndex === quizState.questions.length - 1;
-
-      if (isLastQuestion) {
-        // Signal quiz completion to all clients
-        this.server.to(client.user.code).emit('quizEnded', {
-          code: client.user.code,
-          leaderboard,
-        });
-
-        // Mark quiz as inactive in Redis
-        await this.quizRedisService.endQuiz(client.user.code);
-      }
 
       return { event: 'answerResult', data: { success: true } };
     } catch (error) {

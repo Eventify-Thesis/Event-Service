@@ -1,4 +1,4 @@
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException, BadRequestException } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { randomBytes } from 'crypto';
@@ -17,6 +17,8 @@ export interface QuizGameState {
     userId: string;
     username?: string;
     score: number;
+    answerQuestionIndex: number;
+    selectedOption: number;
     questionsAnswered: number;
     lastActive: number;
   }[];
@@ -27,6 +29,7 @@ export interface UserGameState {
   userId: string;
   quizId: number;
   currentQuestionIndex: number;
+  questionsAnswered: number;
   score: number;
   answers: {
     questionId: number;
@@ -141,6 +144,20 @@ export class QuizRedisService {
     };
   }
 
+  // Participant management
+  private getParticipantsKey(code: string): string {
+    return `quiz:${code}:participants`;
+  }
+
+  async getParticipants(code: string): Promise<Array<{userId: string, username: string}>> {
+    const key = this.getParticipantsKey(code);
+    const participants = await this.redisService.hgetall(key);
+    return Object.entries(participants).map(([userId, username]) => ({
+      userId,
+      username
+    }));
+  }
+
   // Game state management
   private getUserQuizKey(userId: string, code: string): string {
     return `user:${userId}:quiz:${code}`;
@@ -221,6 +238,7 @@ export class QuizRedisService {
       quizId: Number(code),
       currentQuestionIndex: 0,
       score: 0,
+      questionsAnswered: 0,
       answers: [],
     };
 
@@ -240,6 +258,7 @@ export class QuizRedisService {
       userId,
       quizId: Number(code),
       currentQuestionIndex: 0,
+      questionsAnswered: 0,
       code: '',
       score: 0,
       answers: [],
@@ -250,6 +269,14 @@ export class QuizRedisService {
       throw new NotFoundException(
         `Current question not found for quiz ${code}`,
       );
+    }
+
+    // Prevent duplicate answers for the same question
+    const alreadyAnswered = userState.answers.some(
+      (answer) => answer.questionId === questionId
+    );
+    if (alreadyAnswered) {
+      throw new BadRequestException('User has already answered this question.');
     }
 
     // Add the new answer
@@ -266,8 +293,12 @@ export class QuizRedisService {
         ? currentQuestion.timeLimit - timeTaken
         : 0;
 
-    // Move to next question
-    userState.currentQuestionIndex += 1;
+    // Don't increment currentQuestionIndex automatically - it should be controlled by the quiz flow
+    // Update the current question index to the one just answered
+    const currentQuizState = await this.getQuizState(code);
+    if (currentQuizState) {
+      userState.currentQuestionIndex = currentQuizState.currentQuestionIndex;
+    }
 
     await this.setUserState(userId, code, userState);
 
@@ -282,13 +313,17 @@ export class QuizRedisService {
         quizState.participants[participantIndex].score = userState.score;
         quizState.participants[participantIndex].questionsAnswered =
           userState.answers.length;
+        quizState.participants[participantIndex].selectedOption = selectedOption;
         quizState.participants[participantIndex].lastActive = Date.now();
+        quizState.participants[participantIndex].answerQuestionIndex = questionId;
       } else {
         quizState.participants.push({
           userId,
           score: userState.score,
           questionsAnswered: userState.answers.length,
+          answerQuestionIndex: questionId,
           lastActive: Date.now(),
+          selectedOption: selectedOption,
         });
       }
 
@@ -304,6 +339,9 @@ export class QuizRedisService {
     username: string,
   ): Promise<void> {
     const quizState = await this.getQuizState(code);
+    
+    const key = this.getParticipantsKey(code);
+    await this.redisService.hset(key, userId, username);
 
     if (!quizState) {
       throw new NotFoundException(`Quiz state for code ${code} not found`);
@@ -321,6 +359,8 @@ export class QuizRedisService {
         score: 0,
         questionsAnswered: 0,
         lastActive: Date.now(),
+        answerQuestionIndex: null,
+        selectedOption: null
       });
 
       await this.setQuizState(code, quizState);
@@ -329,6 +369,9 @@ export class QuizRedisService {
 
   async removeParticipant(code: string, userId: string): Promise<void> {
     const quizState = await this.getQuizState(code);
+    
+    const key = this.getParticipantsKey(code);
+    await this.redisService.hdel(key, userId);
 
     if (!quizState) {
       return; // No error if quiz doesn't exist
@@ -352,14 +395,17 @@ export class QuizRedisService {
       return { success: false, message: 'Quiz not found' };
     }
 
+    // Add user to participants hash
     await this.addParticipant(code, userId, username);
 
+    // Initialize user's quiz state
     await this.redisService.set(
       this.getUserQuizKey(userId, code),
       JSON.stringify({
         userId,
         quizId: quizState.quizId,
         currentQuestionIndex: 0,
+        questionsAnswered: 0,
         code,
         score: 0,
         answers: [],
@@ -413,6 +459,30 @@ export class QuizRedisService {
   }
 
   async clearUserState(userId: string, code: string): Promise<void> {
-    await this.redisService.del(this.getUserQuizKey(userId, code));
+    const key = this.getUserQuizKey(userId, code);
+    await this.redisService.del(key);
+  }
+
+  /**
+   * Mark a user as disconnected in Redis with a TTL
+   * @param code The quiz code
+   * @param userId The user ID
+   * @param ttlSeconds Time to live in seconds (default: 10 seconds)
+   */
+  async markUserDisconnected(code: string, userId: string, ttlSeconds = 10): Promise<void> {
+    const key = `quiz:${code}:disconnected:${userId}`;
+    await this.redisService.set(key, '1', ttlSeconds);
+  }
+
+  /**
+   * Check if a user is marked as disconnected
+   * @param code The quiz code
+   * @param userId The user ID
+   * @returns True if the user is marked as disconnected
+   */
+  async isUserDisconnected(code: string, userId: string): Promise<boolean> {
+    const key = `quiz:${code}:disconnected:${userId}`;
+    const result = await this.redisService.get(key);
+    return result === '1';
   }
 }

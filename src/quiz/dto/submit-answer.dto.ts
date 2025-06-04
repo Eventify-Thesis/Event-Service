@@ -14,7 +14,7 @@ export class SubmitAnswerDto {
     example: 2,
   })
   @IsNumber()
-  questionIndex: number;
+  answerQuestionIndex: number;
 
   @ApiProperty({
     description: 'ID of the selected option',

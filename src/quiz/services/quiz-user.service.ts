@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { QuizAnswer } from '../entities/quiz-answer.entity';
@@ -62,18 +62,30 @@ export class QuizUserService {
   }
 
   async submitAnswer(dto: SubmitAnswerDto, userId: string) {
-    const result = await this.quizRedisService.recordUserAnswer(
-      userId,
-      dto.code,
-      dto.questionIndex,
-      dto.selectedOption,
-      dto.timeTaken || 0,
-    );
-
-    return {
-      success: true,
-      result,
-    };
+    try {
+      const result = await this.quizRedisService.recordUserAnswer(
+        userId,
+        dto.code,
+        dto.answerQuestionIndex,
+        dto.selectedOption,
+        dto.timeTaken || 0,
+      );
+  
+      return {
+        success: true,
+        result,
+      };
+    } catch (error) {
+      // Handle duplicate answer error
+      if (error instanceof BadRequestException) {
+        return {
+          success: false,
+          message: error.message,
+        };
+      }
+      // Optionally rethrow or handle other errors
+      throw error;
+    }
   }
 
   async getQuizProgress(code: string, userId: string) {
