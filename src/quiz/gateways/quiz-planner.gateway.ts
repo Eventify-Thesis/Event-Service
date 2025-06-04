@@ -61,11 +61,12 @@ export class QuizPlannerGateway
       if (quizState.isActive) {
         client.emit('updateGameState', {
           code: client.user.code,
-          questionIndex: quizState.currentQuestionIndex,
+          currentQuestionIndex: quizState.currentQuestionIndex,
           question: quizState.questions[quizState.currentQuestionIndex],
           timeLimit:
             quizState.questions[quizState.currentQuestionIndex].timeLimit,
           participants: quizState.participants,
+          isTimerRunning: quizState.isActive,
           currentQuestionStartTime: quizState.currentQuestionStartTime,
         });
       }
@@ -109,6 +110,38 @@ export class QuizPlannerGateway
         `Error handling host disconnection: ${error.message}`,
         error.stack,
       );
+    }
+  }
+  @SubscribeMessage('requestQuizState')
+  async handleRequestQuizState(
+    @ConnectedSocket() client: AuthenticatedSocket,
+    @MessageBody() data: { code: string },
+  ) {
+    try {
+      if (!data.code) {
+        throw new WsException('Quiz code is required');
+      }
+
+      const quizState = await this.quizRedisService.getQuizState(data.code);
+      if (!quizState) {
+        throw new WsException('Quiz not found');
+      }
+
+      // Send the current quiz state to the requesting client
+      client.emit('quizState', {
+        code: data.code,
+        currentQuestionIndex: quizState.currentQuestionIndex,
+        question: quizState.questions[quizState.currentQuestionIndex],
+        participants: quizState.participants,
+        timeLimit: quizState.questions[quizState.currentQuestionIndex]?.timeLimit || 30,
+        isTimerRunning: quizState.isActive,
+        showResults: false, // You might want to track this in your quiz state
+      });
+
+      return { success: true };
+    } catch (error) {
+      this.logger.error(`Error handling quiz state request: ${error.message}`, error.stack);
+      return { success: false, error: error.message };
     }
   }
 
@@ -174,8 +207,13 @@ export class QuizPlannerGateway
   ) {
     try {
       this.logger.log(`Host started quiz: ${data.code}`);
+
+      // Get the current quiz state
+      const quizState = await this.quizRedisService.getQuizState(data.code);
+
       // Initialize the quiz state in Redis
       await this.quizRedisService.updateQuizState(data.code, {
+        ...quizState,
         isActive: true,
         startTime: Date.now(),
         currentQuestionIndex: 0,
@@ -184,14 +222,65 @@ export class QuizPlannerGateway
 
       this.logger.log(`Quiz started: ${data.code}`);
 
+      // Get the updated quiz state
+      const updatedState = await this.quizRedisService.getQuizState(data.code);
+
+      // Emit the first question data along with the quiz started event
       this.server.to(data.code).emit('quizStarted', {
         code: data.code,
         startTime: Date.now(),
+        currentQuestionIndex: updatedState.currentQuestionIndex,
+        question: updatedState.questions[updatedState.currentQuestionIndex],
+        timeLimit: updatedState.questions[updatedState.currentQuestionIndex]?.timeLimit || 30,
+        currentQuestionStartTime: Date.now(),
+        participants: updatedState.participants || [],
       });
 
       return { event: 'quizStarted', data: { success: true } };
     } catch (error) {
       this.logger.error(`Error starting quiz: ${error.message}`, error.stack);
+      return { event: 'error', data: { message: error.message } };
+    }
+  }
+
+  @SubscribeMessage('pauseTimer')
+  async handlePauseTimer(
+    @ConnectedSocket() client: AuthenticatedSocket,
+    @MessageBody() data: { code: string },
+  ) {
+    try {
+      this.logger.log(`Host paused timer for quiz: ${data.code}`);
+
+      // Emit the timer paused event to all clients
+      this.server.to(data.code).emit('timerPaused', {
+        code: data.code,
+        timestamp: Date.now(),
+      });
+
+      return { event: 'timerPaused', data: { success: true } };
+    } catch (error) {
+      this.logger.error(`Error pausing timer: ${error.message}`, error.stack);
+      return { event: 'error', data: { message: error.message } };
+    }
+  }
+
+  @SubscribeMessage('resumeTimer')
+  async handleResumeTimer(
+    @ConnectedSocket() client: AuthenticatedSocket,
+    @MessageBody() data: { code: string },
+  ) {
+    try {
+      this.logger.log(`Host resumed timer for quiz: ${data.code}`);
+
+      // Emit the timer resumed event to all clients
+      this.server.to(data.code).emit('timerResumed', {
+        code: data.code,
+        timestamp: Date.now(),
+      });
+
+      return { event: 'timerResumed', data: { success: true } };
+    } catch (error) {
+      this.logger.error(`Error resuming timer: ${error.message}`, error.stack);
       return { event: 'error', data: { message: error.message } };
     }
   }
@@ -219,7 +308,7 @@ export class QuizPlannerGateway
         leaderboard,
       });
 
-      return { event: 'quizEnded', data: { success: true } };
+      return { event: 'quizEndedForHost', data: { success: true, leaderboard } };
     } catch (error) {
       this.logger.error(`Error ending quiz: ${error.message}`, error.stack);
       return { event: 'error', data: { message: error.message } };
@@ -233,6 +322,7 @@ export class QuizPlannerGateway
   ) {
     try {
       const quizState = await this.quizRedisService.getQuizState(data.code);
+      const leaderboard = await this.quizRedisService.getLeaderboard(data.code);
       if (!quizState) {
         throw new WsException('Quiz not found');
       }
@@ -244,6 +334,7 @@ export class QuizPlannerGateway
         code: data.code,
         questionIndex,
         question,
+        leaderboard,
       });
     } catch (error) {
       this.logger.error(
@@ -274,12 +365,13 @@ export class QuizPlannerGateway
 
       this.server.to(data.code).emit('updateGameState', {
         code: data.code,
-        questionIndex: quizState.currentQuestionIndex,
+        currentQuestionIndex: quizState.currentQuestionIndex,
         question: quizState.questions[quizState.currentQuestionIndex],
         timeLimit:
           quizState.questions[quizState.currentQuestionIndex].timeLimit,
         currentQuestionStartTime: quizState.currentQuestionStartTime,
         participants: quizState.participants,
+        leaderboard,
       });
     } catch (error) {
       this.logger.error(`Error ending question: ${error.message}`, error.stack);
@@ -311,6 +403,11 @@ export class QuizPlannerGateway
       // Calculate next question index
       const nextQuestionIndex = quizState.currentQuestionIndex + 1;
 
+      // Get final leaderboard
+      const leaderboard = await this.quizRedisService.getLeaderboard(
+        data.code,
+      );
+
       // Check if we're at the end of the quiz
       if (
         !quizState.questions ||
@@ -318,11 +415,6 @@ export class QuizPlannerGateway
       ) {
         // End the quiz
         await this.quizRedisService.endQuiz(data.code);
-
-        // Get final leaderboard
-        const leaderboard = await this.quizRedisService.getLeaderboard(
-          data.code,
-        );
 
         // Notify all clients
         this.server.to(data.code).emit('quizEnded', {
@@ -335,6 +427,16 @@ export class QuizPlannerGateway
         this.logger.log(`Quiz ended: ${data.code}`);
         return { event: 'quizEnded', data: { success: true, leaderboard } };
       }
+
+      // Get current time to start new question
+      const now = Date.now();
+
+      // Update quiz state with new question index and start time
+      await this.quizRedisService.updateQuizState(data.code, {
+        ...quizState,
+        currentQuestionIndex: nextQuestionIndex,
+        currentQuestionStartTime: now,
+      });
 
       // Update the current question index
       await this.quizRedisService.setActiveQuestion(
@@ -349,22 +451,24 @@ export class QuizPlannerGateway
       // Notify all clients
       this.server.to(data.code).emit('nextQuestion', {
         code: data.code,
-        questionIndex: nextQuestionIndex,
+        currentQuestionIndex: nextQuestionIndex,
         question: nextQuestion,
         timeLimit,
         totalQuestions: quizState.questions.length,
-        currentQuestionStartTime: quizState.currentQuestionStartTime,
-        timestamp: Date.now(),
+        currentQuestionStartTime: now,
+        timestamp: now,
+        leaderboard,
       });
 
       this.server.to(data.code).emit('updateGameState', {
         code: data.code,
-        questionIndex: nextQuestionIndex,
+        currentQuestionIndex: nextQuestionIndex,
         question: nextQuestion,
         timeLimit,
         participants: quizState.participants,
         totalQuestions: quizState.questions.length,
-        currentQuestionStartTime: quizState.currentQuestionStartTime,
+        currentQuestionStartTime: now,
+        leaderboard,
       });
 
       this.logger.log(
@@ -377,6 +481,8 @@ export class QuizPlannerGateway
           currentQuestionIndex: nextQuestionIndex,
           timeLimit,
           totalQuestions: quizState.questions.length,
+          currentQuestionStartTime: now,
+          leaderboard,
         },
       };
     } catch (error) {
