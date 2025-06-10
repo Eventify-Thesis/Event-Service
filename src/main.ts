@@ -69,10 +69,10 @@ async function bootstrap() {
 
   // Set up microservices
   app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.TCP,
+    transport: Transport.REDIS,
     options: {
-      host: '127.0.0.1',
-      port: 8081,
+      host: configService.get('REDIS_HOST') || 'localhost',
+      port: configService.get('REDIS_PORT') || 6379,
     },
   });
 
