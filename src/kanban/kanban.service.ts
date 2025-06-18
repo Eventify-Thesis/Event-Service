@@ -24,7 +24,7 @@ export class KanbanService {
     private kanbanTaskRepository: Repository<KanbanTask>,
     @InjectRepository(TaskAssignment)
     private taskAssignmentRepository: Repository<TaskAssignment>,
-  ) { }
+  ) {}
 
   // Create a new Kanban board with default columns
   async createBoard(eventId: number) {
@@ -40,7 +40,11 @@ export class KanbanService {
       });
 
       if (existingBoard) {
-        return { success: false, message: 'A Kanban board already exists for this event', boardId: existingBoard.id };
+        return {
+          success: false,
+          message: 'A Kanban board already exists for this event',
+          boardId: existingBoard.id,
+        };
       }
 
       // Create new board
@@ -58,12 +62,12 @@ export class KanbanService {
         { name: 'Done', position: 2 },
       ];
 
-      const columns = defaultColumns.map(col =>
+      const columns = defaultColumns.map((col) =>
         this.kanbanColumnRepository.create({
           boardId: savedBoard.id,
           name: col.name,
           position: col.position,
-        })
+        }),
       );
 
       await queryRunner.manager.save(columns);
@@ -73,7 +77,7 @@ export class KanbanService {
         success: true,
         message: 'Kanban board created successfully',
         board: savedBoard,
-        columns
+        columns,
       };
     } catch (err) {
       await queryRunner.rollbackTransaction();
@@ -97,7 +101,10 @@ export class KanbanService {
       });
 
       if (!board) {
-        return { success: false, message: 'No Kanban board found for this event' };
+        return {
+          success: false,
+          message: 'No Kanban board found for this event',
+        };
       }
 
       // Get the highest position in existing columns to put the new one at the end
@@ -113,7 +120,10 @@ export class KanbanService {
       const column = this.kanbanColumnRepository.create({
         boardId: board.id,
         name: createColumnDto.name,
-        position: createColumnDto.position !== undefined ? createColumnDto.position : position,
+        position:
+          createColumnDto.position !== undefined
+            ? createColumnDto.position
+            : position,
       });
 
       const savedColumn = await queryRunner.manager.save(column);
@@ -252,7 +262,10 @@ export class KanbanService {
       const savedTask = await queryRunner.manager.save(task);
 
       // Create assignments if provided
-      if (createKanbanTaskDto.assignees && createKanbanTaskDto.assignees.length > 0) {
+      if (
+        createKanbanTaskDto.assignees &&
+        createKanbanTaskDto.assignees.length > 0
+      ) {
         const assignments = createKanbanTaskDto.assignees.map((memberId) => {
           return this.taskAssignmentRepository.create({
             taskId: savedTask.id,
@@ -291,7 +304,10 @@ export class KanbanService {
   }
 
   // Update task assignments
-  async updateTaskAssignments(id: number, updateTaskAssignmentsDto: UpdateTaskAssignmentsDto) {
+  async updateTaskAssignments(
+    id: number,
+    updateTaskAssignmentsDto: UpdateTaskAssignmentsDto,
+  ) {
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();
@@ -315,7 +331,11 @@ export class KanbanService {
 
       await queryRunner.commitTransaction();
 
-      return { success: true, taskId: id, assignees: updateTaskAssignmentsDto.assignees };
+      return {
+        success: true,
+        taskId: id,
+        assignees: updateTaskAssignmentsDto.assignees,
+      };
     } catch (err) {
       await queryRunner.rollbackTransaction();
       throw err;
@@ -325,7 +345,10 @@ export class KanbanService {
   }
 
   // Update task position
-  async updateTaskPosition(id: number, updateTaskPositionDto: UpdateTaskPositionDto) {
+  async updateTaskPosition(
+    id: number,
+    updateTaskPositionDto: UpdateTaskPositionDto,
+  ) {
     await this.kanbanTaskRepository.update(id, updateTaskPositionDto);
     return this.kanbanTaskRepository.findOne({ where: { id } });
   }
@@ -338,8 +361,8 @@ export class KanbanService {
     await queryRunner.startTransaction();
 
     try {
-      // Delete task assignments first
-      await queryRunner.manager.delete(TaskAssignment, { task_id: id });
+      // Delete task assignments first (use taskId, not task_id)
+      await queryRunner.manager.delete(TaskAssignment, { taskId: id });
 
       // Delete the task
       await queryRunner.manager.delete(KanbanTask, { id });
