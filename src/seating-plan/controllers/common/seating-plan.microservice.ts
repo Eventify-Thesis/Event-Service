@@ -11,13 +11,13 @@ export class SeatingPlanMicroservice {
   async getEventShowSeatingPlan(
     @Payload()
     payload: {
-      eventId: number;
+      id: number;
       seatingPlanId: number;
     },
   ) {
     try {
       return await this.seatingPlanService.getEventShowSeatingPlan(
-        payload.eventId,
+        payload.id,
         payload.seatingPlanId,
       );
     } catch (error) {

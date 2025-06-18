@@ -11,12 +11,17 @@ import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import { AppExceptionFilter } from './common/exceptions/app-exception.filter';
 
 async function bootstrap() {
-  let httpsOptions = {
-    key: fs.readFileSync('localhost-key.pem'),
-    cert: fs.readFileSync('localhost.pem'),
-  };
-  if (process.env.NODE_ENV === 'production') {
-    httpsOptions = undefined;
+  let httpsOptions = undefined;
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      httpsOptions = {
+        key: fs.readFileSync('localhost-key.pem'),
+        cert: fs.readFileSync('localhost.pem'),
+      };
+    } catch (error) {
+      console.log('SSL certificates not found, running without HTTPS');
+      httpsOptions = undefined;
+    }
   }
   const app = await NestFactory.create(AppModule, { httpsOptions });
   app.setGlobalPrefix('event');

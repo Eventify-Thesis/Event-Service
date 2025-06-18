@@ -14,10 +14,10 @@ export class EventMicroservice {
 
   @MessagePattern('getEventShowDetails')
   async getEventShowDetails(
-    @Payload() payload: { eventId: number; showId: number },
+    @Payload() payload: { id: number; showId: number },
   ) {
     return await this.eventService.getEventShowDetails(
-      payload.eventId,
+      payload.id,
       payload.showId,
     );
   }
