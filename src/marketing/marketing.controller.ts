@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, Query, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { MarketingService } from './marketing.service';
 import { SchedulePostDto } from './dto/schedule-post.dto';
 import { GeneratePostDto } from './dto/generate-post.dto';
@@ -11,20 +20,18 @@ import RequestWithUser from 'src/auth/role/requestWithUser.interface';
 @UseGuards(ClerkAuthGuard)
 @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
 export class MarketingController {
-  constructor(private readonly marketingService: MarketingService) { }
+  constructor(private readonly marketingService: MarketingService) {}
 
   @Post('generate')
   async generatePost(
-    @Body() generatePostDto: GeneratePostDto
+    @Body() generatePostDto: GeneratePostDto,
   ): Promise<string> {
     const content = await this.marketingService.generatePost(generatePostDto);
     return content;
   }
 
   @Get('facebook/pages')
-  async getFacebookPages(
-    @Req() req: RequestWithUser
-  ) {
+  async getFacebookPages(@Req() req: RequestWithUser) {
     return this.marketingService.getFacebookPages(req.user.id);
   }
 
@@ -34,6 +41,10 @@ export class MarketingController {
     @Req() req: RequestWithUser,
     @Body() schedulePostDto: SchedulePostDto,
   ) {
-    return await this.marketingService.schedulePost(eventId, req.user.id, schedulePostDto);
+    return await this.marketingService.schedulePost(
+      eventId,
+      req.user.id,
+      schedulePostDto,
+    );
   }
 }
