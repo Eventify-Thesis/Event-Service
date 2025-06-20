@@ -224,7 +224,15 @@ export class PlannerEventController {
   @UseGuards(EventRoleGuard(EventRole.OWNER))
   @ApiOkResponse({ type: EventStatsResponseDto })
   @Get(':eventId/stats')
-  async getStats(@Param('eventId', EventExists) eventId: number) {
-    return await this.eventStatsService.getEventStats(eventId);
+  async getStats(
+    @Param('eventId', EventExists) eventId: number,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    return await this.eventStatsService.getEventStats(
+      eventId,
+      startDate,
+      endDate,
+    );
   }
 }

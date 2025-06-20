@@ -27,16 +27,25 @@ export class EventStatsService {
     private readonly dailyStatsRepo: Repository<EventDailyStatistics>,
     // @InjectRepository(Attendee)
     // private readonly attendeeRepo: Repository<Attendee>,
-  ) { }
+  ) {}
 
   /**
    * Fetch event-level and daily statistics for a given event over a date range.
    * @param eventId
-   * @param daysAgo Number of days in the past to include (default: 7)
+   * @param startDateStr Start date string (ISO format) or null for default
+   * @param endDateStr End date string (ISO format) or null for default
    */
-  async getEventStats(eventId: number, daysAgo = 7): Promise<EventStatsResponseDto> {
-    const endDate = dayjs().tz('Asia/Bangkok').endOf('day').toDate();
-    const startDate = dayjs().tz('Asia/Bangkok').subtract(daysAgo, 'day').startOf('day').toDate();
+  async getEventStats(
+    eventId: number,
+    startDateStr?: string,
+    endDateStr?: string,
+  ): Promise<EventStatsResponseDto> {
+    const endDate = endDateStr
+      ? dayjs(endDateStr).tz('Asia/Bangkok').endOf('day').toDate()
+      : dayjs().tz('Asia/Bangkok').endOf('day').toDate();
+    const startDate = startDateStr
+      ? dayjs(startDateStr).tz('Asia/Bangkok').startOf('day').toDate()
+      : dayjs().tz('Asia/Bangkok').subtract(7, 'day').startOf('day').toDate();
 
     // Total aggregates
     const totals = await this.statsRepo
@@ -80,9 +89,13 @@ export class EventStatsService {
       ORDER BY ds.date ASC;
     `;
 
-    const dailyRows = await this.dataSource.query(dailyQuery, [startDate, endDate, eventId]);
+    const dailyRows = await this.dataSource.query(dailyQuery, [
+      startDate,
+      endDate,
+      eventId,
+    ]);
 
-    const dailyStats: EventDailyStatsDto[] = dailyRows.map(row => ({
+    const dailyStats: EventDailyStatsDto[] = dailyRows.map((row) => ({
       date: dayjs(row.date).tz('Asia/Bangkok').format('YYYY-MM-DD HH:mm:ss'),
       totalDiscount: parseFloat(row.totalDiscount),
       totalSalesGross: parseFloat(row.totalSalesGross),
@@ -93,7 +106,9 @@ export class EventStatsService {
 
     return {
       dailyStats,
-      startDate: dayjs(startDate).tz('Asia/Bangkok').format('YYYY-MM-DD HH:mm:ss'),
+      startDate: dayjs(startDate)
+        .tz('Asia/Bangkok')
+        .format('YYYY-MM-DD HH:mm:ss'),
       endDate: dayjs(endDate).tz('Asia/Bangkok').format('YYYY-MM-DD HH:mm:ss'),
       // checkInStats: {
       //   totalCheckInAttendees: parseInt(checkedInCount, 10),
