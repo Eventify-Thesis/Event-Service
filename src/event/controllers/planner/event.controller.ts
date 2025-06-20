@@ -51,7 +51,7 @@ export class PlannerEventController {
   constructor(
     private readonly eventService: PlannerEventService,
     private readonly eventStatsService: EventStatsService,
-  ) { }
+  ) {}
 
   @Get('')
   @ApiOkResponse({

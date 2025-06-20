@@ -123,6 +123,17 @@ export class MemberService {
       throw new BadRequestException(MESSAGE.CLERK_ERROR);
     }
 
+    let organizations = clerkUser.publicMetadata.organizations || {};
+
+    organizations[`${eventId}:${dto.organizationId}`] =
+      `org:${dto.role.toLowerCase()}`;
+
+    await this.clerkClient.users.updateUserMetadata(clerkUser.id, {
+      publicMetadata: {
+        organizations,
+      },
+    });
+
     // Create member in our database
     const member = await this.memberRepository.save({
       userId: clerkUser.id,
@@ -149,13 +160,25 @@ export class MemberService {
       throw new BadRequestException(MESSAGE.MEMBER_NOT_FOUND);
     }
 
+    let memberUser: User;
+
+    const users = await this.clerkClient.users.getUserList({
+      userId: [userId],
+    });
+
+    if (!users.data[0]) {
+      // Create new user in Clerk if doesn't exist
+      throw new BadRequestException(MESSAGE.MEMBER_NOT_FOUND);
+    }
+
+    memberUser = users.data[0];
+
     const userRole = await this.getMemberRole(user.id, eventId);
 
     if (!this.canManageRole(userRole, member.role)) {
       throw new ForbiddenException(MESSAGE.CANNOT_DELETE_MEMBER);
     }
 
-    // Remove from Clerk organization
     try {
       await this.clerkClient.organizations.deleteOrganizationMembership({
         organizationId: member.organizationId,
@@ -164,6 +187,16 @@ export class MemberService {
     } catch (error) {
       throw new BadRequestException(MESSAGE.CLERK_ERROR);
     }
+
+    let organizations = memberUser.publicMetadata.organizations || {};
+
+    delete organizations[`${eventId}:${member.organizationId}`];
+
+    await this.clerkClient.users.updateUserMetadata(memberUser.id, {
+      publicMetadata: {
+        organizations,
+      },
+    });
 
     await this.memberRepository.delete(member.id);
   }
