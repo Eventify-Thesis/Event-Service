@@ -11,4 +11,5 @@ export default () => ({
     SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
     AWS_PUBLIC_BUCKET_NAME: process.env.AWS_PUBLIC_BUCKET_NAME,
   },
+  CLERK_CUSTOM_TEMPLATE: process.env.CLERK_CUSTOM_TEMPLATE || 'test',
 });
