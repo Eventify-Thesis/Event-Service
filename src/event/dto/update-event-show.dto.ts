@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsBoolean,
   IsDate,
   IsNotEmpty,
   IsOptional,
@@ -23,6 +24,11 @@ export class UpdateTicketTypeDto {
   @ApiProperty({ required: true })
   @IsNotEmpty()
   price: number;
+
+  @ApiProperty({ required: false, default: false })
+  @IsBoolean()
+  @IsOptional()
+  isFree: boolean;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
