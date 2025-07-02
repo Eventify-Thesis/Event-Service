@@ -5,7 +5,6 @@ import { MessageService } from './message.service';
 import { PlannerMessageController } from './controllers/planner/message.controller';
 import { ClerkClientProvider } from 'src/providers/clerk-client.provider';
 import { EmailModule } from 'src/email/email.module';
-import { MessageRepository } from './repositories/message.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Message]), EmailModule],
@@ -13,8 +12,6 @@ import { MessageRepository } from './repositories/message.repository';
   providers: [
     MessageService, 
     ClerkClientProvider,
-    MessageRepository,
   ],
-  exports: [MessageRepository],
 })
 export class MessageModule { }

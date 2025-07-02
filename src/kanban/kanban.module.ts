@@ -6,10 +6,6 @@ import { KanbanBoard } from './entities/kanban-board.entity';
 import { KanbanColumn } from './entities/kanban-column.entity';
 import { KanbanTask } from './entities/kanban-task.entity';
 import { TaskAssignment } from './entities/task-assignment.entity';
-import { KanbanBoardRepository } from './repositories/kanban-board.repository';
-import { KanbanTaskRepository } from './repositories/kanban-task.repository';
-import { KanbanColumnRepository } from './repositories/kanban-column.repository';
-import { TaskAssignmentRepository } from './repositories/task-assignment.repository';
 
 @Module({
   imports: [
@@ -21,18 +17,6 @@ import { TaskAssignmentRepository } from './repositories/task-assignment.reposit
     ])
   ],
   controllers: [KanbanController],
-  providers: [
-    KanbanService,
-    KanbanBoardRepository,
-    KanbanTaskRepository,
-    KanbanColumnRepository,
-    TaskAssignmentRepository
-  ],
-  exports: [
-    KanbanBoardRepository,
-    KanbanTaskRepository,
-    KanbanColumnRepository,
-    TaskAssignmentRepository
-  ],
+  providers: [KanbanService],
 })
 export class KanbanModule { }

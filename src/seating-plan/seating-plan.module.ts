@@ -29,9 +29,6 @@ import { SeatingPlanMicroservice } from './controllers/common/seating-plan.micro
     SeatCategoryMappingRepository,
     SeatRepository,
   ],
-  exports: [
-    SeatingPlanService,
-    SeatCategoryMappingRepository,
-  ],
+  exports: [SeatingPlanService],
 })
 export class SeatingPlanModule {}
