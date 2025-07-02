@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { EntityManager } from 'typeorm';
 import { EventRepository } from '../repositories/event.repository';
-import { SettingRepository } from '../repositories/setting.repository';
-import { PaymentInfoRepository } from '../repositories/payment-info.repository';
 import { ShowRepository } from '../repositories/show.repository';
-import { TicketTypeRepository } from '../repositories/ticket-type.repository';
 import { Quiz } from '../../quiz/entities/quiz.entity';
 import { QuizQuestion } from '../../quiz/entities/quiz-question.entity';
 import { QuizAnswer } from '../../quiz/entities/quiz-answer.entity';
@@ -12,60 +9,13 @@ import { QuizResult } from '../../quiz/entities/quiz-result.entity';
 import { EventStatus, MESSAGE } from '../event.constant';
 import { Brackets } from 'typeorm';
 import { AppException } from 'src/common/exceptions/app.exception';
-import { QuestionRepository } from '../../question/repositories/question.repository';
-import { SeatCategoryMappingRepository } from '../../seating-plan/repositories/seat-category-mapping.repository';
-import { MessageRepository } from '../../message/repositories/message.repository';
-import { OrderRepository } from '../../order/repositories/order.repository';
-import { EventStatisticsRepository } from '../repositories/event-statistics.repository';
-import { EventDailyStatisticsRepository } from '../repositories/event-daily-statistics.repository';
-import { ShowScheduleRepository } from '../../show-schedule/repositories/show-schedule.repository';
-import { OrderItemRepository } from '../../order/repositories/order-item.repository';
-import { BookingAnswerRepository } from '../../order/repositories/booking-answer.repository';
-import { AttendeeCheckInRepository } from '../../check-in-list/repositories/attendee-check-in.repository';
-import { VoucherRepository } from '../../voucher/repositories/voucher.repository';
-import { KanbanBoardRepository } from '../../kanban/repositories/kanban-board.repository';
-import { KanbanTaskRepository } from '../../kanban/repositories/kanban-task.repository';
-import { KanbanColumnRepository } from '../../kanban/repositories/kanban-column.repository';
-import { TaskAssignmentRepository } from '../../kanban/repositories/task-assignment.repository';
-import { FacebookPostRepository } from '../../facebook/repositories/facebook-post.repository';
-import { FacebookTokenRepository } from '../../facebook/repositories/facebook-token.repository';
-import { QuizRepository } from '../../quiz/repositories/quiz.repository';
-import { QuizQuestionRepository } from '../../quiz/repositories/quiz-question.repository';
-import { QuizAnswerRepository } from '../../quiz/repositories/quiz-answer.repository';
-import { QuizResultRepository } from '../../quiz/repositories/quiz-result.repository';
-import { AttendeeRepository } from '../../attendee/repositories/attendee.repository';
 
 @Injectable()
 export class SuperAdminEventService {
   constructor(
     private readonly eventRepository: EventRepository,
-    private readonly settingRepository: SettingRepository,
-    private readonly paymentInfoRepository: PaymentInfoRepository,
     private readonly showRepository: ShowRepository,
-    private readonly ticketTypeRepository: TicketTypeRepository,
     private readonly entityManager: EntityManager,
-    private readonly questionRepository: QuestionRepository,
-    private readonly seatCategoryMappingRepository: SeatCategoryMappingRepository,
-    private readonly messageRepository: MessageRepository,
-    private readonly orderRepository: OrderRepository,
-    private readonly eventStatisticsRepository: EventStatisticsRepository,
-    private readonly eventDailyStatisticsRepository: EventDailyStatisticsRepository,
-    private readonly showScheduleRepository: ShowScheduleRepository,
-    private readonly orderItemRepository: OrderItemRepository,
-    private readonly bookingAnswerRepository: BookingAnswerRepository,
-    private readonly attendeeCheckInRepository: AttendeeCheckInRepository,
-    private readonly voucherRepository: VoucherRepository,
-    private readonly kanbanBoardRepository: KanbanBoardRepository,
-    private readonly kanbanTaskRepository: KanbanTaskRepository,
-    private readonly kanbanColumnRepository: KanbanColumnRepository,
-    private readonly taskAssignmentRepository: TaskAssignmentRepository,
-    private readonly facebookPostRepository: FacebookPostRepository,
-    private readonly facebookTokenRepository: FacebookTokenRepository,
-    private readonly quizRepository: QuizRepository,
-    private readonly quizQuestionRepository: QuizQuestionRepository,
-    private readonly quizAnswerRepository: QuizAnswerRepository,
-    private readonly quizResultRepository: QuizResultRepository,
-    private readonly attendeeRepository: AttendeeRepository,
   ) {}
 
   async list(_organizations: any, pagination, { keyword, status }: any) {
