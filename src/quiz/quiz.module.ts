@@ -14,6 +14,9 @@ import { QuizResult } from './entities/quiz-result.entity';
 import { QuizGateway } from './gateways/quiz.gateway';
 import { RedisModule } from '../redis/redis.module';
 import { QuizPlannerGateway } from './gateways/quiz-planner.gateway';
+import { QuizQuestionRepository } from './repositories/quiz-question.repository';
+import { QuizAnswerRepository } from './repositories/quiz-answer.repository';
+import { QuizResultRepository } from './repositories/quiz-result.repository';
 
 @Module({
   imports: [
@@ -32,9 +35,20 @@ import { QuizPlannerGateway } from './gateways/quiz-planner.gateway';
     QuizUserService,
     QuizRedisService,
     QuizRepository,
+    QuizQuestionRepository,
+    QuizAnswerRepository,
+    QuizResultRepository,
     QuizGateway,
     QuizPlannerGateway,
   ],
-  exports: [QuizService, QuizUserService, QuizRedisService],
+  exports: [
+    QuizService, 
+    QuizUserService, 
+    QuizRedisService, 
+    QuizRepository,
+    QuizQuestionRepository,
+    QuizAnswerRepository,
+    QuizResultRepository
+  ],
 })
 export class QuizModule {}

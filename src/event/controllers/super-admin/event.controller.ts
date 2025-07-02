@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Put, Body, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Put, Body, Query, UseGuards, Delete } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiOkResponse, getSchemaPath, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { SuperAdminEventService } from 'src/event/services/superadmin-event.service';
 import { EventStatus, MESSAGE } from 'src/event/event.constant';
@@ -59,5 +59,11 @@ export class SuperAdminEventController {
     ) {
         return await this.SuperAdminEventService.censorEvent(eventId, body.status, body.currentStatus);
     }
-
+    
+    //@UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
+    @Delete(':id')
+    @ApiOperation({ summary: 'Delete an event' })
+    async deleteEvent(@Param('id', EventExists) eventId: number) {
+        return await this.SuperAdminEventService.deleteEvent(eventId);
+    }
 }
