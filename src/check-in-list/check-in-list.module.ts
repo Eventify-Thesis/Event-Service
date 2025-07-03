@@ -11,7 +11,12 @@ import { CheckInService } from './services/check-in.service';
     TypeOrmModule.forFeature([CheckInList]),
   ],
   controllers: [PlannerCheckInListController, PlannerCheckInController],
-  providers: [CheckInListService, CheckInService],
-  exports: [CheckInListService],
+  providers: [
+    CheckInListService, 
+    CheckInService,
+  ],
+  exports: [
+    CheckInListService,
+  ],
 })
 export class CheckInListModule { }

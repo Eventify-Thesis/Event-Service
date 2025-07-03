@@ -8,7 +8,14 @@ import { KanbanTask } from './entities/kanban-task.entity';
 import { TaskAssignment } from './entities/task-assignment.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([KanbanBoard, KanbanColumn, KanbanTask, TaskAssignment])],
+  imports: [
+    TypeOrmModule.forFeature([
+      KanbanBoard, 
+      KanbanColumn, 
+      KanbanTask, 
+      TaskAssignment
+    ])
+  ],
   controllers: [KanbanController],
   providers: [KanbanService],
 })

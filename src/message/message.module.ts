@@ -9,6 +9,9 @@ import { EmailModule } from 'src/email/email.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Message]), EmailModule],
   controllers: [PlannerMessageController],
-  providers: [MessageService, ClerkClientProvider],
+  providers: [
+    MessageService, 
+    ClerkClientProvider,
+  ],
 })
 export class MessageModule { }

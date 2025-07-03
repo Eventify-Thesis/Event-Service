@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventService } from './services/event.service';
 import { PlannerEventController } from './controllers/planner/event.controller';
@@ -38,7 +38,7 @@ import { EventDailyStatistics, EventStatistics } from './entities/event-statisti
       District,
       Ward,
       EventStatistics,
-      EventDailyStatistics
+      EventDailyStatistics,
     ]),
     MemberModule,
   ],
@@ -54,12 +54,13 @@ import { EventDailyStatistics, EventStatistics } from './entities/event-statisti
     EventService,
     PlannerEventService,
     SuperAdminEventService,
+    EventStatsService,
     EventRepository,
     SettingRepository,
     PaymentInfoRepository,
     ShowRepository,
     TicketTypeRepository,
-    EventStatsService,
+    EventStatsService
   ],
   exports: [
     EventService,

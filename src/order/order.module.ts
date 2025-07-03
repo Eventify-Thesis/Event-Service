@@ -10,6 +10,9 @@ import { OrderService } from './services/user/order.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Order]), EmailModule],
   controllers: [PlannerOrderController, OrderController],
-  providers: [PlannerOrderService, OrderService],
+  providers: [
+    PlannerOrderService, 
+    OrderService,
+  ],
 })
 export class OrderModule { }
