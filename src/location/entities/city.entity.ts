@@ -22,10 +22,10 @@ export class City {
   @Column({ length: 40, name: 'name_en' })
   nameEn: string;
 
-  @Column({ length: 20 })
+  @Column({ length: 50 })
   type: string;
 
-  @Column({ length: 20, name: 'type_en' })
+  @Column({ length: 50, name: 'type_en' })
   typeEn: string;
 
   @Column({ length: 20, nullable: true, name: 'short_name' })

@@ -26,4 +26,10 @@ export class LocationController {
   async findListWard(@Param('districtId') districtId: string) {
     return await this.locationService.findWardsByDistrict(districtId);
   }
+
+  // New endpoint for Vietnam 2025 restructuring - get wards directly from cities
+  @Get('cities/:cityId/wards')
+  async findWardsByCity(@Param('cityId') cityId: string) {
+    return await this.locationService.findWardsByCity(cityId);
+  }
 }

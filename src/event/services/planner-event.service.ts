@@ -254,6 +254,29 @@ export class PlannerEventService {
         throw new AppException(MESSAGE.EVENT_NOT_FOUND);
       }
 
+      // Delete shows that are not in the request
+      const showIdsToKeep = updateEventShowDto.shows
+        .map((showDto) => showDto.id)
+        .filter(Boolean);
+
+      if (showIdsToKeep.length > 0) {
+        await entityManager
+          .getRepository(this.showRepository.target)
+          .createQueryBuilder()
+          .delete()
+          .where('eventId = :eventId', { eventId })
+          .andWhere('id NOT IN (:...showIdsToKeep)', { showIdsToKeep })
+          .execute();
+      } else {
+        // If no shows have IDs (all are new), delete all existing shows
+        await entityManager
+          .getRepository(this.showRepository.target)
+          .createQueryBuilder()
+          .delete()
+          .where('eventId = :eventId', { eventId })
+          .execute();
+      }
+
       // Process each show
       const shows = [];
       for (const showDto of updateEventShowDto.shows) {

@@ -41,4 +41,14 @@ export class LocationService {
       .orderBy('ward.sort', 'ASC')
       .getMany();
   }
+
+  // New method for Vietnam 2025 restructuring - get wards directly from cities
+  // Note: In the new structure, district_id field in wards table represents city_id
+  async findWardsByCity(cityId: string) {
+    return await this.wardRepository
+      .createQueryBuilder('ward')
+      .where('ward.district_id = :cityId', { cityId })
+      .orderBy('ward.sort', 'ASC')
+      .getMany();
+  }
 }
