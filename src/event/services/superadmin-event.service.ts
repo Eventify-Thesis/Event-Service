@@ -366,12 +366,12 @@ export class SuperAdminEventService {
           .where('order_id IN (:...orderIds)', { orderIds })
           .execute(),
 
-        // Delete attendee check-ins
+        // Delete attendee check-ins - first get attendee IDs from orders
         this.entityManager
           .createQueryBuilder()
           .delete()
-          .from('attendee_check_ins')
-          .where('order_id IN (:...orderIds)', { orderIds })
+          .from('attendee_check_ins', 'aci')
+          .where('aci.attendee_id IN (SELECT id FROM attendees WHERE order_id IN (:...orderIds))', { orderIds })
           .execute(),
 
         // Delete order items
