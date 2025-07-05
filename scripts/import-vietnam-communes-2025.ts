@@ -182,7 +182,7 @@ function translateProvinceName(provinceName: string): string {
 
   const translations: Record<string, string> = {
     'Hà Nội': 'Hanoi',
-    'Hồ Chí Minh': 'Ho Chi Minh City',
+    'Hồ Chí Minh': 'Ho Chi Minh',
     'Đà Nẵng': 'Da Nang',
     'Hải Phòng': 'Hai Phong',
     'Cần Thơ': 'Can Tho',

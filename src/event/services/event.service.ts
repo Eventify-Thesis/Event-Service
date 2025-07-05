@@ -63,14 +63,6 @@ export class EventService {
 
         address.addressVi += ', ' + ward.name;
         address.addressEn += ', ' + ward.nameEn;
-
-        const district = await this.districtRepository.findOne({
-          where: { originId: event.districtId },
-        });
-
-        address.addressVi += ', ' + district.name;
-        address.addressEn += ', ' + district.nameEn;
-
         const city = await this.cityRepository.findOne({
           where: { originId: event.cityId },
         });
@@ -89,6 +81,7 @@ export class EventService {
         endTime,
       };
     } catch (error) {
+      console.log('error', error);
       return null;
     }
   }
