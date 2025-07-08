@@ -123,7 +123,11 @@ export class SuperAdminEventService {
     return show;
   }
 
-  async censorEvent(eventId: number, status: EventStatus, currentStatus: EventStatus) {
+  async censorEvent(
+    eventId: number,
+    status: EventStatus,
+    currentStatus: EventStatus,
+  ) {
     const validStatuses = [EventStatus.PUBLISHED, EventStatus.CANCELLED];
     if (!validStatuses.includes(status)) {
       throw new AppException(MESSAGE.INVALID_STATUS);
@@ -143,40 +147,42 @@ export class SuperAdminEventService {
   }
 
   async deleteEvent(eventId: number) {
-    return await this.entityManager.transaction(async (transactionalEntityManager) => {
-      // 1. Find the event first
-      const event = await this.findOne(eventId);
-      if (!event) {
-        throw new AppException(MESSAGE.EVENT_NOT_FOUND);
-      }
-  
-      // 2. Delete quiz-related data (deepest in the dependency tree)
-      await this.deleteQuizRelatedData(eventId);
-  
-      // 3. Delete kanban-related data
-      await this.deleteKanbanRelatedData(eventId);
-  
-      // 4. Delete order-related data
-      await this.deleteOrderRelatedData(eventId);
-  
-      // 5. Delete shows and their dependencies
-      await this.deleteShowRelatedData(eventId);
-  
-      // 6. Delete voucher data
-      await this.deleteVoucherData(eventId);
-  
-      // 7. Delete facebook data
-      await this.deleteFacebookData(eventId);
-  
-      // 8. Delete other direct relationships
-      await this.deleteDirectRelationships(eventId);
-  
-      // 9. Delete statistics
-      await this.deleteEventStatistics(eventId);
-  
-      // 10. Finally, delete the event
-      return await transactionalEntityManager.remove(event);
-    });
+    return await this.entityManager.transaction(
+      async (transactionalEntityManager) => {
+        // 1. Find the event first
+        const event = await this.findOne(eventId);
+        if (!event) {
+          throw new AppException(MESSAGE.EVENT_NOT_FOUND);
+        }
+
+        // 2. Delete quiz-related data (deepest in the dependency tree)
+        await this.deleteQuizRelatedData(eventId);
+
+        // 3. Delete kanban-related data
+        await this.deleteKanbanRelatedData(eventId);
+
+        // 4. Delete order-related data
+        await this.deleteOrderRelatedData(eventId);
+
+        // 5. Delete shows and their dependencies
+        await this.deleteShowRelatedData(eventId);
+
+        // 6. Delete voucher data
+        await this.deleteVoucherData(eventId);
+
+        // 7. Delete facebook data
+        await this.deleteFacebookData(eventId);
+
+        // 8. Delete other direct relationships
+        await this.deleteDirectRelationships(eventId);
+
+        // 9. Delete statistics
+        await this.deleteEventStatistics(eventId);
+
+        // 10. Finally, delete the event
+        return await transactionalEntityManager.remove(event);
+      },
+    );
   }
 
   private async deleteQuizRelatedData(eventId: number) {
@@ -185,19 +191,19 @@ export class SuperAdminEventService {
       .createQueryBuilder(Quiz, 'quiz')
       .where('quiz.event_id = :eventId', { eventId })
       .getMany();
-    
-    const quizIds = quizzes.map(quiz => quiz.id);
-  
+
+    const quizIds = quizzes.map((quiz) => quiz.id);
+
     if (quizIds.length === 0) return;
-  
+
     // Get all questions for these quizzes
     const questions = await this.entityManager
       .createQueryBuilder(QuizQuestion, 'question')
       .where('question.quiz_id IN (:...quizIds)', { quizIds })
       .getMany();
-    
-    const questionIds = questions.map(q => q.id);
-  
+
+    const questionIds = questions.map((q) => q.id);
+
     if (questionIds.length > 0) {
       // Delete quiz answers
       await this.entityManager
@@ -206,7 +212,7 @@ export class SuperAdminEventService {
         .from(QuizAnswer)
         .where('question_id IN (:...questionIds)', { questionIds })
         .execute();
-  
+
       // Delete quiz questions
       await this.entityManager
         .createQueryBuilder()
@@ -215,7 +221,7 @@ export class SuperAdminEventService {
         .where('id IN (:...questionIds)', { questionIds })
         .execute();
     }
-  
+
     // Delete quiz results
     await this.entityManager
       .createQueryBuilder()
@@ -223,7 +229,7 @@ export class SuperAdminEventService {
       .from(QuizResult)
       .where('quiz_id IN (:...quizIds)', { quizIds })
       .execute();
-  
+
     // Delete quizzes
     await this.entityManager
       .createQueryBuilder()
@@ -241,11 +247,11 @@ export class SuperAdminEventService {
       .from('kanban_boards', 'board')
       .where('board.event_id = :eventId', { eventId })
       .getRawMany();
-    
-    const boardIds = boards.map(board => board.board_id);
-  
+
+    const boardIds = boards.map((board) => board.board_id);
+
     if (boardIds.length === 0) return;
-  
+
     // Get all columns for these boards
     const columns = await this.entityManager
       .createQueryBuilder()
@@ -253,9 +259,9 @@ export class SuperAdminEventService {
       .from('kanban_columns', 'column')
       .where('column.board_id IN (:...boardIds)', { boardIds })
       .getRawMany();
-    
-    const columnIds = columns.map(col => col.column_id);
-  
+
+    const columnIds = columns.map((col) => col.column_id);
+
     // Get all tasks for these columns
     const tasks = await this.entityManager
       .createQueryBuilder()
@@ -263,9 +269,9 @@ export class SuperAdminEventService {
       .from('kanban_tasks', 'task')
       .where('task.column_id IN (:...columnIds)', { columnIds })
       .getRawMany();
-    
-    const taskIds = tasks.map(task => task.task_id);
-  
+
+    const taskIds = tasks.map((task) => task.task_id);
+
     if (taskIds.length > 0) {
       // Delete task assignments
       await this.entityManager
@@ -274,7 +280,7 @@ export class SuperAdminEventService {
         .from('task_assignments')
         .where('task_id IN (:...taskIds)', { taskIds })
         .execute();
-  
+
       // Delete tasks
       await this.entityManager
         .createQueryBuilder()
@@ -283,7 +289,7 @@ export class SuperAdminEventService {
         .where('id IN (:...taskIds)', { taskIds })
         .execute();
     }
-  
+
     // Delete columns
     if (columnIds.length > 0) {
       await this.entityManager
@@ -293,7 +299,7 @@ export class SuperAdminEventService {
         .where('id IN (:...columnIds)', { columnIds })
         .execute();
     }
-  
+
     // Finally, delete the boards
     await this.entityManager
       .createQueryBuilder()
@@ -302,7 +308,7 @@ export class SuperAdminEventService {
       .where('event_id = :eventId', { eventId })
       .execute();
   }
-  
+
   private async deleteVoucherData(eventId: number) {
     // Then delete the vouchers
     await this.entityManager
@@ -333,8 +339,8 @@ export class SuperAdminEventService {
       .from('shows', 'show')
       .where('show.event_id = :eventId', { eventId })
       .getRawMany();
-      
-    const showIds = shows.map(show => show.show_id);
+
+    const showIds = shows.map((show) => show.show_id);
 
     if (showIds.length === 0) return;
 
@@ -345,8 +351,8 @@ export class SuperAdminEventService {
       .from('orders', 'orders')
       .where('orders.show_id IN (:...showIds)', { showIds })
       .getRawMany();
-    
-    const orderIds = orders.map(order => order.orders_id);
+
+    const orderIds = orders.map((order) => order.orders_id);
 
     if (orderIds.length > 0) {
       // Delete attendees first
@@ -401,8 +407,8 @@ export class SuperAdminEventService {
       .from('shows', 'show')
       .where('show.event_id = :eventId', { eventId })
       .getRawMany();
-      
-    const showIds = shows.map(show => show.show_id);
+
+    const showIds = shows.map((show) => show.show_id);
 
     if (showIds.length === 0) return;
 

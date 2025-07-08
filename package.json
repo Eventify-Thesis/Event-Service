@@ -24,7 +24,8 @@
     "migration:revert": "npm run typeorm -- migration:revert -d src/config/typeorm.migration.config.ts",
     "migration:create": "npm run typeorm -- migration:create",
     "migrate:mongo-to-postgres": "ts-node scripts/migrate-mongo-to-postgres.ts",
-    "import:vietnam-communes-2025": "ts-node scripts/import-vietnam-communes-2025.ts"
+    "import:vietnam-communes-2025": "ts-node scripts/import-vietnam-communes-2025.ts",
+    "generate:demo-events": "ts-node scripts/generate-demo-events.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.750.0",

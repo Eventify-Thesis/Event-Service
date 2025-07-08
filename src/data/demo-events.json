@@ -1,0 +1,2926 @@
+[
+  {
+    "id": null,
+    "eventLogoUrl": "https://hanoi-rockclub.vn/images/hanoi-rock-logo.png",
+    "eventBannerUrl": "https://hanoiphotos.vn/img/Rock-night-concert-banner.jpg",
+    "eventName": "Live Concert Rock 'N' Roll Hanoi: Đốt Cháy Đêm Hà Nội",
+    "categories": ["music"],
+    "eventDescription": "Một đêm nhạc rock bùng nổ tại Cung Văn hóa Hữu nghị Việt Xô với sự góp mặt của các ban nhạc Rock nổi tiếng nhất Việt Nam như Bức Tường, Ngọt, Chillies. Sự kiện hứa hẹn mang đến những giây phút thăng hoa cùng âm nhạc mạnh mẽ và đầy nhiệt huyết.",
+    "orgLogoUrl": "https://rockmusicvn.com/logo/vietnam-rock-agency.png",
+    "orgName": "Công ty TNHH Rock Việt Entertainment",
+    "orgDescription": "Rock Việt Entertainment là đơn vị chuyên tổ chức các sự kiện âm nhạc Rock, thúc đẩy phong trào và kết nối cộng đồng Rock tại Việt Nam.",
+    "venueName": "Cung Văn hóa Hữu nghị Việt Xô",
+    "cityId": 1,
+    "districtId": null,
+    "wardId": 215,
+    "street": "91 Trần Hưng Đạo",
+    "latitude": 21.0285,
+    "longitude": 105.8542,
+    "formattedAddress": "91 Trần Hưng Đạo, Phường Trần Hưng Đạo, Quận Hoàn Kiếm, Hà Nội",
+    "placeId": "ChIJGb1b2fKq_NTERJ3oUe0oG69k",
+    "categoriesIds": ["fc981c1b-485d-497d-b539-b8e73c4376bb"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-09-27T19:30:00.000Z",
+        "endTime": "2025-09-27T22:30:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé VIP Standing",
+            "price": 850000,
+            "isFree": false,
+            "quantity": 150,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 4,
+            "startTime": "2025-08-01T00:00:00.000Z",
+            "endTime": "2025-09-27T18:30:00.000Z",
+            "description": "Khu vực đứng gần sân khấu nhất, bao gồm nước uống miễn phí và quà tặng.",
+            "imageUrl": "https://ticketbox.vn/images/concert/vip-rock-standing.jpg"
+          },
+          {
+            "name": "Vé Thường",
+            "price": 300000,
+            "isFree": false,
+            "quantity": 600,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-08-01T00:00:00.000Z",
+            "endTime": "2025-09-27T18:30:00.000Z",
+            "description": "Vé vào cửa khu vực chung.",
+            "imageUrl": "https://ticketbox.vn/images/concert/regular-rock-concert.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Techcombank",
+      "bankAccountName": "CONG TY TNHH ROCK VIET ENTERTAINMENT",
+      "bankAccountNumber": "19039870123456",
+      "bankOffice": "Chi nhánh Hoàn Kiếm, Hà Nội",
+      "businessType": "COMPANY",
+      "name": "Công ty TNHH Rock Việt Entertainment",
+      "address": "15 Hàng Da, Quận Hoàn Kiếm, Hà Nội",
+      "taxNumber": "0100987654"
+    },
+    "setting": {
+      "url": "rock-night-hanoi-2025",
+      "messageAttendees": "Hãy cùng bùng cháy hết mình với Rock 'N' Roll Hanoi! Hẹn gặp lại tại cổng vào nhé!",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 800
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://hcmute.edu.vn/images/iot-ecosystem-logo.png",
+    "eventBannerUrl": "https://sci.vn/banners/iot-vietnam-2025-banner.jpg",
+    "eventName": "Hệ Sinh Thái IoT Tại Việt Nam: Tiềm Năng và Thách Thức",
+    "categories": ["technology"],
+    "eventDescription": "Một diễn đàn chuyên sâu về phát triển Internet of Things (IoT) tại Việt Nam, thảo luận về các công nghệ mới, ứng dụng trong công nghiệp và đời sống, cùng với những thách thức pháp lý và hạ tầng.",
+    "orgLogoUrl": "https://vietiot.org/logo/iot-association-vn.png",
+    "orgName": "Hiệp Hội Internet of Things Việt Nam",
+    "orgDescription": "Hiệp Hội IoT Việt Nam là tổ chức hàng đầu nhằm thúc đẩy nghiên cứu, phát triển và ứng dụng công nghệ IoT, xây dựng cộng đồng và hệ sinh thái IoT vững mạnh.",
+    "venueName": "Trung tâm Hội nghị Gem Center",
+    "cityId": 79,
+    "districtId": null,
+    "wardId": 25688,
+    "street": "8 Nguyễn Bỉnh Khiêm",
+    "latitude": 10.785,
+    "longitude": 106.702,
+    "formattedAddress": "8 Nguyễn Bỉnh Khiêm, Phường Đa Kao, Quận 1, TP. Hồ Chí Minh",
+    "placeId": "ChIJcQf_TeyrNTERZ1o2e0oG69t",
+    "categoriesIds": ["9671bdf8-484e-4922-8835-cc800cc7ba3f"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-10-25T09:00:00.000Z",
+        "endTime": "2025-10-25T16:30:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Hội Thảo Chuyên Sâu",
+            "price": 250000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 3,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-25T08:00:00.000Z",
+            "description": "Tiếp cận tất cả các phiên thảo luận chuyên sâu và workshop thực hành.",
+            "imageUrl": "https://techsummit.vn/images/tickets/deep-dive-iot-ticket.jpg"
+          },
+          {
+            "name": "Vé Networking",
+            "price": 80000,
+            "isFree": false,
+            "quantity": 250,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-25T08:00:00.000Z",
+            "description": "Tham gia phiên khai mạc và khu vực triển lãm công nghệ, cơ hội kết nối.",
+            "imageUrl": "https://techsummit.vn/images/tickets/networking-iot-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "BIDV",
+      "bankAccountName": "HIEP HOI INTERNET OF THINGS VIET NAM",
+      "bankAccountNumber": "68010001239876",
+      "bankOffice": "Chi nhánh Nguyễn Huệ, TP.HCM",
+      "businessType": "COMPANY",
+      "name": "Hiệp Hội Internet of Things Việt Nam",
+      "address": "45 Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, TP. Hồ Chí Minh",
+      "taxNumber": "0312019283"
+    },
+    "setting": {
+      "url": "iot-ecosystem-vn-2025",
+      "messageAttendees": "Chào mừng đến với Diễn đàn IoT VN 2025! Cùng nhau kiến tạo tương lai kết nối.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 500
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://youthcup.vn/images/football-cup-logo.png",
+    "eventBannerUrl": "https://tuyendung.fpt.vn/fpt-photos/danang-football-fpt.jpg",
+    "eventName": "Giải Bóng Đá Thanh Niên Đà Nẵng Mở Rộng 2025",
+    "categories": ["sport"],
+    "eventDescription": "Giải bóng đá thường niên dành cho các đội bóng thanh niên khu vực Đà Nẵng và các tỉnh lân cận. Mục tiêu khuyến khích phong trào thể thao, nâng cao sức khỏe và tinh thần đoàn kết trong cộng đồng trẻ.",
+    "orgLogoUrl": "https://danangfootball.vn/logo/danang-football-association.png",
+    "orgName": "Liên Đoàn Bóng Đá Đà Nẵng",
+    "orgDescription": "Đơn vị chủ quản các giải đấu bóng đá chuyên nghiệp và nghiệp dư tại Đà Nẵng, phát triển tài năng và phong trào bóng đá địa phương.",
+    "venueName": "Cung Văn hóa Thể thao Tiên Sơn",
+    "cityId": 48,
+    "districtId": null,
+    "wardId": 16155,
+    "street": "Đường 2 tháng 9",
+    "latitude": 16.0357,
+    "longitude": 108.2045,
+    "formattedAddress": "Đường 2 tháng 9, Phường Hòa Cường Bắc, Quận Hải Châu, Đà Nẵng",
+    "placeId": "ChIJdYbGk7pZNDERZ1o3e0oG69c",
+    "categoriesIds": ["4247769b-251e-4909-8c89-3af54d648374"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-07-20T16:00:00.000Z",
+        "endTime": "2025-07-20T20:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Đội Tham Gia",
+            "price": 500000,
+            "isFree": false,
+            "quantity": 30,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-06-01T00:00:00.000Z",
+            "endTime": "2025-07-20T15:00:00.000Z",
+            "description": "Phí tham dự cho một đội bóng, bao gồm sân bãi và nước uống trong trận đấu.",
+            "imageUrl": "https://sportsevents.vn/images/tickets/football-team-ticket.jpg"
+          },
+          {
+            "name": "Vé Khán Giả",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 500,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 10,
+            "startTime": "2025-06-01T00:00:00.000Z",
+            "endTime": "2025-07-20T15:00:00.000Z",
+            "description": "Vé vào cửa khu vực khán đài để cổ vũ trận đấu.",
+            "imageUrl": "https://sportsevents.vn/images/tickets/football-fan-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "VietinBank",
+      "bankAccountName": "LIEN DOAN BONG DA DA NANG",
+      "bankAccountNumber": "10800123456789",
+      "bankOffice": "Chi nhánh Tiên Sơn, Đà Nẵng",
+      "businessType": "COMPANY",
+      "name": "Liên Đoàn Bóng Đá Đà Nẵng",
+      "address": "100 Phan Đăng Lưu, Phường Hòa Cường Bắc, Quận Hải Châu, Đà Nẵng",
+      "taxNumber": "5000192837"
+    },
+    "setting": {
+      "url": "youth-football-danang-2025",
+      "messageAttendees": "Chào mừng các đội bóng và khán giả đến với giải đấu! Chúc giải đấu thành công tốt đẹp.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 800
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://dalatfilmfestival.vn/images/film-festival-logo.png",
+    "eventBannerUrl": "https://dalattravel.vn/images/film-festival-banner-dalat.jpg",
+    "eventName": "Liên Hoan Phim Độc Lập Đà Lạt 2025: Góc Nhìn Mới",
+    "categories": ["art"],
+    "eventDescription": "Nơi hội tụ của những nhà làm phim độc lập trẻ tuổi, giới thiệu các tác phẩm điện ảnh đầy sáng tạo và phá cách từ khắp Việt Nam. Sự kiện bao gồm các buổi chiếu phim, tọa đàm với đạo diễn và hoạt động giao lưu văn hóa.",
+    "orgLogoUrl": "https://indiemovienetwork.vn/logo/indie-film-vietnam.png",
+    "orgName": "Mạng Lưới Phim Độc Lập Việt Nam",
+    "orgDescription": "Mạng Lưới Phim Độc Lập Việt Nam là tổ chức hỗ trợ và quảng bá các tác phẩm điện ảnh độc lập, tạo cơ hội cho các nhà làm phim mới.",
+    "venueName": "Trung tâm Hội nghị Dalat Palace",
+    "cityId": 68,
+    "districtId": null,
+    "wardId": 22952,
+    "street": "2 Trần Phú",
+    "latitude": 11.9442,
+    "longitude": 108.4371,
+    "formattedAddress": "2 Trần Phú, Phường 3, Thành phố Đà Lạt, Lâm Đồng",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69x",
+    "categoriesIds": ["b8f1c2d3-4e5f-6789-abcd-ef0123456789"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-11-15T10:00:00.000Z",
+        "endTime": "2025-11-15T22:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Tuần Lễ Vàng",
+            "price": 180000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 2,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-11-15T09:00:00.000Z",
+            "description": "Vào cửa tất cả các buổi chiếu và tọa đàm trong suốt tuần lễ. Bao gồm ưu tiên chỗ ngồi.",
+            "imageUrl": "https://filmfestival.vn/images/tickets/premium-film-festival.jpg"
+          },
+          {
+            "name": "Vé Ngày",
+            "price": 80000,
+            "isFree": false,
+            "quantity": 300,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-11-15T09:00:00.000Z",
+            "description": "Vào cửa tất cả các buổi chiếu trong một ngày cụ thể.",
+            "imageUrl": "https://filmfestival.vn/images/tickets/daily-film-festival.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "ACB",
+      "bankAccountName": "MANG LUOI PHIM DOC LAP VIET NAM",
+      "bankAccountNumber": "23456789012345",
+      "bankOffice": "Chi nhánh Đà Lạt, Lâm Đồng",
+      "businessType": "COMPANY",
+      "name": "Mạng Lưới Phim Độc Lập Việt Nam",
+      "address": "1A Nam Kỳ Khởi Nghĩa, Phường 1, Thành phố Đà Lạt, Lâm Đồng",
+      "taxNumber": "4200876543"
+    },
+    "setting": {
+      "url": "independent-film-fest-dalat",
+      "messageAttendees": "Chào mừng đến với Liên Hoan Phim Độc Lập Đà Lạt! Hãy cùng khám phá những góc nhìn mới mẻ.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 500
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://environmental-ed.vn/images/green-future-logo.png",
+    "eventBannerUrl": "https://canthophotography.vn/img/environmental-workshop-banner.jpg",
+    "eventName": "Workshop Nâng Cao Nhận Thức Môi Trường: Xây Dựng Tương Lai Xanh",
+    "categories": ["education"],
+    "eventDescription": "Buổi workshop tương tác nhằm nâng cao nhận thức về biến đổi khí hậu và tầm quan trọng của việc bảo vệ môi trường. Các hoạt động thực hành, trò chơi giáo dục và chia sẻ từ chuyên gia sẽ giúp người tham gia thay đổi thói quen vì một tương lai bền vững hơn.",
+    "orgLogoUrl": "https://greencenter.org.vn/logo/cantho-green-center.png",
+    "orgName": "Trung Tâm Phát Triển Xanh Cần Thơ",
+    "orgDescription": "Trung Tâm Phát Triển Xanh Cần Thơ là tổ chức phi lợi nhuận hoạt động vì môi trường, thúc đẩy các giải pháp bền vững và nâng cao nhận thức cộng đồng tại đồng bằng sông Cửu Long.",
+    "venueName": "Cung Văn hóa Lao động",
+    "cityId": 92,
+    "districtId": null,
+    "wardId": 30275,
+    "street": "131 Trần Hưng Đạo",
+    "latitude": 10.027,
+    "longitude": 105.7725,
+    "formattedAddress": "131 Trần Hưng Đạo, Phường An Nghiệp, Quận Ninh Kiều, TP. Cần Thơ",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69y",
+    "categoriesIds": ["c9e2d4f5-6b7a-8901-bcde-f23456789012"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-08-10T08:30:00.000Z",
+        "endTime": "2025-08-10T12:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Tham Gia Toàn Diện",
+            "price": 80000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 3,
+            "startTime": "2025-07-01T00:00:00.000Z",
+            "endTime": "2025-08-10T07:30:00.000Z",
+            "description": "Bao gồm tài liệu, vật liệu thực hành và chứng nhận tham gia. Hỗ trợ dự án cây xanh.",
+            "imageUrl": "https://ecoworkshop.vn/images/tickets/full-workshop-green.jpg"
+          },
+          {
+            "name": "Vé Miễn Phí (Cộng đồng)",
+            "price": 0,
+            "isFree": true,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-07-01T00:00:00.000Z",
+            "endTime": "2025-08-10T07:30:00.000Z",
+            "description": "Tham gia buổi chia sẻ chính và các hoạt động cộng đồng.",
+            "imageUrl": "https://ecoworkshop.vn/images/tickets/free-community-workshop.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Sacombank",
+      "bankAccountName": "TRUNG TAM PHAT TRIEN XANH CAN THO",
+      "bankAccountNumber": "040012398765",
+      "bankOffice": "Chi nhánh Ninh Kiều, Cần Thơ",
+      "businessType": "COMPANY",
+      "name": "Trung Tâm Phát Triển Xanh Cần Thơ",
+      "address": "14 Nguyễn Thị Minh Khai, An Lạc, Ninh Kiều, Cần Thơ",
+      "taxNumber": "9200345678"
+    },
+    "setting": {
+      "url": "green-future-workshop-ct",
+      "messageAttendees": "Cảm ơn bạn đã đồng hành cùng chúng tôi trong hành trình xây dựng một tương lai xanh! Hãy Sống Xanh ngay hôm nay.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 300
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://charity-hope.vn/images/hope-for-children-logo.png",
+    "eventBannerUrl": "https://vietnamchildrenfund.org/banners/children-charity-gala-banner.jpg",
+    "eventName": "Gala Từ Thiện: Ánh Sáng Cho Trẻ Em Vùng Cao",
+    "categories": ["charity"],
+    "eventDescription": "Một buổi gala ấm cúng và ý nghĩa nhằm gây quỹ xây dựng trường học và cung cấp sách vở, đồ dùng học tập cho trẻ em vùng núi khó khăn. Chương trình bao gồm đấu giá từ thiện, tiết mục văn nghệ và tiệc nhẹ.",
+    "orgLogoUrl": "https://childrenofvietnam.org/images/fund-for-child.png",
+    "orgName": "Quỹ Vì Trẻ Em Việt",
+    "orgDescription": "Quỹ Vì Trẻ Em Việt là một tổ chức phi lợi nhuận hoạt động với mục tiêu cải thiện điều kiện sống và học tập của trẻ em nghèo, đặc biệt là ở các vùng sâu vùng xa.",
+    "venueName": "Nhà Hát Thành Phố Hồ Chí Minh",
+    "cityId": 79,
+    "districtId": null,
+    "wardId": 25700,
+    "street": "7 Công Trường Lam Sơn",
+    "latitude": 10.7766,
+    "longitude": 106.7011,
+    "formattedAddress": "7 Công Trường Lam Sơn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh",
+    "placeId": "ChIJz424n2syNTERZ1o2e0oG69r",
+    "categoriesIds": ["d0f3e5g6-7c8b-9012-cdef-345678901234"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-12-12T18:00:00.000Z",
+        "endTime": "2025-12-12T22:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Ủng Hộ Kim Cương",
+            "price": 300000,
+            "isFree": false,
+            "quantity": 50,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-11-01T00:00:00.000Z",
+            "endTime": "2025-12-12T17:00:00.000Z",
+            "description": "Bàn riêng, ưu tiên đấu giá, vinh danh và nhận quà lưu niệm đặc biệt từ quỹ.",
+            "imageUrl": "https://charityevents.vn/images/tickets/diamond-sponsor.jpg"
+          },
+          {
+            "name": "Vé Ủng Hộ Vàng",
+            "price": 200000,
+            "isFree": false,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 10,
+            "startTime": "2025-11-01T00:00:00.000Z",
+            "endTime": "2025-12-12T17:00:00.000Z",
+            "description": "Tham gia tiệc tối và đấu giá, đóng góp vào quỹ.",
+            "imageUrl": "https://charityevents.vn/images/tickets/gold-sponsor.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "QUY VI TRE EM VIET",
+      "bankAccountNumber": "001100567890123",
+      "bankOffice": "Chi nhánh Bến Thành, TP.HCM",
+      "businessType": "COMPANY",
+      "name": "Quỹ Vì Trẻ Em Việt",
+      "address": "120 Nguyễn Du, Quận 1, TP. Hồ Chí Minh",
+      "taxNumber": "0300987654"
+    },
+    "setting": {
+      "url": "light-for-children-gala-hcm",
+      "messageAttendees": "Mỗi tấm lòng vàng của quý vị sẽ thắp sáng tương lai cho thế hệ trẻ em Việt Nam. Cảm ơn sự hiện diện của quý vị!",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 300
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://hanoijazz.vn/images/jazz-festival-logo.png",
+    "eventBannerUrl": "https://vietnambiz.vn/images/hanoi-jazz-banner.jpg",
+    "eventName": "Festival Jazz Mùa Thu Hà Nội 2025: Giai Điệu Vượt Thời Gian",
+    "categories": ["music"],
+    "eventDescription": "Một lễ hội âm nhạc Jazz quốc tế với sự góp mặt của các nghệ sĩ Jazz hàng đầu Việt Nam và thế giới. Khám phá sự đa dạng của nhạc Jazz từ cổ điển đến hiện đại trong không gian âm nhạc lãng mạn của Nhà hát Lớn Hà Nội.",
+    "orgLogoUrl": "https://jazzfusionvn.com/logo/hanoi-jazz-foundation.png",
+    "orgName": "Quỹ Phát Triển Jazz Hà Nội",
+    "orgDescription": "Quỹ Phát Triển Jazz Hà Nội là tổ chức phi lợi nhuận nhằm bảo tồn và phát triển nhạc Jazz tại Việt Nam, tổ chức các sự kiện và đào tạo tài năng trẻ.",
+    "venueName": "Nhà hát Lớn Hà Nội",
+    "cityId": 1,
+    "districtId": null,
+    "wardId": 12,
+    "street": "1 Tràng Tiền",
+    "latitude": 21.025,
+    "longitude": 105.856,
+    "formattedAddress": "1 Tràng Tiền, Phường Tràng Tiền, Quận Hoàn Kiếm, Hà Nội",
+    "placeId": "ChIJy-p7dKq_NTERJ3oUe0oG69m",
+    "categoriesIds": ["fc981c1b-485d-497d-b539-b8e73c4376bb"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-10-18T20:00:00.000Z",
+        "endTime": "2025-10-18T23:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Thượng Hạng (VIP)",
+            "price": 900000,
+            "isFree": false,
+            "quantity": 80,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 4,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-18T19:00:00.000Z",
+            "description": "Vị trí tốt nhất, dịch vụ đặt đồ uống tại chỗ và quà tặng lưu niệm.",
+            "imageUrl": "https://hanoiopera.vn/images/tickets/vip-opera-ticket.jpg"
+          },
+          {
+            "name": "Vé Khu Vực A",
+            "price": 500000,
+            "isFree": false,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 6,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-18T19:00:00.000Z",
+            "description": "Chỗ ngồi tốt ở khu vực A.",
+            "imageUrl": "https://hanoiopera.vn/images/tickets/zone-a-ticket.jpg"
+          },
+          {
+            "name": "Vé Khu Vực B",
+            "price": 200000,
+            "isFree": false,
+            "quantity": 300,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-18T19:00:00.000Z",
+            "description": "Chỗ ngồi tiêu chuẩn khu vực B.",
+            "imageUrl": "https://hanoiopera.vn/images/tickets/zone-b-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "QUY PHAT TRIEN JAZZ HA NOI",
+      "bankAccountNumber": "00110045678901",
+      "bankOffice": "Chi nhánh Chu Văn An, Hà Nội",
+      "businessType": "COMPANY",
+      "name": "Quỹ Phát Triển Jazz Hà Nội",
+      "address": "15 Ngô Quyền, Quận Hoàn Kiếm, Hà Nội",
+      "taxNumber": "0100765432"
+    },
+    "setting": {
+      "url": "hanoi-autumn-jazz-fest-2025",
+      "messageAttendees": "Chào mừng đến với Festival Jazz Mùa Thu! Hy vọng quý vị sẽ có một đêm thật thư giãn và thăng hoa cùng âm nhạc.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 600
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://saigontechclub.vn/images/startup-pitch-logo.png",
+    "eventBannerUrl": "https://scc.vn/banners/startup-pitch-day-hcmc.jpg",
+    "eventName": "Ngày Hội Khởi Nghiệp và Gọi Vốn Hồ Chí Minh 2025",
+    "categories": ["technology"],
+    "eventDescription": "Một sự kiện thường niên quan trọng dành cho cộng đồng khởi nghiệp tại TP. Hồ Chí Minh, nơi các startup trình bày ý tưởng, tìm kiếm nhà đầu tư và nhận được sự cố vấn từ các chuyên gia hàng đầu. Sự kiện mang đến nhiều cơ hội hợp tác và phát triển.",
+    "orgLogoUrl": "https://hcmcstartup.org/logo/hcmc-startup-network.png",
+    "orgName": "Mạng Lưới Khởi Nghiệp TP. Hồ Chí Minh",
+    "orgDescription": "Đóng vai trò trung tâm kết nối các nguồn lực, hỗ trợ các startup phát triển bền vững và đóng góp vào sự phát triển kinh tế của thành phố và đất nước.",
+    "venueName": "Trung tâm Hội nghị Gem Center",
+    "cityId": 79,
+    "districtId": null,
+    "wardId": 25688,
+    "street": "8 Nguyễn Bỉnh Khiêm",
+    "latitude": 10.785,
+    "longitude": 106.702,
+    "formattedAddress": "8 Nguyễn Bỉnh Khiêm, Phường Đa Kao, Quận 1, TP. Hồ Chí Minh",
+    "placeId": "ChIJcQf_TeyrNTERZ1o2e0oG69u",
+    "categoriesIds": ["9671bdf8-484e-4922-8835-cc800cc7ba3f"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-09-05T09:00:00.000Z",
+        "endTime": "2025-09-05T17:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Nhà Đầu Tư",
+            "price": 300000,
+            "isFree": false,
+            "quantity": 80,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 3,
+            "startTime": "2025-08-01T00:00:00.000Z",
+            "endTime": "2025-09-05T08:00:00.000Z",
+            "description": "Truy cập các phiên pitch chuyên sâu, khu vực VIP networking và tài liệu dự án.",
+            "imageUrl": "https://startup.vn/images/tickets/investor-ticket-tech.jpg"
+          },
+          {
+            "name": "Vé Startup/General",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 300,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-08-01T00:00:00.000Z",
+            "endTime": "2025-09-05T08:00:00.000Z",
+            "description": "Tham gia các phiên chính, khu vực triển lãm và kết nối chung.",
+            "imageUrl": "https://startup.vn/images/tickets/general-startup-ticket-tech.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "ACB",
+      "bankAccountName": "MANG LUOI KHOI NGHIEP TP HCM",
+      "bankAccountNumber": "20000101928374",
+      "bankOffice": "Chi nhánh Sài Gòn, TP.HCM",
+      "businessType": "COMPANY",
+      "name": "Mạng Lưới Khởi Nghiệp TP. Hồ Chí Minh",
+      "address": "40 Trương Định, Phường Bến Thành, Quận 1, TP. Hồ Chí Minh",
+      "taxNumber": "0310876543"
+    },
+    "setting": {
+      "url": "hcm-startup-funding-day-2025",
+      "messageAttendees": "Chào mừng đến với Ngày Hội Khởi Nghiệp và Gọi Vốn! Cùng nhau hiện thực hóa những ý tưởng đột phá.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 500
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://danang-run.vn/images/color-run-logo.png",
+    "eventBannerUrl": "https://tourismdanang.vn/images/color-run-danang-banner.jpg",
+    "eventName": "Giải Chạy Sắc Màu Đà Nẵng 2025: Lan Tỏa Năng Lượng",
+    "categories": ["sport"],
+    "eventDescription": "Một giải chạy không chuyên đầy màu sắc và niềm vui dành cho mọi lứa tuổi, kết hợp giữa thể thao và các hoạt động giải trí. Người tham gia sẽ được phủ bột màu tại các trạm trên đường chạy, mang lại trải nghiệm độc đáo và đáng nhớ.",
+    "orgLogoUrl": "https://danangactive.vn/logo/danang-youth-sports-center.png",
+    "orgName": "Trung Tâm Thể Thao Thanh Thiếu Niên Đà Nẵng",
+    "orgDescription": "Trung Tâm Thể Thao Thanh Thiếu Niên Đà Nẵng chuyên tổ chức các sự kiện thể thao cộng đồng, định hướng phát triển thể chất và tinh thần cho giới trẻ tại Đà Nẵng.",
+    "venueName": "Cung Văn hóa Thể thao Tiên Sơn",
+    "cityId": 48,
+    "districtId": null,
+    "wardId": 16155,
+    "street": "Đường 2 tháng 9",
+    "latitude": 16.0357,
+    "longitude": 108.2045,
+    "formattedAddress": "Đường 2 tháng 9, Phường Hòa Cường Bắc, Quận Hải Châu, Đà Nẵng",
+    "placeId": "ChIJdYbGk7pZNDERZ1o3e0oG69c",
+    "categoriesIds": ["4247769b-251e-4909-8c89-3af54d648374"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-06-08T06:00:00.000Z",
+        "endTime": "2025-06-08T10:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Chạy Full",
+            "price": 200000,
+            "isFree": false,
+            "quantity": 1000,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-05-01T00:00:00.000Z",
+            "endTime": "2025-06-08T05:00:00.000Z",
+            "description": "Bao gồm áo thun, Bib, bột màu và huy chương hoàn thành.",
+            "imageUrl": "https://colorrun.vn/images/tickets/full-color-run-ticket.jpg"
+          },
+          {
+            "name": "Vé Chạy Cá Nhân",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 800,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-05-01T00:00:00.000Z",
+            "endTime": "2025-06-08T05:00:00.000Z",
+            "description": "Bao gồm Bib và bột màu.",
+            "imageUrl": "https://colorrun.vn/images/tickets/individual-color-run-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "TRUNG TAM THE THAO THANH THIEU NIEN DA NANG",
+      "bankAccountNumber": "00110098712345",
+      "bankOffice": "Chi nhánh Sơn Trà, Đà Nẵng",
+      "businessType": "COMPANY",
+      "name": "Trung Tâm Thể Thao Thanh Thiếu Niên Đà Nẵng",
+      "address": "150 Nguyễn Văn Linh, Phường Thạc Gián, Quận Thanh Khê, Đà Nẵng",
+      "taxNumber": "5000987654"
+    },
+    "setting": {
+      "url": "color-run-danang-2025",
+      "messageAttendees": "Hãy sẵn sàng cho một buổi sáng đầy màu sắc và năng lượng! Chạy hết mình và tận hưởng niềm vui.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 2000
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://digitalartvn.com/images/digital-art-expo-logo.png",
+    "eventBannerUrl": "https://vincom.vn/banners/digital-art-expo-hcmc-banner.jpg",
+    "eventName": "Triển Lãm Nghệ Thuật Số Việt Nam 2025: Tương Lai Của Sáng Tạo",
+    "categories": ["art"],
+    "eventDescription": "Triển lãm nghệ thuật số đầu tiên tại TP. Hồ Chí Minh, giới thiệu những tác phẩm tiên phong trong lĩnh vực nghệ thuật tương tác, VR/AR art, và AI art từ các nghệ sĩ trẻ tài năng. Một trải nghiệm thị giác và công nghệ đỉnh cao.",
+    "orgLogoUrl": "https://digitalartistsvn.com/logo/vn-digital-art-community.png",
+    "orgName": "Cộng Đồng Nghệ Thuật Số Việt Nam",
+    "orgDescription": "Cộng Đồng Nghệ Thuật Số Việt Nam là nơi quy tụ các nghệ sĩ và những người yêu thích nghệ thuật số, thúc đẩy việc ứng dụng công nghệ vào sáng tạo nghệ thuật.",
+    "venueName": "Trung tâm Hội nghị Gem Center",
+    "cityId": 79,
+    "districtId": null,
+    "wardId": 25688,
+    "street": "8 Nguyễn Bỉnh Khiêm",
+    "latitude": 10.785,
+    "longitude": 106.702,
+    "formattedAddress": "8 Nguyễn Bỉnh Khiêm, Phường Đa Kao, Quận 1, TP. Hồ Chí Minh",
+    "placeId": "ChIJcQf_TeyrNTERZ1o2e0oG69u",
+    "categoriesIds": ["b8f1c2d3-4e5f-6789-abcd-ef0123456789"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-09-20T09:00:00.000Z",
+        "endTime": "2025-09-20T20:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Trải Nghiệm Cao Cấp",
+            "price": 180000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 3,
+            "startTime": "2025-08-15T00:00:00.000Z",
+            "endTime": "2025-09-20T08:00:00.000Z",
+            "description": "Vào cửa tất cả các khu vực, bao gồm khu trải nghiệm VR/AR đặc biệt và quà tặng nghệ thuật số.",
+            "imageUrl": "https://artexpo.org/images/tickets/premium-digital-art.jpg"
+          },
+          {
+            "name": "Vé Tham Quan Triển Lãm",
+            "price": 80000,
+            "isFree": false,
+            "quantity": 400,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-08-15T00:00:00.000Z",
+            "endTime": "2025-09-20T08:00:00.000Z",
+            "description": "Vào cửa khu vực triển lãm chính.",
+            "imageUrl": "https://artexpo.org/images/tickets/general-digital-art.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Techcombank",
+      "bankAccountName": "CONG DONG NGHE THUAT SO VIET NAM",
+      "bankAccountNumber": "19030123456789",
+      "bankOffice": "Chi nhánh Quận 1, TP.HCM",
+      "businessType": "COMPANY",
+      "name": "Cộng Đồng Nghệ Thuật Số Việt Nam",
+      "address": "90 Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh",
+      "taxNumber": "0319876543"
+    },
+    "setting": {
+      "url": "digital-art-expo-hcm-2025",
+      "messageAttendees": "Chào mừng quý vị đến với không gian nghệ thuật số đầy mê hoặc! Hãy tận hưởng và khám phá tương lai của sáng tạo.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 600
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://canthouni.edu.vn/images/career-fair-logo.png",
+    "eventBannerUrl": "https://canthofuture.vn/banners/career-fair-ct-banner.jpg",
+    "eventName": "Ngày Hội Hướng Nghiệp và Việc Làm Sinh Viên Cần Thơ 2025",
+    "categories": ["education"],
+    "eventDescription": "Ngày hội việc làm lớn nhất tại Cần Thơ, kết nối sinh viên và các doanh nghiệp hàng đầu trong nhiều lĩnh vực. Cơ hội phỏng vấn trực tiếp, tìm kiếm công việc và thực tập tiềm năng, cùng các buổi chia sẻ kỹ năng viết CV, phỏng vấn xin việc.",
+    "orgLogoUrl": "https://canthouni.edu.vn/logo/cantho-university-logo.png",
+    "orgName": "Trung Tâm Hỗ Trợ Sinh Viên và Khởi Nghiệp - Đại học Cần Thơ",
+    "orgDescription": "Trung tâm trực thuộc Đại học Cần Thơ, chuyên trách hỗ trợ sinh viên trong học tập, hướng nghiệp và phát triển các dự án khởi nghiệp.",
+    "venueName": "Trung tâm Hội nghị Ninh Kiều",
+    "cityId": 92,
+    "districtId": null,
+    "wardId": 30270,
+    "street": "108A Lê Lợi",
+    "latitude": 10.0298,
+    "longitude": 105.772,
+    "formattedAddress": "108A Lê Lợi, Phường Cái Khế, Quận Ninh Kiều, TP. Cần Thơ",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69q",
+    "categoriesIds": ["c9e2d4f5-6b7a-8901-bcde-f23456789012"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-04-15T08:00:00.000Z",
+        "endTime": "2025-04-15T17:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Tham Quan & Workshop",
+            "price": 50000,
+            "isFree": false,
+            "quantity": 300,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 3,
+            "startTime": "2025-03-01T00:00:00.000Z",
+            "endTime": "2025-04-15T07:00:00.000Z",
+            "description": "Vào cửa tất cả các gian hàng, tham gia các buổi workshop kỹ năng ngắn.",
+            "imageUrl": "https://careerfair.vn/images/tickets/workshop-access-ticket.jpg"
+          },
+          {
+            "name": "Vé Miễn Phí (Sinh viên ĐHCT)",
+            "price": 0,
+            "isFree": true,
+            "quantity": 500,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-03-01T00:00:00.000Z",
+            "endTime": "2025-04-15T07:00:00.000Z",
+            "description": "Dành riêng cho sinh viên Đại học Cần Thơ, cần xuất trình thẻ sinh viên. Chỉ bao gồm tham quan chung.",
+            "imageUrl": "https://careerfair.vn/images/tickets/free-student-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "BIDV",
+      "bankAccountName": "TRUNG TAM HO TRO SINH VIEN DH CT",
+      "bankAccountNumber": "68010001928374",
+      "bankOffice": "Chi nhánh Đại học Cần Thơ, Cần Thơ",
+      "businessType": "COMPANY",
+      "name": "Trung Tâm Hỗ Trợ Sinh Viên và Khởi Nghiệp - Đại học Cần Thơ",
+      "address": "Khu II, Đường 3/2, Phường Xuân Khánh, Quận Ninh Kiều, TP. Cần Thơ",
+      "taxNumber": "9200456789"
+    },
+    "setting": {
+      "url": "career-fair-cantho-2025",
+      "messageAttendees": "Chào mừng các bạn sinh viên đến với Ngày Hội Hướng Nghiệp. Chúc các bạn tìm được cơ hội phát triển bản thân và sự nghiệp!",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 800
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://forest-charity.vn/images/tree-planting-logo.png",
+    "eventBannerUrl": "https://trekkingdalat.vn/banners/planting-for-green-dalat-banner.jpg",
+    "eventName": "Chiến Dịch Trồng Cây: Vì Một Đà Lạt Xanh Tươi",
+    "categories": ["charity"],
+    "eventDescription": "Một hoạt động cộng đồng ý nghĩa nhằm phục hồi và phát triển rừng thông Đà Lạt. Người tham gia sẽ cùng nhau trồng cây, góp phần bảo vệ môi trường, giữ gìn cảnh quan thiên nhiên và chống biến đổi khí hậu tại thành phố mộng mơ.",
+    "orgLogoUrl": "https://dalatgreen.org/logo/dalat-green-project.png",
+    "orgName": "Dự Án Đà Lạt Xanh",
+    "orgDescription": "Dự Án Đà Lạt Xanh là một sáng kiến cộng đồng nhằm thúc đẩy các hoạt động bảo vệ môi trường, bảo tồn thiên nhiên và phát triển bền vững tại Đà Lạt và Lâm Đồng.",
+    "venueName": "Đồi Thông Hai Mộ (Khu vực chỉ định)",
+    "cityId": 68,
+    "districtId": null,
+    "wardId": 22956,
+    "street": "đường Khởi Nghĩa Bắc Sơn",
+    "latitude": 11.97,
+    "longitude": 108.43,
+    "formattedAddress": "Đồi Thông Hai Mộ, Đường Khởi Nghĩa Bắc Sơn, Phường 10, Thành phố Đà Lạt, Lâm Đồng",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69z",
+    "categoriesIds": ["d0f3e5g6-7c8b-9012-cdef-345678901234"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-10-05T07:00:00.000Z",
+        "endTime": "2025-10-05T12:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Ủng Hộ (Người Lớn)",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 300,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-05T06:00:00.000Z",
+            "description": "Bao gồm cây giống, công cụ trồng cây và áo thun sự kiện.",
+            "imageUrl": "https://greenplanet.vn/images/tickets/adult-planting-ticket.jpg"
+          },
+          {
+            "name": "Vé Ủng Hộ (Học Sinh/Sinh Viên)",
+            "price": 50000,
+            "isFree": false,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 10,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-05T06:00:00.000Z",
+            "description": "Giá ưu đãi dành cho học sinh/sinh viên. Bao gồm cây giống và công cụ.",
+            "imageUrl": "https://greenplanet.vn/images/tickets/student-planting-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "VietinBank",
+      "bankAccountName": "DU AN DA LAT XANH",
+      "bankAccountNumber": "10800192837645",
+      "bankOffice": "Chi nhánh Đà Lạt, Lâm Đồng",
+      "businessType": "COMPANY",
+      "name": "Dự Án Đà Lạt Xanh",
+      "address": "5 Trần Quốc Toản, Phường 1, Thành phố Đà Lạt, Lâm Đồng",
+      "taxNumber": "4200123987"
+    },
+    "setting": {
+      "url": "green-dalat-tree-planting",
+      "messageAttendees": "Cảm ơn bạn đã chung tay vì một Đà Lạt xanh tươi hơn! Hãy cùng nhau lan tỏa ý thức bảo vệ môi trường.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 500
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://v-popworld.vn/logo/v-pop-love-story-logo.png",
+    "eventBannerUrl": "https://vietnamconcert.vn/banners/vpop-saigon-banner.jpg",
+    "eventName": "Hồ Chí Minh Music Festival: Tình Khúc Hồi Ức",
+    "categories": ["music"],
+    "eventDescription": "Đêm nhạc đặc biệt tái hiện những tình khúc bất hủ của âm nhạc Việt Nam qua các thập kỷ. Sự kiện quy tụ các giọng ca vàng và ban nhạc hàng đầu, mang đến những cảm xúc hoài niệm và thăng hoa cho khán giả mọi lứa tuổi.",
+    "orgLogoUrl": "https://goldenvoicevn.com/logo/golden-voice-ent.png",
+    "orgName": "Công ty TNHH Golden Voice Entertainment",
+    "orgDescription": "Golden Voice Entertainment là đơn vị tổ chức sự kiện âm nhạc uy tín, chuyên mang đến các chương trình nghệ thuật chất lượng cao, từ những đêm nhạc hoài niệm đến các festival sôi động.",
+    "venueName": "Nhà Hát Thành Phố Hồ Chí Minh",
+    "cityId": 79,
+    "districtId": null,
+    "wardId": 25700,
+    "street": "7 Công Trường Lam Sơn",
+    "latitude": 10.7766,
+    "longitude": 106.7011,
+    "formattedAddress": "7 Công Trường Lam Sơn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh",
+    "placeId": "ChIJz424n2syNTERZ1o2e0oG69r",
+    "categoriesIds": ["fc981c1b-485d-497d-b539-b8e73c4376bb"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-11-23T19:00:00.000Z",
+        "endTime": "2025-11-23T22:30:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Kim Cương",
+            "price": 1000000,
+            "isFree": false,
+            "quantity": 50,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 4,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-11-23T18:00:00.000Z",
+            "description": "Vị trí đẹp nhất, khu vực riêng, kèm đồ uống và quà lưu niệm cao cấp.",
+            "imageUrl": "https://ticketbox.vn/images/concert/diamond-hcmc.jpg"
+          },
+          {
+            "name": "Vé Bạch Kim",
+            "price": 700000,
+            "isFree": false,
+            "quantity": 150,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 6,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-11-23T18:00:00.000Z",
+            "description": "Chỗ ngồi tốt, bao gồm ưu đãi đồ uống.",
+            "imageUrl": "https://ticketbox.vn/images/concert/platinum-hcmc.jpg"
+          },
+          {
+            "name": "Vé Tiêu Chuẩn",
+            "price": 350000,
+            "isFree": false,
+            "quantity": 400,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-11-23T18:00:00.000Z",
+            "description": "Vé vào cửa khu vực ghế ngồi tiêu chuẩn.",
+            "imageUrl": "https://ticketbox.vn/images/concert/standard-hcmc.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "CONG TY TNHH GOLDEN VOICE ENTERTAINMENT",
+      "bankAccountNumber": "001100987654321",
+      "bankOffice": "Chi nhánh Quận 3, TP.HCM",
+      "businessType": "COMPANY",
+      "name": "Công ty TNHH Golden Voice Entertainment",
+      "address": "12 Nguyễn Thị Diệu, Phường 6, Quận 3, TP. Hồ Chí Minh",
+      "taxNumber": "0319283746"
+    },
+    "setting": {
+      "url": "hcmc-music-festival-2025",
+      "messageAttendees": "Chào mừng quý vị đến với đêm nhạc 'Tình Khúc Hồi Ức'! Hãy để âm nhạc đưa chúng ta trở về những kỷ niệm đẹp.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 600
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://ai-edtech.vn/images/edtech-summit-logo.png",
+    "eventBannerUrl": "https://vnedu.vn/banners/edtech-summit-hanoi-banner.jpg",
+    "eventName": "EdTech Summit Việt Nam 2025: Đổi Mới Giáo Dục Kỷ Nguyên Số",
+    "categories": ["technology"],
+    "eventDescription": " Hội nghị cấp cao về công nghệ giáo dục, mang đến những xu hướng và giải pháp tiên tiến nhất trong EdTech như AI trong giáo dục, nền tảng học tập trực tuyến, thực tế ảo VR/AR. Sự kiện thu hút các nhà giáo dục, IT developers và nhà đầu tư.",
+    "orgLogoUrl": "https://vietnamlearning.org/logo/vn-edtech-association.png",
+    "orgName": "Hiệp Hội Công Nghệ Giáo Dục Việt Nam",
+    "orgDescription": "Đơn vị hàng đầu thúc đẩy ứng dụng công nghệ vào giáo dục, kết nối các tổ chức, doanh nghiệp và chuyên gia để nâng cao chất lượng giáo dục tại Việt Nam.",
+    "venueName": "Trung tâm Hội nghị Quốc gia",
+    "cityId": 1,
+    "districtId": null,
+    "wardId": 350,
+    "street": "Phạm Hùng",
+    "latitude": 21.0,
+    "longitude": 105.78,
+    "formattedAddress": "Phạm Hùng, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69k",
+    "categoriesIds": ["9671bdf8-484e-4922-8835-cc800cc7ba3f"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-05-10T08:30:00.000Z",
+        "endTime": "2025-05-10T17:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Tham Dự Hội Nghị",
+            "price": 280000,
+            "isFree": false,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 3,
+            "startTime": "2025-04-01T00:00:00.000Z",
+            "endTime": "2025-05-10T07:30:00.000Z",
+            "description": "Truy cập tất cả các phiên thảo luận, tọa đàm và khu vực triển lãm. Bao gồm tài liệu và ăn trưa.",
+            "imageUrl": "https://edtechconference.vn/images/tickets/full-conference-ticket.jpg"
+          },
+          {
+            "name": "Vé Triển Lãm & Demo",
+            "price": 80000,
+            "isFree": false,
+            "quantity": 300,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-04-01T00:00:00.000Z",
+            "endTime": "2025-05-10T07:30:00.000Z",
+            "description": "Tiếp cận khu vực triển lãm các sản phẩm EdTech và các buổi Demo công nghệ.",
+            "imageUrl": "https://edtechconference.vn/images/tickets/expo-demo-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "VietinBank",
+      "bankAccountName": "HIEP HOI CONG NGHE GIAO DUC VIET NAM",
+      "bankAccountNumber": "1080012398765",
+      "bankOffice": "Chi nhánh Đống Đa, Hà Nội",
+      "businessType": "COMPANY",
+      "name": "Hiệp Hội Công Nghệ Giáo Dục Việt Nam",
+      "address": "15 Trần Duy Hưng, Phường Trung Hòa, Quận Cầu Giấy, Hà Nội",
+      "taxNumber": "0100678901"
+    },
+    "setting": {
+      "url": "edtech-summit-vn-2025",
+      "messageAttendees": "Chào mừng đến với EdTech Summit 2025! Cùng nhau định hình tương lai giáo dục Việt Nam.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 700
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://vnbadmintonviet.vn/images/vn-open-logo.png",
+    "eventBannerUrl": "https://thethao.vn/banners/vietnam-open-badminton-2025.jpg",
+    "eventName": "Giải Cầu Lông Vô Địch Quốc Gia Việt Nam Mở Rộng 2025",
+    "categories": ["sport"],
+    "eventDescription": "Giải đấu cầu lông lớn nhất toàn quốc với sự tham gia của các vận động viên hàng đầu Việt Nam. Cơ hội chứng kiến những trận đấu đỉnh cao, kỹ thuật điêu luyện và tinh thần thể thao Fair Play.",
+    "orgLogoUrl": "https://vietnambadminton.org/logo/vn-badminton-fed.png",
+    "orgName": "Liên Đoàn Cầu Lông Việt Nam",
+    "orgDescription": "Liên Đoàn Cầu Lông Việt Nam là cơ quan quản lý và phát triển môn cầu lông tại Việt Nam, tổ chức các giải đấu chuyên nghiệp và phong trào, đào tạo vận động viên tài năng.",
+    "venueName": "Cung Văn hóa Thể thao Tiên Sơn",
+    "cityId": 48,
+    "districtId": null,
+    "wardId": 16155,
+    "street": "Đường 2 tháng 9",
+    "latitude": 16.0357,
+    "longitude": 108.2045,
+    "formattedAddress": "Đường 2 tháng 9, Phường Hòa Cường Bắc, Quận Hải Châu, Đà Nẵng",
+    "placeId": "ChIJdYbGk7pZNDERZ1o3e0oG69c",
+    "categoriesIds": ["4247769b-251e-4909-8c89-3af54d648374"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-10-12T09:00:00.000Z",
+        "endTime": "2025-10-12T19:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé VIP (Ngày Chung Kết)",
+            "price": 500000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 4,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-12T08:00:00.000Z",
+            "description": "Vị trí ghế ngồi tốt nhất, kèm nước uống và quà lưu niệm đặc biệt.",
+            "imageUrl": "https://badmintonticket.vn/images/tickets/vip-badminton-final.jpg"
+          },
+          {
+            "name": "Vé Thường (Ngày Chung Kết)",
+            "price": 250000,
+            "isFree": false,
+            "quantity": 400,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-12T08:00:00.000Z",
+            "description": "Vé vào cửa khu vực khán đài ngày chung kết.",
+            "imageUrl": "https://badmintonticket.vn/images/tickets/regular-badminton-final.jpg"
+          },
+          {
+            "name": "Vé Vòng Bảng (Ngày Bất Kỳ)",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 500,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 10,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-12T08:00:00.000Z",
+            "description": "Vào cửa các trận đấu vòng bảng trong một ngày bất kỳ.",
+            "imageUrl": "https://badmintonticket.vn/images/tickets/group-stage-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "ACB",
+      "bankAccountName": "LIEN DOAN CAU LONG VIET NAM",
+      "bankAccountNumber": "2000101928374567",
+      "bankOffice": "Chi nhánh Đà Nẵng, Đà Nẵng",
+      "businessType": "COMPANY",
+      "name": "Liên Đoàn Cầu Lông Việt Nam",
+      "address": "40 Lê Duẩn, Phường Hải Châu 2, Quận Hải Châu, Đà Nẵng",
+      "taxNumber": "5000123456"
+    },
+    "setting": {
+      "url": "vn-badminton-championship-2025",
+      "messageAttendees": "Chào mừng quý vị đến với Giải Cầu Lông Vô Địch Quốc Gia! Chúc quý vị những giờ phút mãn nhãn với các trận cầu đỉnh cao.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 1000
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://hanoiartclub.vn/images/traditional-paint-logo.png",
+    "eventBannerUrl": "https://hanoi-art-gallery.vn/banners/hanoi-art-show-banner.jpg",
+    "eventName": "Triển Lãm Tranh Hiện Đại Hà Nội: Đối Diện Với Đổi Mới",
+    "categories": ["art"],
+    "eventDescription": "Triển lãm trưng bày các tác phẩm hội họa hiện đại từ các nghệ sĩ Việt Nam đương đại, khám phá các phong cách và chủ đề mới mẻ. Sự kiện này là cơ hội để thưởng thức nghệ thuật độc đáo và gặp gỡ các tài năng mới của làng mỹ thuật Việt.",
+    "orgLogoUrl": "https://vietnamfinearts.org/logo/vn-fine-arts-association.png",
+    "orgName": "Hội Mỹ Thuật Việt Nam",
+    "orgDescription": "Hội Mỹ Thuật Việt Nam là tổ chức nghề nghiệp lớn nhất của các họa sĩ, nhà điêu khắc, và nhà phê bình mỹ thuật, có nhiệm vụ phát triển mỹ thuật nước nhà.",
+    "venueName": "Cung Văn hóa Hữu nghị Việt Xô",
+    "cityId": 1,
+    "districtId": null,
+    "wardId": 215,
+    "street": "91 Trần Hưng Đạo",
+    "latitude": 21.0285,
+    "longitude": 105.8542,
+    "formattedAddress": "91 Trần Hưng Đạo, Phường Trần Hưng Đạo, Quận Hoàn Kiếm, Hà Nội",
+    "placeId": "ChIJGb1b2fKq_NTERJ3oUe0oG69k",
+    "categoriesIds": ["b8f1c2d3-4e5f-6789-abcd-ef0123456789"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-09-10T09:00:00.000Z",
+        "endTime": "2025-09-10T19:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Có Hướng Dẫn Viên",
+            "price": 150000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 4,
+            "startTime": "2025-08-01T00:00:00.000Z",
+            "endTime": "2025-09-10T08:00:00.000Z",
+            "description": "Bao gồm vé vào cửa và tour tham quan cùng hướng dẫn viên chuyên nghiệp.",
+            "imageUrl": "https://art-exhibition.vn/images/tickets/guided-art-tour.jpg"
+          },
+          {
+            "name": "Vé Vào Cửa",
+            "price": 70000,
+            "isFree": false,
+            "quantity": 500,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-08-01T00:00:00.000Z",
+            "endTime": "2025-09-10T08:00:00.000Z",
+            "description": "Vào cửa tham quan các khu vực trưng bày.",
+            "imageUrl": "https://art-exhibition.vn/images/tickets/general-art-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "BIDV",
+      "bankAccountName": "HOI MY THUAT VIET NAM",
+      "bankAccountNumber": "6801000987654321",
+      "bankOffice": "Chi nhánh Hoàn Kiếm, Hà Nội",
+      "businessType": "COMPANY",
+      "name": "Hội Mỹ Thuật Việt Nam",
+      "address": "16 Ngô Quyền, Quận Hoàn Kiếm, Hà Nội",
+      "taxNumber": "0100456789"
+    },
+    "setting": {
+      "url": "modern-art-exhibition-hanoi",
+      "messageAttendees": "Chào mừng đến với không gian nghệ thuật đầy cảm hứng! Hy vọng bạn có những giây phút thưởng lãm đáng nhớ.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 600
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://dalatedu.vn/images/robotics-camp-logo.png",
+    "eventBannerUrl": "https://dalatscience.vn/banners/robotics-camp-dalat.jpg",
+    "eventName": "Học Kỳ Hè Robotics và Lập Trình Đà Lạt 2025",
+    "categories": ["education"],
+    "eventDescription": "Trại hè khoa học công nghệ dành cho học sinh, sinh viên tại Đà Lạt, chuyên sâu về Robotics, lập trình và trí tuệ nhân tạo. Chương trình giúp các em phát triển tư duy logic, sáng tạo và kỹ năng giải quyết vấn đề thông qua thực hành.",
+    "orgLogoUrl": "https://dalatstem.org/logo/dalat-stem-club.png",
+    "orgName": "Câu Lạc Bộ STEM Đà Lạt",
+    "orgDescription": "Câu Lạc Bộ STEM Đà Lạt là một tổ chức giáo dục phi lợi nhuận, thúc đẩy đam mê khoa học, công nghệ, kỹ thuật và toán học cho thế hệ trẻ.",
+    "venueName": "Nhà Văn hóa Thành phố Đà Lạt",
+    "cityId": 68,
+    "districtId": null,
+    "wardId": 22953,
+    "street": "Số 05 Phan Bội Châu",
+    "latitude": 11.9404,
+    "longitude": 108.4419,
+    "formattedAddress": "05 Phan Bội Châu, Phường 1, Thành phố Đà Lạt, Lâm Đồng",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69x",
+    "categoriesIds": ["c9e2d4f5-6b7a-8901-bcde-f23456789012"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-07-20T08:00:00.000Z",
+        "endTime": "2025-07-20T17:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Trọn Gói Trại Hè (05 Ngày)",
+            "price": 150000,
+            "isFree": false,
+            "quantity": 50,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-06-01T00:00:00.000Z",
+            "endTime": "2025-07-20T07:00:00.000Z",
+            "description": "Bao gồm tất cả các buổi học, vật liệu, ăn trưa và chứng nhận hoàn thành chương trình.",
+            "imageUrl": "https://stemcamp.vn/images/tickets/full-camp-ticket.jpg"
+          },
+          {
+            "name": "Vé Tham Quan Học Hỏi",
+            "price": 80000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 2,
+            "startTime": "2025-06-01T00:00:00.000Z",
+            "endTime": "2025-07-20T07:00:00.000Z",
+            "description": "Tham gia các buổi giới thiệu tổng quan và khu vực trải nghiệm Robotics.",
+            "imageUrl": "https://stemcamp.vn/images/tickets/visitor-edu-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Sacombank",
+      "bankAccountName": "CAU LAC BO STEM DA LAT",
+      "bankAccountNumber": "0400192837465",
+      "bankOffice": "Chi nhánh Đà Lạt, Lâm Đồng",
+      "businessType": "COMPANY",
+      "name": "Câu Lạc Bộ STEM Đà Lạt",
+      "address": "Phù Đổng Thiên Vương, Phường 8, Thành phố Đà Lạt, Lâm Đồng",
+      "taxNumber": "4200987654"
+    },
+    "setting": {
+      "url": "robotics-camp-dalat-2025",
+      "messageAttendees": "Chào mừng các nhà khoa học trẻ tương lai! Cùng khám phá thế giới STEM đầy thú vị và sáng tạo.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 150
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://vnexpress.net/images/charity-run.png",
+    "eventBannerUrl": "https://saigoncharity.vn/banners/funrun-for-charity-hcmc.jpg",
+    "eventName": "Chạy Bộ Gây Quỹ: Bước Chân Vì Cộng Đồng",
+    "categories": ["charity"],
+    "eventDescription": "Một giải chạy bộ vui vẻ nhằm lan tỏa tinh thần thể dục thể thao và gây quỹ ủng hộ các dự án cộng đồng như xây cầu, xây nhà tình thương, tặng quà cho người nghèo. Mọi đóng góp đều được sử dụng minh bạch và hiệu quả.",
+    "orgLogoUrl": "https://community-vn.org/logo/vietnam-community-fund.png",
+    "orgName": "Quỹ Phát Triển Cộng Đồng Việt",
+    "orgDescription": "Quỹ Phát Triển Cộng Đồng Việt là tổ chức từ thiện chuyên hỗ trợ các dự án phát triển cơ sở hạ tầng, nâng cao đời sống và giáo dục cho các cộng đồng khó khăn trên cả nước.",
+    "venueName": "Cung Văn hóa Lao động",
+    "cityId": 79,
+    "districtId": null,
+    "wardId": 25777,
+    "street": "55B Nguyễn Thị Minh Khai",
+    "latitude": 10.776,
+    "longitude": 106.696,
+    "formattedAddress": "55B Nguyễn Thị Minh Khai, Phường Bến Thành, Quận 1, TP. Hồ Chí Minh",
+    "placeId": "ChIJZ-b7rOgyNTERZ1o2e0oG69k",
+    "categoriesIds": ["d0f3e5g6-7c8b-9012-cdef-345678901234"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-11-02T06:30:00.000Z",
+        "endTime": "2025-11-02T10:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Tham Gia Cự Ly 5km",
+            "price": 150000,
+            "isFree": false,
+            "quantity": 800,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-11-02T05:30:00.000Z",
+            "description": "Bao gồm Bib, áo thun sự kiện, nước uống và huy chương hoàn thành.",
+            "imageUrl": "https://charityrun.vn/images/tickets/5km-charity-ticket.jpg"
+          },
+          {
+            "name": "Vé Tham Gia Cự Ly 3km",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 1000,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-11-02T05:30:00.000Z",
+            "description": "Bao gồm Bib, áo thun sự kiện và nước uống.",
+            "imageUrl": "https://charityrun.vn/images/tickets/3km-charity-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "ACB",
+      "bankAccountName": "QUY PHAT TRIEN CONG DONG VIET",
+      "bankAccountNumber": "2345678901234567",
+      "bankOffice": "Chi nhánh Phú Nhuận, TP.HCM",
+      "businessType": "COMPANY",
+      "name": "Quỹ Phát Triển Cộng Đồng Việt",
+      "address": "40 Phan Xích Long, Phường 3, Quận Phú Nhuận, TP. Hồ Chí Minh",
+      "taxNumber": "0300123987"
+    },
+    "setting": {
+      "url": "charity-fun-run-hcmc-2025",
+      "messageAttendees": "Cảm ơn mỗi bước chân của bạn đã góp phần xây dựng cộng đồng tốt đẹp hơn! Hãy cùng nhau lan tỏa những giá trị nhân văn.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 2000
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://vietnamcultureheritage.vn/images/ao-dai-festival-logo.png",
+    "eventBannerUrl": "https://hanoiheritage.vn/banners/ao-dai-festival-hanoi-banner.jpg",
+    "eventName": "Lễ Hội Áo Dài Di Sản Văn Hóa Hà Nội 2025",
+    "categories": ["art"],
+    "eventDescription": "Một lễ hội tôn vinh vẻ đẹp truyền thống của tà áo dài Việt Nam, kết hợp trình diễn thời trang, trưng bày áo dài cổ và hiện đại, cùng các hoạt động văn hóa nghệ thuật truyền thống khác. Sự kiện nhằm bảo tồn và phát huy giá trị văn hóa dân tộc.",
+    "orgLogoUrl": "https://hanoiheritage.org/logo/hanoi-culture-research.png",
+    "orgName": "Trung Tâm Nghiên Cứu Văn Hóa Hà Nội",
+    "orgDescription": "Trung Tâm Nghiên Cứu Văn Hóa Hà Nội là đơn vị chuyên nghiên cứu, bảo tồn và phát huy các giá trị văn hóa, lịch sử của Thủ đô, tổ chức các hoạt động văn hóa cộng đồng.",
+    "venueName": "Vườn Hoa Lý Thái Tổ",
+    "cityId": 1,
+    "districtId": null,
+    "wardId": 1,
+    "street": "đường Đinh Tiên Hoàng",
+    "latitude": 21.0296,
+    "longitude": 105.8524,
+    "formattedAddress": "Vườn Hoa Lý Thái Tổ, Đường Đinh Tiên Hoàng, Phường Tràng Tiền, Quận Hoàn Kiếm, Hà Nội",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69w",
+    "categoriesIds": ["b8f1c2d3-4e5f-6789-abcd-ef0123456789"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-03-08T10:00:00.000Z",
+        "endTime": "2025-03-08T21:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé VIP (khu vực trình diễn)",
+            "price": 200000,
+            "isFree": false,
+            "quantity": 150,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 4,
+            "startTime": "2025-02-01T00:00:00.000Z",
+            "endTime": "2025-03-08T09:00:00.000Z",
+            "description": "Vị trí tốt để xem biểu diễn áo dài, bao gồm ưu tiên các khu vực trưng bày.",
+            "imageUrl": "https://aodai-festival.vn/images/tickets/vip-aodai-ticket.jpg"
+          },
+          {
+            "name": "Vé Thường",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 500,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-02-01T00:00:00.000Z",
+            "endTime": "2025-03-08T09:00:00.000Z",
+            "description": "Vào cửa chung các khu vực triển lãm và khu vực đứng xem trình diễn.",
+            "imageUrl": "https://aodai-festival.vn/images/tickets/general-aodai-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "TRUNG TAM NGHIEN CUU VAN HOA HA NOI",
+      "bankAccountNumber": "0011005678901234",
+      "bankOffice": "Chi nhánh Chương Dương, Hà Nội",
+      "businessType": "COMPANY",
+      "name": "Trung Tâm Nghiên Cứu Văn Hóa Hà Nội",
+      "address": "8 Đinh Tiên Hoàng, Quận Hoàn Kiếm, Hà Nội",
+      "taxNumber": "0100456789"
+    },
+    "setting": {
+      "url": "vn-ao-dai-festival-hanoi-2025",
+      "messageAttendees": "Chào mừng quý vị đến với Lễ Hội Áo Dài! Hãy cùng hòa mình vào không gian văn hóa đậm đà bản sắc Việt.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 700
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://vnexpress.net/images/esports-championship-logo.png",
+    "eventBannerUrl": "https://game.vn/banners/vietnam-esports-championship.jpg",
+    "eventName": "Giải Vô Địch Esport Quốc Gia Việt Nam 2025",
+    "categories": ["sport"],
+    "eventDescription": "Sự kiện thể thao điện tử lớn nhất Việt Nam, quy tụ các đội tuyển Esport hàng đầu tranh tài ở các bộ môn phổ biến như Liên Minh Huyền Thoại, Valorant, PUBG Mobile. Giải đấu mang đến những trận đấu kịch tính và không khí sôi động cho cộng đồng game thủ.",
+    "orgLogoUrl": "https://vietnamsports.org/logo/vn-esports-federation.png",
+    "orgName": "Liên Đoàn Thể Thao Điện Tử Giải Trí Việt Nam (VIRESA)",
+    "orgDescription": "VIRESA là tổ chức quốc gia duy nhất được công nhận quản lý, điều hành và phát triển thể thao điện tử (Esports) tại Việt Nam.",
+    "venueName": "Trung tâm Hội nghị Quốc gia",
+    "cityId": 1,
+    "districtId": null,
+    "wardId": 350,
+    "street": "Phạm Hùng",
+    "latitude": 21.0,
+    "longitude": 105.78,
+    "formattedAddress": "Phạm Hùng, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69k",
+    "categoriesIds": ["4247769b-251e-4909-8c89-3af54d648374"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-11-29T14:00:00.000Z",
+        "endTime": "2025-11-29T22:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé VIP (Gần Sân Khấu)",
+            "price": 300000,
+            "isFree": false,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 4,
+            "startTime": "2025-10-15T00:00:00.000Z",
+            "endTime": "2025-11-29T13:00:00.000Z",
+            "description": "Vị trí ngồi tốt nhất, có khu vực riêng và quà tặng game thủ.",
+            "imageUrl": "https://esportsticket.vn/images/tickets/vip-esports-ticket.jpg"
+          },
+          {
+            "name": "Vé Thường",
+            "price": 150000,
+            "isFree": false,
+            "quantity": 800,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-10-15T00:00:00.000Z",
+            "endTime": "2025-11-29T13:00:00.000Z",
+            "description": "Vé vào cửa khu vực khán đài chung.",
+            "imageUrl": "https://esportsticket.vn/images/tickets/regular-esports-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Techcombank",
+      "bankAccountName": "LIEN DOAN THE THAO DIEN TU GIAI TRI VIET NAM",
+      "bankAccountNumber": "19030876543210",
+      "bankOffice": "Chi nhánh Láng Hạ, Hà Nội",
+      "businessType": "COMPANY",
+      "name": "Liên Đoàn Thể Thao Điện Tử Giải Trí Việt Nam (VIRESA)",
+      "address": "45 Lê Văn Lương, Phường Nhân Chính, Quận Thanh Xuân, Hà Nội",
+      "taxNumber": "0100987654"
+    },
+    "setting": {
+      "url": "esports-championship-vn-2025",
+      "messageAttendees": "Chào mừng các bạn game thủ đến với Vòng Chung Kết! Hãy cháy hết mình và cùng tạo nên lịch sử Esport Việt Nam!",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 1200
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://vietnamtravel.vn/images/vietnamtourism-logo.png",
+    "eventBannerUrl": "https://tourismfairvietnam.vn/banners/vietnam-tourism-expo.jpg",
+    "eventName": "Hội Chợ Du Lịch Quốc Tế Việt Nam 2025",
+    "categories": ["education"],
+    "eventDescription": "Sự kiện lớn nhất ngành du lịch Việt Nam, nơi các công ty lữ hành, khách sạn, hãng hàng không trong nước và quốc tế quảng bá sản phẩm, dịch vụ. Cơ hội tìm kiếm các gói du lịch ưu đãi, cập nhật xu hướng du lịch mới và kết nối đối tác.",
+    "orgLogoUrl": "https://vitat.vn/logo/vietnam-tourism-association.png",
+    "orgName": "Hiệp Hội Du Lịch Việt Nam",
+    "orgDescription": "Tổ chức đại diện cho ngành du lịch Việt Nam, đóng vai trò quan trọng trong việc xúc tiến du lịch, kết nối doanh nghiệp và phát triển du lịch bền vững.",
+    "venueName": "Trung tâm Hội nghị Quốc gia",
+    "cityId": 1,
+    "districtId": null,
+    "wardId": 350,
+    "street": "Phạm Hùng",
+    "latitude": 21.0,
+    "longitude": 105.78,
+    "formattedAddress": "Phạm Hùng, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69k",
+    "categoriesIds": ["c9e2d4f5-6b7a-8901-bcde-f23456789012"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-04-18T09:00:00.000Z",
+        "endTime": "2025-04-18T18:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Chuyên Gia/Doanh Nghiệp",
+            "price": 150000,
+            "isFree": false,
+            "quantity": 300,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-03-01T00:00:00.000Z",
+            "endTime": "2025-04-18T08:00:00.000Z",
+            "description": "Vé vào cửa ưu tiên, khu vực networking B2B và tham gia tọa đàm chuyên ngành.",
+            "imageUrl": "https://tourismexpo.vn/images/tickets/professional-pass.jpg"
+          },
+          {
+            "name": "Vé Khách Tham Quan",
+            "price": 50000,
+            "isFree": false,
+            "quantity": 1000,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 10,
+            "startTime": "2025-03-01T00:00:00.000Z",
+            "endTime": "2025-04-18T08:00:00.000Z",
+            "description": "Vào cửa chung khu vực triển lãm và các gian hàng.",
+            "imageUrl": "https://tourismexpo.vn/images/tickets/visitor-pass.jpg"
+          },
+          {
+            "name": "Vé Miễn Phí (Sinh viên Du Lịch)",
+            "price": 0,
+            "isFree": true,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-03-01T00:00:00.000Z",
+            "endTime": "2025-04-18T08:00:00.000Z",
+            "description": "Dành cho sinh viên chuyên ngành du lịch, cần xuất trình thẻ. Chỉ tham quan chung.",
+            "imageUrl": "https://tourismexpo.vn/images/tickets/student-free-pass.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "BIDV",
+      "bankAccountName": "HIEP HOI DU LICH VIET NAM",
+      "bankAccountNumber": "6801000123456789",
+      "bankOffice": "Chi nhánh Thăng Long, Hà Nội",
+      "businessType": "COMPANY",
+      "name": "Hiệp Hội Du Lịch Việt Nam",
+      "address": "7 Đào Duy Anh, Phường Phương Mai, Quận Đống Đa, Hà Nội",
+      "taxNumber": "0100543210"
+    },
+    "setting": {
+      "url": "vietnam-tourism-expo-2025",
+      "messageAttendees": "Chào mừng đến với VITM 2025! Hãy khám phá vẻ đẹp Việt Nam và thế giới.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 1500
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://canthofilm.cdn/images/cinemas-logo.png",
+    "eventBannerUrl": "https://canthoculture.vn/banners/cai-rang-film-show.jpg",
+    "eventName": "Đêm Chiếu Phim Ngoài Trời: Về Miền Sông Nước Cái Răng",
+    "categories": ["art"],
+    "eventDescription": "Một buổi chiếu phim ngoài trời đặc biệt tại Cần Thơ, giới thiệu các tác phẩm điện ảnh về miền Tây sông nước và cuộc sống của người dân địa phương. Sự kiện kết hợp ẩm thực đường phố và không gian văn hóa đặc trưng, mang đến trải nghiệm độc đáo cho khán giả.",
+    "orgLogoUrl": "https://canthoculture.org/logo/cantho-culture-center.png",
+    "orgName": "Trung Tâm Văn Hóa TP. Cần Thơ",
+    "orgDescription": "Trung Tâm Văn Hóa TP. Cần Thơ là đơn vị sự nghiệp công lập, có nhiệm vụ tổ chức các hoạt động văn hóa, nghệ thuật, thông tin tuyên truyền, góp phần xây dựng đời sống văn hóa tinh thần của nhân dân.",
+    "venueName": "Công viên Sông Hậu",
+    "cityId": 92,
+    "districtId": null,
+    "wardId": 30268,
+    "street": "đường Võ Văn Kiệt",
+    "latitude": 10.02,
+    "longitude": 105.77,
+    "formattedAddress": "Công viên Sông Hậu, Đường Võ Văn Kiệt, Phường An Lạc, Quận Ninh Kiều, TP. Cần Thơ",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69q",
+    "categoriesIds": ["b8f1c2d3-4e5f-6789-abcd-ef0123456789"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-07-28T18:00:00.000Z",
+        "endTime": "2025-07-28T22:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Combo Phim & Ẩm Thực",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-06-01T00:00:00.000Z",
+            "endTime": "2025-07-28T17:00:00.000Z",
+            "description": "Bao gồm vé xem phim và voucher ẩm thực trị giá 50.000 VND.",
+            "imageUrl": "https://outdoorcinema.vn/images/tickets/cinema-food-combo.jpg"
+          },
+          {
+            "name": "Vé Xem Phim",
+            "price": 50000,
+            "isFree": false,
+            "quantity": 500,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 10,
+            "startTime": "2025-06-01T00:00:00.000Z",
+            "endTime": "2025-07-28T17:00:00.000Z",
+            "description": "Chỉ bao gồm vé xem phim.",
+            "imageUrl": "https://outdoorcinema.vn/images/tickets/movie-only-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "VietinBank",
+      "bankAccountName": "TRUNG TAM VAN HOA TP CAN THO",
+      "bankAccountNumber": "10800192837456",
+      "bankOffice": "Chi nhánh Ninh Kiều, Cần Thơ",
+      "businessType": "COMPANY",
+      "name": "Trung Tâm Văn Hóa TP. Cần Thơ",
+      "address": "12 Đường Trần Văn Hoài, Phường Xuân Khánh, Quận Ninh Kiều, TP. Cần Thơ",
+      "taxNumber": "9200192837"
+    },
+    "setting": {
+      "url": "phim-ngoai-troi-cai-rang",
+      "messageAttendees": "Chào mừng quý vị đến với đêm chiếu phim đặc biệt! Hãy tận hưởng không gian văn hóa sông nước tại Cần Thơ.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 700
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://dalatcuisine.vn/images/food-fest-logo.png",
+    "eventBannerUrl": "https://dalatfoodie.vn/banners/dalat-food-festival-banner.jpg",
+    "eventName": "Festival Ẩm Thực Đà Lạt 2025: Hương Vị Cao Nguyên",
+    "categories": ["art"],
+    "eventDescription": "Một lễ hội ẩm thực độc đáo tại Đà Lạt, giới thiệu tinh hoa ẩm thực địa phương và đặc sản của thành phố ngàn hoa. Khám phá các món ăn truyền thống, món ăn đường phố và những sáng tạo ẩm thực mới lạ trong không gian lãng mạn của thành phố.",
+    "orgLogoUrl": "https://dalattaste.org/logo/dalat-gastronomy-association.png",
+    "orgName": "Hội Ẩm Thực Đà Lạt",
+    "orgDescription": "Hội Ẩm Thực Đà Lạt là tổ chức của những người làm và yêu ẩm thực, có nhiệm vụ bảo tồn, phát triển và quảng bá văn hóa ẩm thực đặc trưng của Đà Lạt.",
+    "venueName": "Quảng trường Lâm Viên",
+    "cityId": 68,
+    "districtId": null,
+    "wardId": 22951,
+    "street": "đường Trần Quốc Toản",
+    "latitude": 11.94,
+    "longitude": 108.441,
+    "formattedAddress": "Quảng trường Lâm Viên, Đường Trần Quốc Toản, Phường 1, Thành phố Đà Lạt, Lâm Đồng",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69k",
+    "categoriesIds": ["b8f1c2d3-4e5f-6789-abcd-ef0123456789"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-12-20T10:00:00.000Z",
+        "endTime": "2025-12-20T22:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Thượng Hạng (Food Pass)",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 300,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-11-01T00:00:00.000Z",
+            "endTime": "2025-12-20T09:00:00.000Z",
+            "description": "Voucher ẩm thực trị giá 50.000 VND, ưu tiên khu vực check-in và quà tặng lưu niệm.",
+            "imageUrl": "https://foodfestival.vn/images/tickets/food-pass-ticket.jpg"
+          },
+          {
+            "name": "Vé Vào Cửa",
+            "price": 50000,
+            "isFree": false,
+            "quantity": 700,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 10,
+            "startTime": "2025-11-01T00:00:00.000Z",
+            "endTime": "2025-12-20T09:00:00.000Z",
+            "description": "Vé vào cửa chung khu vực lễ hội ẩm thực.",
+            "imageUrl": "https://foodfestival.vn/images/tickets/entry-food-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "HOI AM THUC DA LAT",
+      "bankAccountNumber": "0011009876543210",
+      "bankOffice": "Chi nhánh Đà Lạt, Lâm Đồng",
+      "businessType": "COMPANY",
+      "name": "Hội Ẩm Thực Đà Lạt",
+      "address": "4 Nguyễn Văn Trỗi, Phường 1, Thành phố Đà Lạt, Lâm Đồng",
+      "taxNumber": "4200789012"
+    },
+    "setting": {
+      "url": "food-festival-dalat-2025",
+      "messageAttendees": "Chào mừng đến với Festival Ẩm Thực Đà Lạt! Chúc quý vị và gia đình có những trải nghiệm ẩm thực tuyệt vời.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 1000
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://vietnamrun.org/logo/hcmc-run-logo.png",
+    "eventBannerUrl": "https://hcmcsports.vn/banners/hcmc-city-run-banner.jpg",
+    "eventName": "Giải Chạy Bộ Marathon TP. Hồ Chí Minh 2025",
+    "categories": ["sport"],
+    "eventDescription": "Giải chạy Marathon lớn nhất TP. Hồ Chí Minh, thu hút hàng chục nghìn vận động viên và người yêu chạy bộ từ khắp nơi trên thế giới. Đường chạy đi qua các địa danh nổi tiếng của thành phố, mang lại trải nghiệm độc đáo và thử thách giới hạn bản thân.",
+    "orgLogoUrl": "https://hcmcmarathon.org/logo/hcmc-marathon-club.png",
+    "orgName": "Công ty TNHH Marathon Sài Gòn",
+    "orgDescription": "Công ty Marathon Sài Gòn là đơn vị chuyên nghiệp tổ chức các sự kiện chạy bộ đường dài, đồng hành cùng cộng đồng để thúc đẩy lối sống khỏe mạnh và yêu thể thao.",
+    "venueName": "Khu đô thị Sala",
+    "cityId": 79,
+    "districtId": null,
+    "wardId": 25800,
+    "street": "đường Mai Chí Thọ",
+    "latitude": 10.76,
+    "longitude": 106.74,
+    "formattedAddress": "Khu đô thị Sala, Đường Mai Chí Thọ, Phường An Lợi Đông, Quận 2, TP. Hồ Chí Minh",
+    "placeId": "ChIJcQf_TeyrNTERZ1o2e0oG69u",
+    "categoriesIds": ["4247769b-251e-4909-8c89-3af54d648374"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-12-14T04:30:00.000Z",
+        "endTime": "2025-12-14T12:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Full Marathon (42km)",
+            "price": 480000,
+            "isFree": false,
+            "quantity": 3000,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-12-14T03:30:00.000Z",
+            "description": "Bao gồm Bib, áo thun, chip timing, huy chương hoàn thành và túi race kit.",
+            "imageUrl": "https://vnmarthon.vn/images/tickets/full-marathon-hcmc.jpg"
+          },
+          {
+            "name": "Vé Half Marathon (21km)",
+            "price": 280000,
+            "isFree": false,
+            "quantity": 5000,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-12-14T03:30:00.000Z",
+            "description": "Bao gồm Bib, áo thun, chip timing, huy chương hoàn thành và túi race kit.",
+            "imageUrl": "https://vnmarthon.vn/images/tickets/half-marathon-hcmc.jpg"
+          },
+          {
+            "name": "Vé Fun Run (10km)",
+            "price": 150000,
+            "isFree": false,
+            "quantity": 7000,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-12-14T03:30:00.000Z",
+            "description": "Bao gồm Bib, áo thun và huy chương hoàn thành.",
+            "imageUrl": "https://vnmarthon.vn/images/tickets/fun-run-10k-hcmc.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "CONG TY TNHH MARATHON SAI GON",
+      "bankAccountNumber": "00110098765432101",
+      "bankOffice": "Chi nhánh Tân Định, TP.HCM",
+      "businessType": "COMPANY",
+      "name": "Công ty TNHH Marathon Sài Gòn",
+      "address": "45 Nguyễn Đình Chiểu, Phường Đa Kao, Quận 1, TP. Hồ Chí Minh",
+      "taxNumber": "0319283746"
+    },
+    "setting": {
+      "url": "hcmc-marathon-2025",
+      "messageAttendees": "Chào mừng quý vị đến với Marathon TP. Hồ Chí Minh! Chúc các vận động viên vượt qua mọi giới hạn và về đích an toàn.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 15000
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://hanoimusicfestival.vn/logo/hanoi-dance-fest-logo.png",
+    "eventBannerUrl": "https://hanoiculture.vn/banners/hanoi-dance-festival.jpg",
+    "eventName": "Festival Khiêu Vũ Quốc Tế Hà Nội 2025",
+    "categories": ["music"],
+    "eventDescription": "Một lễ hội sôi động của các điệu nhảy và âm nhạc từ khắp nơi trên thế giới. Các vũ công chuyên nghiệp và bán chuyên sẽ tranh tài ở nhiều thể loại như Latin, Standard, Hip-hop, và K-pop. Sự kiện mang đến không gian văn hóa đa màu sắc và những màn trình diễn đỉnh cao.",
+    "orgLogoUrl": "https://vn-dance.org/logo/vn-dance-federation.png",
+    "orgName": "Liên Đoàn Khiêu Vũ Thể Thao Việt Nam",
+    "orgDescription": "Đơn vị hàng đầu trong việc phát triển và quản lý các hoạt động khiêu vũ thể thao và nghệ thuật tại Việt Nam, tổ chức các giải đấu và sự kiện lớn.",
+    "venueName": "Cung Thanh Niên Hà Nội",
+    "cityId": 1,
+    "districtId": null,
+    "wardId": 25,
+    "street": "đường Tăng Bạt Hổ",
+    "latitude": 21.018,
+    "longitude": 105.857,
+    "formattedAddress": "Đường Tăng Bạt Hổ, Phường Phạm Đình Hổ, Quận Hai Bà Trưng, Hà Nội",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69k",
+    "categoriesIds": ["fc981c1b-485d-497d-b539-b8e73c4376bb"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-08-03T18:00:00.000Z",
+        "endTime": "2025-08-03T22:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé VIP Sân Khấu",
+            "price": 750000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 4,
+            "startTime": "2025-07-01T00:00:00.000Z",
+            "endTime": "2025-08-03T17:00:00.000Z",
+            "description": "Vị trí gần sân khấu nhất, đồ uống miễn phí và ưu tiên gặp gỡ nghệ sĩ.",
+            "imageUrl": "https://dancefestival.vn/images/tickets/vip-dance-ticket.jpg"
+          },
+          {
+            "name": "Vé Tiêu Chuẩn",
+            "price": 300000,
+            "isFree": false,
+            "quantity": 400,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-07-01T00:00:00.000Z",
+            "endTime": "2025-08-03T17:00:00.000Z",
+            "description": "Vé vào cửa khu vực ghế ngồi chung.",
+            "imageUrl": "https://dancefestival.vn/images/tickets/regular-dance-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "LIEN DOAN KHIEU VU THE THAO VIET NAM",
+      "bankAccountNumber": "00110098765432102",
+      "bankOffice": "Chi nhánh Thăng Long, Hà Nội",
+      "businessType": "COMPANY",
+      "name": "Liên Đoàn Khiêu Vũ Thể Thao Việt Nam",
+      "address": "3 Phan Đình Phùng, Quận Ba Đình, Hà Nội",
+      "taxNumber": "0100456789"
+    },
+    "setting": {
+      "url": "hanoi-intl-dancefest-2025",
+      "messageAttendees": "Chào mừng đến với Festival Khiêu Vũ Quốc Tế Hà Nội! Hãy cùng hòa mình vào những điệu nhảy rực rỡ và đầy đam mê.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 500
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://dantri.com.vn/images/startup-weekend-hanoi.png",
+    "eventBannerUrl": "https://hanoitech.vn/banners/startup-weekend-hanoi.jpg",
+    "eventName": "Startup Weekend Hà Nội: Từ Ý Tưởng Đến Hiện Thực",
+    "categories": ["education"],
+    "eventDescription": "Sự kiện được tổ chức trong vòng 54 giờ, nơi các cá nhân với ý tưởng khởi nghiệp tập hợp, hình thành nhóm, và phát triển mô hình kinh doanh dưới sự cố vấn của các chuyên gia. Đây là sân chơi tuyệt vời để biến ý tưởng thành sản phẩm thực tế.",
+    "orgLogoUrl": "https://tekcapital.vn/logo/tekcapital.png",
+    "orgName": "Công ty Cổ phần TekCapital Vietnam",
+    "orgDescription": "TekCapital Vietnam là quỹ đầu tư mạo hiểm và công ty tư vấn khởi nghiệp, chuyên hỗ trợ các startup về tài chính, chiến lược và kết nối thị trường.",
+    "venueName": "Cung Thiếu nhi Hà Nội",
+    "cityId": 1,
+    "districtId": null,
+    "wardId": 16,
+    "street": "36 Lý Thái Tổ",
+    "latitude": 21.026,
+    "longitude": 105.855,
+    "formattedAddress": "36 Lý Thái Tổ, Phường Lý Thái Tổ, Quận Hoàn Kiếm, Hà Nội",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69k",
+    "categoriesIds": ["c9e2d4f5-6b7a-8901-bcde-f23456789012"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-09-19T18:00:00.000Z",
+        "endTime": "2025-09-21T21:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Founders",
+            "price": 150000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-08-01T00:00:00.000Z",
+            "endTime": "2025-09-19T17:00:00.000Z",
+            "description": "Dành cho những người có ý tưởng và muốn tìm đồng đội để xây dựng startup. Bao gồm ăn uống và tài liệu.",
+            "imageUrl": "https://startupweekend.vn/images/tickets/founder-ticket.jpg"
+          },
+          {
+            "name": "Vé Developers/Designers",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-08-01T00:00:00.000Z",
+            "endTime": "2025-09-19T17:00:00.000Z",
+            "description": "Dành cho những người muốn tham gia phát triển sản phẩm. Bao gồm ăn uống và tài liệu.",
+            "imageUrl": "https://startupweekend.vn/images/tickets/dev-designer-ticket.jpg"
+          },
+          {
+            "name": "Vé Audience/Supporter",
+            "price": 50000,
+            "isFree": false,
+            "quantity": 50,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 3,
+            "startTime": "2025-08-01T00:00:00.000Z",
+            "endTime": "2025-09-21T20:00:00.000Z",
+            "description": "Vé tham gia buổi Pitching cuối cùng và đêm Gala trao giải.",
+            "imageUrl": "https://startupweekend.vn/images/tickets/audience-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "VietinBank",
+      "bankAccountName": "CONG TY CO PHAN TEKCAPITAL VIETNAM",
+      "bankAccountNumber": "1080019283745678",
+      "bankOffice": "Chi nhánh Ba Đình, Hà Nội",
+      "businessType": "COMPANY",
+      "name": "Công ty Cổ phần TekCapital Vietnam",
+      "address": "20 Phan Bội Châu, Quận Hoàn Kiếm, Hà Nội",
+      "taxNumber": "0109876543"
+    },
+    "setting": {
+      "url": "startup-weekend-hanoi-2025",
+      "messageAttendees": "Chào mừng đến với Startup Weekend Hà Nội! Hãy biến ý tưởng của bạn thành hiện thực trong 54 giờ đầy thử thách và hứng khởi.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 250
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://dalatforest.cdn/images/dalat-flower-festival-logo.png",
+    "eventBannerUrl": "https://dalatphotos.vn/banners/dalat-flower-festival-2025.jpg",
+    "eventName": "Lễ Hội Hoa Đà Lạt 2025: Bốn Mùa Hội Ngộ",
+    "categories": ["art"],
+    "eventDescription": "Lễ hội hoa lớn nhất Việt Nam, trưng bày hàng triệu loài hoa và cây cảnh rực rỡ từ khắp nơi trên thế giới. Đây là cơ hội để chiêm ngưỡng những tác phẩm nghệ thuật sắp đặt hoa độc đáo, tham gia các hoạt động văn hóa, nghệ thuật đường phố và thưởng thức ẩm thực đặc sản Đà Lạt.",
+    "orgLogoUrl": "https://dalatcitytourism.org/logo/dalat-tourism-dev-center.png",
+    "orgName": "Trung Tâm Xúc Tiến Đầu Tư, Thương Mại và Du Lịch Lâm Đồng",
+    "orgDescription": "Đơn vị chủ trì các hoạt động xúc tiến đầu tư, thương mại và du lịch của tỉnh Lâm Đồng, đặc biệt là các sự kiện lớn như Lễ Hội Hoa Đà Lạt.",
+    "venueName": "Quảng trường Lâm Viên",
+    "cityId": 68,
+    "districtId": null,
+    "wardId": 22951,
+    "street": "đường Trần Quốc Toản",
+    "latitude": 11.94,
+    "longitude": 108.441,
+    "formattedAddress": "Quảng trường Lâm Viên, Đường Trần Quốc Toản, Phường 1, Thành phố Đà Lạt, Lâm Đồng",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69k",
+    "categoriesIds": ["b8f1c2d3-4e5f-6789-abcd-ef0123456789"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-12-01T08:00:00.000Z",
+        "endTime": "2025-12-07T22:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Vào Khu Triển Lãm Đặc Biệt",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 2000,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 10,
+            "startTime": "2025-11-01T00:00:00.000Z",
+            "endTime": "2025-12-07T21:00:00.000Z",
+            "description": "Vào cửa khu vực triển lãm hoa đặc biệt và được ưu tiên tham gia các hoạt động giới hạn.",
+            "imageUrl": "https://flowerfestival.vn/images/tickets/vip-flower-ticket.jpg"
+          },
+          {
+            "name": "Vé Tham Quan Chung",
+            "price": 50000,
+            "isFree": false,
+            "quantity": 5000,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 20,
+            "startTime": "2025-11-01T00:00:00.000Z",
+            "endTime": "2025-12-07T21:00:00.000Z",
+            "description": "Vé vào cửa khu vực chung của lễ hội, tự do tham quan triển lãm ngoài trời.",
+            "imageUrl": "https://flowerfestival.vn/images/tickets/general-flower-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "TRUNG TAM XUC TIEN DA LAT",
+      "bankAccountNumber": "00110098765432103",
+      "bankOffice": "Chi nhánh Đà Lạt, Lâm Đồng",
+      "businessType": "COMPANY",
+      "name": "Trung Tâm Xúc Tiến Đầu Tư, Thương Mại và Du Lịch Lâm Đồng",
+      "address": "01 Trần Phú, Phường 3, Thành phố Đà Lạt, Lâm Đồng",
+      "taxNumber": "4200123456"
+    },
+    "setting": {
+      "url": "dalat-flowerfest-2025",
+      "messageAttendees": "Chào mừng đến với Lễ Hội Hoa Đà Lạt! Chúc quý vị có những ngày ngập tràn sắc hương và cảm xúc.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 10000
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://vnexpress.net/images/charity-gala.png",
+    "eventBannerUrl": "https://danangcharity.vn/banners/charity-dinner-danang.jpg",
+    "eventName": "Dạ Tiệc Gây Qũy Đà Nẵng: Kết Nối Yêu Thương",
+    "categories": ["charity"],
+    "eventDescription": "Một buổi dạ tiệc sang trọng và ý nghĩa nhằm gây quỹ cho các dự án phát triển cộng đồng tại Đà Nẵng, bao gồm hỗ trợ người già neo đơn, người khuyết tật và trẻ em có hoàn cảnh khó khăn. Sự kiện có sự góp mặt của các nghệ sĩ nổi tiếng và nhiều hoạt động đấu giá gây quỹ.",
+    "orgLogoUrl": "https://danangcommunity.org/logo/danang-charity-association.png",
+    "orgName": "Hội Chữ Thập Đỏ Đà Nẵng",
+    "orgDescription": "Hội Chữ Thập Đỏ Đà Nẵng là tổ chức xã hội, nhân đạo chuyên hoạt động cứu trợ, giúp đỡ những người yếu thế, khó khăn trong xã hội, góp phần vào công tác an sinh xã hội tại thành phố.",
+    "venueName": "Trung tâm Hội nghị Ariyana",
+    "cityId": 48,
+    "districtId": null,
+    "wardId": 16180,
+    "street": "107 Võ Nguyên Giáp",
+    "latitude": 16.0357,
+    "longitude": 108.2045,
+    "formattedAddress": "107 Võ Nguyên Giáp, Phường Khuê Mỹ, Quận Ngũ Hành Sơn, Đà Nẵng",
+    "placeId": "ChIJdYbGk7pZNDERZ1o3e0oG69m",
+    "categoriesIds": ["d0f3e5g6-7c8b-9012-cdef-345678901234"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-11-09T18:30:00.000Z",
+        "endTime": "2025-11-09T22:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Gold Sponsor",
+            "price": 300000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-11-09T17:30:00.000Z",
+            "description": "Ưu tiên bàn VIP, được vinh danh nhà tài trợ và có đại diện trao quà trên sân khấu.",
+            "imageUrl": "https://charitygala.vn/images/tickets/gold-sponsor-ticket.jpg"
+          },
+          {
+            "name": "Vé Silver Donor",
+            "price": 200000,
+            "isFree": false,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-10-01T00:00:00.000Z",
+            "endTime": "2025-11-09T17:30:00.000Z",
+            "description": "Tham gia tiệc tối và các hoạt động gây quỹ.",
+            "imageUrl": "https://charitygala.vn/images/tickets/silver-donor-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "BIDV",
+      "bankAccountName": "HOI CHU THAP DO DA NANG",
+      "bankAccountNumber": "68010001928374567",
+      "bankOffice": "Chi nhánh Tiên Sa, Đà Nẵng",
+      "businessType": "COMPANY",
+      "name": "Hội Chữ Thập Đỏ Đà Nẵng",
+      "address": "40 Lý Tự Trọng, Phường Thạch Thang, Quận Hải Châu, Đà Nẵng",
+      "taxNumber": "5000192837"
+    },
+    "setting": {
+      "url": "charity-gala-danang-2025",
+      "messageAttendees": "Cảm ơn tấm lòng nhân ái của quý vị đã góp phần sưởi ấm những mảnh đời khó khăn. Chúc quý vị một buổi tối ấm áp và ý nghĩa.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 300
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://hufi.edu.vn/images/startup-launchpad-logo.png",
+    "eventBannerUrl": "https://hcmute.edu.vn/banners/tech-startup-launchpad.jpg",
+    "eventName": "Hồ Chí Minh Tech Startup Launchpad 2025",
+    "categories": ["technology"],
+    "eventDescription": "Chương trình huấn luyện và tăng tốc khởi nghiệp công nghệ kéo dài 3 tháng, kết thúc bằng một buổi pitching day với sự tham gia của các quỹ đầu tư và chuyên gia. Mục tiêu là biến các ý tưởng công nghệ tiềm năng thành những startup thành công.",
+    "orgLogoUrl": "https://saigontechhub.org/logo/sgh-tech-hub.png",
+    "orgName": "Trung Tâm Hỗ Trợ Khởi Nghiệp Công Nghệ Sài Gòn",
+    "orgDescription": "Trung Tâm Hỗ Trợ Khởi Nghiệp Công Nghệ Sài Gòn là vườn ươm khởi nghiệp hàng đầu, cung cấp không gian làm việc, cố vấn chuyên sâu và kết nối đầu tư cho các startup công nghệ.",
+    "venueName": "Trung tâm Hội nghị Gem Center",
+    "cityId": 79,
+    "districtId": null,
+    "wardId": 25688,
+    "street": "8 Nguyễn Bỉnh Khiêm",
+    "latitude": 10.785,
+    "longitude": 106.702,
+    "formattedAddress": "8 Nguyễn Bỉnh Khiêm, Phường Đa Kao, Quận 1, TP. Hồ Chí Minh",
+    "placeId": "ChIJcQf_TeyrNTERZ1o2e0oG69u",
+    "categoriesIds": ["9671bdf8-484e-4922-8835-cc800cc7ba3f"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-07-01T09:00:00.000Z",
+        "endTime": "2025-09-30T17:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Phí Tham Gia Chương Trình (Startup Team)",
+            "price": 300000,
+            "isFree": false,
+            "quantity": 20,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-06-01T00:00:00.000Z",
+            "endTime": "2025-07-01T08:00:00.000Z",
+            "description": "Phí tham gia trọn gói chương trình 3 tháng huấn luyện và cố vấn chuyên sâu. Tính trên mỗi đội.",
+            "imageUrl": "https://incubatorvn.vn/images/tickets/incubator-program-fee.jpg"
+          },
+          {
+            "name": "Vé Pitching Day (Khán Giả)",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-09-30T16:00:00.000Z",
+            "description": "Vé tham gia buổi Pitching Day cuối cùng để chứng kiến các startup trình bày dự án.",
+            "imageUrl": "https://incubatorvn.vn/images/tickets/pitching-day-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Techcombank",
+      "bankAccountName": "TRUNG TAM HO TRO KHOI NGHIEP CONG NGHE SAI GON",
+      "bankAccountNumber": "190308765432101",
+      "bankOffice": "Chi nhánh Cộng Hòa, TP.HCM",
+      "businessType": "COMPANY",
+      "name": "Trung Tâm Hỗ Trợ Khởi Nghiệp Công Nghệ Sài Gòn",
+      "address": "12 Điện Biên Phủ, Phường Đa Kao, Quận 1, TP. Hồ Chí Minh",
+      "taxNumber": "0310987654"
+    },
+    "setting": {
+      "url": "hcmc-tech-startup-launchpad-2025",
+      "messageAttendees": "Chào mừng các đội startup đến với Launchpad! Hãy sẵn sàng bứt phá giới hạn và vươn tới thành công.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 120
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://dalatcycling.vn/images/dalat-cycling-challenge-logo.png",
+    "eventBannerUrl": "https://dalatsports.vn/banners/dalat-cycling-challenge.jpg",
+    "eventName": "Thử Thách Đua Xe Đạp Đà Lạt 2025: Vượt Dốc Cao Nguyên",
+    "categories": ["sport"],
+    "eventDescription": "Một giải đua xe đạp địa hình đầy thử thách trên những cung đường đèo hiểm trở và cảnh quan hùng vĩ của Đà Lạt. Cuộc đua dành cho các tay đua chuyên nghiệp và bán chuyên, muốn thử thách sức bền và kỹ năng điều khiển xe trên địa hình đồi núi.",
+    "orgLogoUrl": "https://lamdongsports.org/logo/lam-dong-cycling-federation.png",
+    "orgName": "Liên Đoàn Xe Đạp - Mô Tô Thể Thao Lâm Đồng",
+    "orgDescription": "Đơn vị chủ quản các hoạt động và giải đấu xe đạp, mô tô thể thao tại tỉnh Lâm Đồng, thúc đẩy phong trào và phát triển tài năng.",
+    "venueName": "Đồi Robin",
+    "cityId": 68,
+    "districtId": null,
+    "wardId": 22956,
+    "street": "đường Đống Đa",
+    "latitude": 11.936,
+    "longitude": 108.435,
+    "formattedAddress": "Đồi Robin, Đường Đống Đa, Phường 3, Thành phố Đà Lạt, Lâm Đồng",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69k",
+    "categoriesIds": ["4247769b-251e-4909-8c89-3af54d648374"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-09-14T07:00:00.000Z",
+        "endTime": "2025-09-14T15:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Vận Động Viên (Full Race)",
+            "price": 350000,
+            "isFree": false,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-08-01T00:00:00.000Z",
+            "endTime": "2025-09-14T06:00:00.000Z",
+            "description": "Bao gồm Bib, áo đua, chip timing và huy chương hoàn thành.",
+            "imageUrl": "https://cyclingrace.vn/images/tickets/full-race-cycling-ticket.jpg"
+          },
+          {
+            "name": "Vé Vận Động Viên (Short Race)",
+            "price": 180000,
+            "isFree": false,
+            "quantity": 300,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-08-01T00:00:00.000Z",
+            "endTime": "2025-09-14T06:00:00.000Z",
+            "description": "Bao gồm Bib, áo đua, huy chương hoàn thành.",
+            "imageUrl": "https://cyclingrace.vn/images/tickets/short-race-cycling-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "ACB",
+      "bankAccountName": "LIEN DOAN XE DAP MO TO THE THAO LAM DONG",
+      "bankAccountNumber": "20001928374657",
+      "bankOffice": "Chi nhánh Đà Lạt, Lâm Đồng",
+      "businessType": "COMPANY",
+      "name": "Liên Đoàn Xe Đạp - Mô Tô Thể Thao Lâm Đồng",
+      "address": "Phù Đổng Thiên Vương, Phường 8, Thành phố Đà Lạt, Lâm Đồng",
+      "taxNumber": "4200123987"
+    },
+    "setting": {
+      "url": "dalat-cycling-challenge-2025",
+      "messageAttendees": "Chúc các tay đua vượt qua mọi thử thách! Cùng nhau chinh phục những cung đường đẹp nhất Đà Lạt.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 500
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://hanoijam.vn/images/open-mic-hanoi-logo.png",
+    "eventBannerUrl": "https://hanoimusicclub.vn/banners/acoustic-night-hanoi.jpg",
+    "eventName": "Đêm Nhạc Acoustic: Giai Điệu Thư Thái Giữa Lòng Hà Nội",
+    "categories": ["music"],
+    "eventDescription": "Một buổi tối nhẹ nhàng với những giai điệu Acoustic mộc mạc và sâu lắng tại một không gian ấm cúng ở Hà Nội. Sự kiện là nơi các nghệ sĩ trẻ và những người yêu âm nhạc cùng góp giọng, mang đến những bản nhạc chữa lành tâm hồn.",
+    "orgLogoUrl": "https://hanoimusiccommunity.org/logo/hanoi-acoustic-club.png",
+    "orgName": "Câu Lạc Bộ Acoustic Hà Nội",
+    "orgDescription": "Câu Lạc Bộ Acoustic Hà Nội là một cộng đồng âm nhạc phi lợi nhuận, tổ chức các buổi biểu diễn, workshop và sự kiện kết nối những người đam mê Acoustic.",
+    "venueName": "Thư Viện Hà Nội",
+    "cityId": 1,
+    "districtId": null,
+    "wardId": 18,
+    "street": "47 Bà Triệu",
+    "latitude": 21.02,
+    "longitude": 105.85,
+    "formattedAddress": "47 Bà Triệu, Phường Hàng Bài, Quận Hoàn Kiếm, Hà Nội",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69k",
+    "categoriesIds": ["fc981c1b-485d-497d-b539-b8e73c4376bb"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-07-13T19:00:00.000Z",
+        "endTime": "2025-07-13T21:30:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Hàng Đầu",
+            "price": 200000,
+            "isFree": false,
+            "quantity": 50,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 4,
+            "startTime": "2025-06-01T00:00:00.000Z",
+            "endTime": "2025-07-13T18:00:00.000Z",
+            "description": "Vị trí ngồi tốt nhất, kèm đồ uống và cơ hội giao lưu với nghệ sĩ.",
+            "imageUrl": "https://acousticlive.vn/images/tickets/premium-acoustic-ticket.jpg"
+          },
+          {
+            "name": "Vé Thường",
+            "price": 150000,
+            "isFree": false,
+            "quantity": 150,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-06-01T00:00:00.000Z",
+            "endTime": "2025-07-13T18:00:00.000Z",
+            "description": "Vé vào cửa khu vực ghế ngồi chung.",
+            "imageUrl": "https://acousticlive.vn/images/tickets/general-acoustic-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "ACB",
+      "bankAccountName": "CAU LAC BO ACOUSTIC HA NOI",
+      "bankAccountNumber": "200098765432101",
+      "bankOffice": "Chi nhánh Hai Bà Trưng, Hà Nội",
+      "businessType": "COMPANY",
+      "name": "Câu Lạc Bộ Acoustic Hà Nội",
+      "address": "15 Hàng Tre, Quận Hoàn Kiếm, Hà Nội",
+      "taxNumber": "0100456789"
+    },
+    "setting": {
+      "url": "acoustic-night-hanoi-2025",
+      "messageAttendees": "Chào mừng bạn đến với đêm nhạc Acoustic. Hy vọng bạn sẽ có những giây phút thư giãn và lắng đọng cùng âm nhạc.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 200
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://canthouni.edu.vn/images/entrepreneurship-fair-logo.png",
+    "eventBannerUrl": "https://canthoenterprise.vn/banners/entrepreneurship-challenge-ct.jpg",
+    "eventName": "Thử Thách Khởi Nghiệp Cửu Long 2025",
+    "categories": ["education"],
+    "eventDescription": "Cuộc thi khởi nghiệp dành cho các sinh viên và startup trẻ tại khu vực Đồng bằng sông Cửu Long. Các đội sẽ trình bày dự án, nhận được cố vấn từ chuyên gia và có cơ hội nhận các giải thưởng về tiền mặt, gói ươm tạo và kết nối đầu tư.",
+    "orgLogoUrl": "https://mekongstartup.org/logo/mekong-startup-network.png",
+    "orgName": "Mạng Lưới Khởi Nghiệp Đồng Bằng Sông Cửu Long",
+    "orgDescription": "Mạng lưới hoạt động nhằm thúc đẩy tinh thần khởi nghiệp, hỗ trợ các dự án đổi mới sáng tạo và tạo dựng hệ sinh thái khởi nghiệp bền vững cho khu vực Đồng bằng sông Cửu Long.",
+    "venueName": "Nhà Văn hóa Thanh niên Cần Thơ",
+    "cityId": 92,
+    "districtId": null,
+    "wardId": 30285,
+    "street": "16 Lê Thánh Tôn",
+    "latitude": 10.0306,
+    "longitude": 105.7725,
+    "formattedAddress": "16 Lê Thánh Tôn, Phường Tân An, Quận Ninh Kiều, TP. Cần Thơ",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69q",
+    "categoriesIds": ["c9e2d4f5-6b7a-8901-bcde-f23456789012"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-08-22T08:00:00.000Z",
+        "endTime": "2025-08-22T17:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Phí Đăng Ký Đội Thi",
+            "price": 150000,
+            "isFree": false,
+            "quantity": 50,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-07-01T00:00:00.000Z",
+            "endTime": "2025-08-22T07:00:00.000Z",
+            "description": "Phí đăng ký tham gia cho một đội thi (tối đa 3 thành viên).",
+            "imageUrl": "https://startupchallenge.vn/images/tickets/team-registration.jpg"
+          },
+          {
+            "name": "Vé Khán Giả/Mentor",
+            "price": 80000,
+            "isFree": false,
+            "quantity": 150,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-07-01T00:00:00.000Z",
+            "endTime": "2025-08-22T16:00:00.000Z",
+            "description": "Vào cửa xem các vòng thi Pitching và Gala Chung kết.",
+            "imageUrl": "https://startupchallenge.vn/images/tickets/audience-mentor-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Sacombank",
+      "bankAccountName": "MANG LUOI KHOI NGHIEP DONG BANG SONG CUU LONG",
+      "bankAccountNumber": "040019283746571",
+      "bankOffice": "Chi nhánh An Nghiệp, Cần Thơ",
+      "businessType": "COMPANY",
+      "name": "Mạng Lưới Khởi Nghiệp Đồng Bằng Sông Cửu Long",
+      "address": "90 Mậu Thân, Phường An Hòa, Quận Ninh Kiều, TP. Cần Thơ",
+      "taxNumber": "9200456789"
+    },
+    "setting": {
+      "url": "mekong-startup-challenge-2025",
+      "messageAttendees": "Chào mừng các bạn đến với Thử Thách Khởi Nghiệp Cửu Long! Hãy biến đam mê thành hiện thực.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 200
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://danangopera.vn/images/danang-opera-gala-logo.png",
+    "eventBannerUrl": "https://vietnamculture.vn/banners/opera-gala-concert-danang.jpg",
+    "eventName": "Dạ Tiệc Opera & Ballet: Dòng Chảy Nghệ Thuật Châu Âu",
+    "categories": ["music"],
+    "eventDescription": "Một buổi dạ tiệc nghệ thuật đẳng cấp quốc tế tại Nhà hát Trưng Vương Đà Nẵng, với các trích đoạn Opera và Ballet nổi tiếng từ Châu Âu. Sự kiện có sự góp mặt của các nghệ sĩ Opera và vũ công Ballet danh tiếng, mang đến những màn trình diễn đầy cảm xúc và tinh tế.",
+    "orgLogoUrl": "https://danangart.org/logo/danang-art-culture-center.png",
+    "orgName": "Trung Tâm Văn Hóa Nghệ Thuật Đà Nẵng",
+    "orgDescription": "Trung Tâm Văn Hóa Nghệ Thuật Đà Nẵng là đơn vị tổ chức các sự kiện văn hóa, biểu diễn nghệ thuật, nhằm phát triển và quảng bá giá trị văn hóa địa phương và quốc tế tại thành phố.",
+    "venueName": "Nhà hát Trưng Vương",
+    "cityId": 48,
+    "districtId": null,
+    "wardId": 16145,
+    "street": "35A Phan Châu Trinh",
+    "latitude": 16.068,
+    "longitude": 108.22,
+    "formattedAddress": "35A Phan Châu Trinh, Phường Hải Châu 1, Quận Hải Châu, Đà Nẵng",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69w",
+    "categoriesIds": ["fc981c1b-485d-497d-b539-b8e73c4376bb"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-10-04T19:00:00.000Z",
+        "endTime": "2025-10-04T22:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé VIP Silver",
+            "price": 600000,
+            "isFree": false,
+            "quantity": 80,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 4,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-04T18:00:00.000Z",
+            "description": "Vị trí ngồi đẹp, bao gồm đồ uống miễn phí và chương trình biểu diễn.",
+            "imageUrl": "https://operahouse.vn/images/tickets/vip-silver-opera.jpg"
+          },
+          {
+            "name": "Vé Thường",
+            "price": 250000,
+            "isFree": false,
+            "quantity": 300,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-04T18:00:00.000Z",
+            "description": "Vé vào cửa khu vực ghế ngồi tiêu chuẩn.",
+            "imageUrl": "https://operahouse.vn/images/tickets/regular-opera-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Sacombank",
+      "bankAccountName": "TRUNG TAM VAN HOA NGHE THUAT DA NANG",
+      "bankAccountNumber": "04001928374657",
+      "bankOffice": "Chi nhánh Tây sông Hàn, Đà Nẵng",
+      "businessType": "COMPANY",
+      "name": "Trung Tâm Văn Hóa Nghệ Thuật Đà Nẵng",
+      "address": "42 Phan Châu Trinh, Phường Hải Châu 1, Quận Hải Châu, Đà Nẵng",
+      "taxNumber": "50009876543"
+    },
+    "setting": {
+      "url": "danang-opera-ballet-gala",
+      "messageAttendees": "Chào mừng đến với Dạ Tiệc Opera & Ballet! Chúc quý vị có một buổi tối tràn ngập cảm xúc cùng những giai điệu kinh điển.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 400
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://vietnaminnovation.vn/images/innovation-week-logo.png",
+    "eventBannerUrl": "https://hcmc-innovation.vn/banners/hcmc-innovation-week.jpg",
+    "eventName": "Tuần Lễ Đổi Mới Sáng Tạo TP. Hồ Chí Minh 2025",
+    "categories": ["technology"],
+    "eventDescription": "Một tuần lễ sự kiện đầy ắp các hoạt động về đổi mới sáng tạo, bao gồm các hội thảo chuyên đề, triển lãm công nghệ, cuộc thi khởi nghiệp và kết nối đầu tư. Tuần lễ nhằm thúc đẩy hệ sinh thái đổi mới của TP. Hồ Chí Minh.",
+    "orgLogoUrl": "https://sghitp.vn/logo/sgh-incubation-park.png",
+    "orgName": "Trung Tâm Ươm Tạo Doanh Nghiệp Công Nghệ Cao TP. Hồ Chí Minh",
+    "orgDescription": "Đơn vị hàng đầu trong việc ươm tạo và phát triển các doanh nghiệp công nghệ cao, cung cấp cơ sở vật chất, dịch vụ hỗ trợ và kết nối nguồn lực cho các startup.",
+    "venueName": "Cung Văn hóa Lao động",
+    "cityId": 79,
+    "districtId": null,
+    "wardId": 25777,
+    "street": "55B Nguyễn Thị Minh Khai",
+    "latitude": 10.776,
+    "longitude": 106.696,
+    "formattedAddress": "55B Nguyễn Thị Minh Khai, Phường Bến Thành, Quận 1, TP. Hồ Chí Minh",
+    "placeId": "ChIJZ-b7rOgyNTERZ1o2e0oG69k",
+    "categoriesIds": ["9671bdf8-484e-4922-8835-cc800cc7ba3f"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-08-18T08:30:00.000Z",
+        "endTime": "2025-08-22T17:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Trọn Tuần (Full Access)",
+            "price": 280000,
+            "isFree": false,
+            "quantity": 150,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 3,
+            "startTime": "2025-07-01T00:00:00.000Z",
+            "endTime": "2025-08-18T07:30:00.000Z",
+            "description": "Vào cửa tất cả các sự kiện trong tuần lễ, bao gồm các hội thảo chuyên sâu và networking VIP.",
+            "imageUrl": "https://innovationweek.vn/images/tickets/full-week-pass.jpg"
+          },
+          {
+            "name": "Vé Ngày",
+            "price": 80000,
+            "isFree": false,
+            "quantity": 500,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-07-01T00:00:00.000Z",
+            "endTime": "2025-08-22T16:00:00.000Z",
+            "description": "Vào cửa các sự kiện chung và triển lãm trong một ngày bất kỳ.",
+            "imageUrl": "https://innovationweek.vn/images/tickets/daily-pass.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "TRUNG TAM UOM TAO DOANH NGHIEP CONG NGHE CAO TP HCM",
+      "bankAccountNumber": "00110098765432104",
+      "bankOffice": "Chi nhánh Thủ Đức, TP.HCM",
+      "businessType": "COMPANY",
+      "name": "Trung Tâm Ươm Tạo Doanh Nghiệp Công Nghệ Cao TP. Hồ Chí Minh",
+      "address": "145 Nguyễn Du, Phường Bến Thành, Quận 1, TP. Hồ Chí Minh",
+      "taxNumber": "0319283746"
+    },
+    "setting": {
+      "url": "hcmc-innovation-week-2025",
+      "messageAttendees": "Chào mừng đến với Tuần Lễ Đổi Mới Sáng Tạo! Hãy cùng khám phá và kiến tạo tương lai.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 700
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://canthoslam.vn/images/poetry-slam-logo.png",
+    "eventBannerUrl": "https://mekongarts.vn/banners/poetry-slam-ct.jpg",
+    "eventName": "Đêm Thơ Đường Phố: Vần Thơ Phương Nam",
+    "categories": ["art"],
+    "eventDescription": "Một buổi biểu diễn thơ đường phố độc đáo tại Cần Thơ, nơi các nhà thơ và người yêu thơ trình bày những tác phẩm của mình. Sự kiện kết hợp âm nhạc đường phố và nghệ thuật thị giác, tạo nên không gian nghệ thuật phóng khoáng và gần gũi.",
+    "orgLogoUrl": "https://southculture.org/logo/mekong-delta-arts-center.png",
+    "orgName": "Trung Tâm Văn Hóa Nghệ Thuật Đồng Bằng Sông Cửu Long",
+    "orgDescription": "Trung tâm chuyên tổ chức các hoạt động nghệ thuật, bảo tồn và phát huy giá trị văn hóa đặc trưng của vùng đồng bằng sông Cửu Long.",
+    "venueName": "Bến Ninh Kiều (Khu vực sân khấu nổi)",
+    "cityId": 92,
+    "districtId": null,
+    "wardId": 30265,
+    "street": "đường Hai Bà Trưng",
+    "latitude": 10.033,
+    "longitude": 105.7725,
+    "formattedAddress": "Bến Ninh Kiều, Đường Hai Bà Trưng, Phường Tân An, Quận Ninh Kiều, TP. Cần Thơ",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69q",
+    "categoriesIds": ["b8f1c2d3-4e5f-6789-abcd-ef0123456789"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-06-25T19:00:00.000Z",
+        "endTime": "2025-06-25T22:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Hỗ Trợ Nghệ Sĩ",
+            "price": 80000,
+            "isFree": false,
+            "quantity": 100,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-05-01T00:00:00.000Z",
+            "endTime": "2025-06-25T18:00:00.000Z",
+            "description": "Bao gồm vé vào cửa khu vực ngồi ưu tiên và góp phần ủng hộ nghệ sĩ.",
+            "imageUrl": "https://poetryslam.vn/images/tickets/artist-support-ticket.jpg"
+          },
+          {
+            "name": "Vé Tham Dự",
+            "price": 50000,
+            "isFree": false,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 8,
+            "startTime": "2025-05-01T00:00:00.000Z",
+            "endTime": "2025-06-25T18:00:00.000Z",
+            "description": "Vé vào cửa khu vực đứng và xem biểu diễn.",
+            "imageUrl": "https://poetryslam.vn/images/tickets/general-poetry-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "TRUNG TAM VAN HOA NGHE THUAT DONG BANG SONG CUU LONG",
+      "bankAccountNumber": "00110098765432105",
+      "bankOffice": "Chi nhánh Cần Thơ, Cần Thơ",
+      "businessType": "COMPANY",
+      "name": "Trung Tâm Văn Hóa Nghệ Thuật Đồng Bằng Sông Cửu Long",
+      "address": "06 Lý Thái Tổ, Phường An Phú, Quận Ninh Kiều, TP. Cần Thơ",
+      "taxNumber": "9200456789"
+    },
+    "setting": {
+      "url": "poetry-slam-cantho-2025",
+      "messageAttendees": "Chào mừng quý vị đến với Đêm Thơ Đường Phố! Hãy cùng lắng nghe những vần thơ đầy cảm xúc và tình yêu quê hương.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 300
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://vietnaminvest.vn/images/investment-summit-logo.png",
+    "eventBannerUrl": "https://hcmcbank.vn/banners/vietnam-investment-summit.jpg",
+    "eventName": "Hội Nghị Đầu Tư Việt Nam 2025: Cơ Hội Bứt Phá",
+    "categories": ["education"],
+    "eventDescription": "Một diễn đàn cao cấp quy tụ các nhà đầu tư trong nước và quốc tế, các nhà hoạch định chính sách và doanh nghiệp để thảo luận về môi trường đầu tư, các chính sách thu hút vốn và cơ hội phát triển đột phá tại Việt Nam trong bối cảnh kinh tế mới.",
+    "orgLogoUrl": "https://vn-chamber.org/logo/vietnam-chamber-commerce.png",
+    "orgName": "Phòng Thương Mại và Công Nghiệp Việt Nam (VCCI)",
+    "orgDescription": "VCCI là tổ chức quốc gia đại diện cho cộng đồng doanh nghiệp, người sử dụng lao động và các hiệp hội doanh nghiệp tại Việt Nam, thúc đẩy phát triển kinh tế và hội nhập quốc tế.",
+    "venueName": "Trung tâm Hội nghị Gem Center",
+    "cityId": 79,
+    "districtId": null,
+    "wardId": 25688,
+    "street": "8 Nguyễn Bỉnh Khiêm",
+    "latitude": 10.785,
+    "longitude": 106.702,
+    "formattedAddress": "8 Nguyễn Bỉnh Khiêm, Phường Đa Kao, Quận 1, TP. Hồ Chí Minh",
+    "placeId": "ChIJcQf_TeyrNTERZ1o2e0oG69u",
+    "categoriesIds": ["c9e2d4f5-6b7a-8901-bcde-f23456789012"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-05-20T08:30:00.000Z",
+        "endTime": "2025-05-20T17:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Delegate (Khách Mời Chính Thức)",
+            "price": 150000,
+            "isFree": false,
+            "quantity": 150,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 3,
+            "startTime": "2025-04-01T00:00:00.000Z",
+            "endTime": "2025-05-20T07:30:00.000Z",
+            "description": "Vào cửa tất cả các phiên, bao gồm ăn trưa và tài liệu hội nghị đầy đủ.",
+            "imageUrl": "https://investmentsummit.vn/images/tickets/delegate-ticket.jpg"
+          },
+          {
+            "name": "Vé Thường",
+            "price": 80000,
+            "isFree": false,
+            "quantity": 250,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-04-01T00:00:00.000Z",
+            "endTime": "2025-05-20T07:30:00.000Z",
+            "description": "Vào cửa các phiên chính và khu vực kết nối chung.",
+            "imageUrl": "https://investmentsummit.vn/images/tickets/general-ticket-invest.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "BIDV",
+      "bankAccountName": "PHONG THUONG MAI VA CONG NGHIEP VIET NAM",
+      "bankAccountNumber": "680100019283745678",
+      "bankOffice": "Chi nhánh Hàm Nghi, TP.HCM",
+      "businessType": "COMPANY",
+      "name": "Phòng Thương Mại và Công Nghiệp Việt Nam (VCCI)",
+      "address": "171 Võ Thị Sáu, Phường 7, Quận 3, TP. Hồ Chí Minh",
+      "taxNumber": "0300192837"
+    },
+    "setting": {
+      "url": "vn-investment-summit-2025",
+      "messageAttendees": "Chào mừng đến với Hội Nghị Đầu Tư Việt Nam! Cùng nhau kiến tạo thị trường và đón đầu cơ hội bứt phá.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 400
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://danang-maritime.vn/images/danang-boat-race-logo.png",
+    "eventBannerUrl": "https://tourismdanang.vn/banners/danang-dragon-boat-race.jpg",
+    "eventName": "Giải Đua Thuyền Rồng Quốc Tế Đà Nẵng 2025: Sức Mạnh Sông Hàn",
+    "categories": ["sport"],
+    "eventDescription": "Một lễ hội thể thao truyền thống và hiện đại, với các đội đua thuyền rồng từ Việt Nam và quốc tế. Diễn ra trên sông Hàn thơ mộng, sự kiện mang đến những màn tranh tài gay cấn, sôi động, thể hiện sức mạnh, tinh thần đồng đội và vẻ đẹp văn hóa biển của Đà Nẵng.",
+    "orgLogoUrl": "https://danangwater.org/logo/danang-water-sports-federation.png",
+    "orgName": "Liên Đoàn Đua Thuyền Đà Nẵng",
+    "orgDescription": "Liên Đoàn Đua Thuyền Đà Nẵng là đơn vị chuyên tổ chức và phát triển các môn thể thao dưới nước, đặc biệt là đua thuyền, góp phần quảng bá du lịch và văn hóa cho thành phố.",
+    "venueName": "Sông Hàn (khu vực cầu Rồng)",
+    "cityId": 48,
+    "districtId": null,
+    "wardId": 16141,
+    "street": "đường Bạch Đằng",
+    "latitude": 16.06,
+    "longitude": 108.22,
+    "formattedAddress": "Sông Hàn, Khu vực Cầu Rồng, Phường An Hải Bắc, Quận Sơn Trà, Đà Nẵng",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69w",
+    "categoriesIds": ["4247769b-251e-4909-8c89-3af54d648374"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-08-30T08:00:00.000Z",
+        "endTime": "2025-08-30T17:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Team Entry",
+            "price": 500000,
+            "isFree": false,
+            "quantity": 50,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-07-01T00:00:00.000Z",
+            "endTime": "2025-08-30T07:00:00.000Z",
+            "description": "Phí đăng ký cho một đội tham gia đua thuyền rồng (tối đa 20 vận động viên).",
+            "imageUrl": "https://dragonboat.vn/images/tickets/team-entry-ticket.jpg"
+          },
+          {
+            "name": "Vé Khán Giả VIP",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-07-01T00:00:00.000Z",
+            "endTime": "2025-08-30T07:00:00.000Z",
+            "description": "Vị trí ngồi xem trực diện ở khu vực VIP, có nước uống miễn phí.",
+            "imageUrl": "https://dragonboat.vn/images/tickets/vip-spectator-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Techcombank",
+      "bankAccountName": "LIEN DOAN DUA THUYEN DA NANG",
+      "bankAccountNumber": "19031928374657",
+      "bankOffice": "Chi nhánh Sông Hàn, Đà Nẵng",
+      "businessType": "COMPANY",
+      "name": "Liên Đoàn Đua Thuyền Đà Nẵng",
+      "address": "12 Bạch Đằng, Phường Thạch Thang, Quận Hải Châu, Đà Nẵng",
+      "taxNumber": "5000123987"
+    },
+    "setting": {
+      "url": "danang-dragon-boat-race-2025",
+      "messageAttendees": "Chào mừng quý vị đến với Giải Đua Thuyền Rồng Quốc Tế! Hãy cùng cổ vũ hết mình và tận hưởng không khí lễ hội sôi động.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 700
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://mekongfolk.vn/images/folk-fest-logo.png",
+    "eventBannerUrl": "https://canthoculture.vn/banners/mekong-folk-art-festival.jpg",
+    "eventName": "Lễ Hội Văn Hóa Dân Gian ĐBSCL 2025: Sắc Màu Di Sản",
+    "categories": ["art"],
+    "eventDescription": "Một lễ hội lớn tôn vinh các giá trị văn hóa dân gian độc đáo của miền Tây sông nước, với các hoạt động biểu diễn đờn ca tài tử, nghệ thuật cải lương, vũ điệu dân gian, trưng bày thủ công mỹ nghệ và ẩm thực truyền thống. Hứa hẹn một không gian văn hóa sống động và đầy màu sắc.",
+    "orgLogoUrl": "https://mekongculture.org/logo/mekong-culture-institute.png",
+    "orgName": "Viện Văn Hóa Nghệ Thuật Quốc Gia VN Tại Cần Thơ",
+    "orgDescription": "Đơn vị nghiên cứu, đào tạo và tổ chức sự kiện văn hóa nghệ thuật cấp quốc gia tại khu vực phía Nam, đặc biệt là văn hóa Đồng bằng sông Cửu Long.",
+    "venueName": "Công viên Sông Hậu",
+    "cityId": 92,
+    "districtId": null,
+    "wardId": 30268,
+    "street": "đường Võ Văn Kiệt",
+    "latitude": 10.02,
+    "longitude": 105.77,
+    "formattedAddress": "Công viên Sông Hậu, Đường Võ Văn Kiệt, Phường An Lạc, Quận Ninh Kiều, TP. Cần Thơ",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69q",
+    "categoriesIds": ["b8f1c2d3-4e5f-6789-abcd-ef0123456789"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-10-26T09:00:00.000Z",
+        "endTime": "2025-10-26T22:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Gia Đình (4 người)",
+            "price": 100000,
+            "isFree": false,
+            "quantity": 300,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-26T08:00:00.000Z",
+            "description": "Gói vé cho 4 người, bao gồm ưu tiên vào các khu vực biểu diễn chính và voucher ẩm thực nhỏ.",
+            "imageUrl": "https://folkfestival.vn/images/tickets/family-pack-ticket.jpg"
+          },
+          {
+            "name": "Vé Cá Nhân",
+            "price": 50000,
+            "isFree": false,
+            "quantity": 1000,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 10,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-26T08:00:00.000Z",
+            "description": "Vé vào cửa khu vực lễ hội chung, tự do tham quan.",
+            "imageUrl": "https://folkfestival.vn/images/tickets/individual-folk-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Techcombank",
+      "bankAccountName": "VIEN VAN HOA NGHE THUAT QUOC GIA VIET NAM TAI CAN THO",
+      "bankAccountNumber": "190319283746571",
+      "bankOffice": "Chi nhánh Cái Răng, Cần Thơ",
+      "businessType": "COMPANY",
+      "name": "Viện Văn Hóa Nghệ Thuật Quốc Gia Việt Nam Tại Cần Thơ",
+      "address": "15 Trần Phú, Phường Cái Khế, Quận Ninh Kiều, TP. Cần Thơ",
+      "taxNumber": "9200456789"
+    },
+    "setting": {
+      "url": "mekong-folk-art-festival-2025",
+      "messageAttendees": "Chào mừng đến với Lễ Hội Văn Hóa Dân Gian! Hãy cùng khám phá và lan tỏa vẻ đẹp văn hóa đặc trưng của miền Tây sông nước.",
+      "isPrivate": false,
+      "ageRestriction": "ALL_AGES",
+      "maximumAttendees": 1500
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://vietnaminnovation.vn/images/hackathon-logo.png",
+    "eventBannerUrl": "https://hanoitech.vn/banners/global-tech-challenge.jpg",
+    "eventName": "Hanoi Global Tech Challenge 2025",
+    "categories": ["technology"],
+    "eventDescription": "Hackathon quốc tế 48 giờ dành cho các lập trình viên, kỹ sư và designer từ khắp nơi trên thế giới. Các đội sẽ cùng nhau giải quyết những thách thức công nghệ thực tế và phát triển các sản phẩm sáng tạo. Sự kiện có giải thưởng lớn và cơ hội nhận đầu tư.",
+    "orgLogoUrl": "https://hanoihub.vn/logo/hanoi-innovation-center.png",
+    "orgName": "Trung Tâm Đổi Mới Sáng Tạo Quốc Gia (NIC) - Cơ sở Hà Nội",
+    "orgDescription": "NIC là trung tâm quốc gia thúc đẩy đổi mới sáng tạo, phát triển hệ sinh thái khởi nghiệp sáng tạo và ứng dụng công nghệ tại Việt Nam.",
+    "venueName": "Trung tâm Hội nghị Quốc gia",
+    "cityId": 1,
+    "districtId": null,
+    "wardId": 350,
+    "street": "Phạm Hùng",
+    "latitude": 21.0,
+    "longitude": 105.78,
+    "formattedAddress": "Phạm Hùng, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69k",
+    "categoriesIds": ["9671bdf8-484e-4922-8835-cc800cc7ba3f"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-10-17T09:00:00.000Z",
+        "endTime": "2025-10-19T17:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Phí Đăng Ký Đội (3-5 thành viên)",
+            "price": 300000,
+            "isFree": false,
+            "quantity": 50,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-17T08:00:00.000Z",
+            "description": "Phí đăng ký cho một đội tham gia Hackathon, bao gồm ăn uống, không gian làm việc và tài liệu hỗ trợ.",
+            "imageUrl": "https://hackathon.vn/images/tickets/team-hackathon-ticket.jpg"
+          },
+          {
+            "name": "Vé Khán Giả (Demo Day)",
+            "price": 50000,
+            "isFree": false,
+            "quantity": 200,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 5,
+            "startTime": "2025-09-01T00:00:00.000Z",
+            "endTime": "2025-10-19T16:00:00.000Z",
+            "description": "Vé vào cửa ngày Demo Day để xem các dự án được trình bày và trao giải.",
+            "imageUrl": "https://hackathon.vn/images/tickets/demo-day-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "TRUNG TAM DOI MOI SANG TAO QUOC GIA HA NOI",
+      "bankAccountNumber": "00110098765432106",
+      "bankOffice": "Chi nhánh Cầu Giấy, Hà Nội",
+      "businessType": "COMPANY",
+      "name": "Trung Tâm Đổi Mới Sáng Tạo Quốc Gia (NIC) - Cơ sở Hà Nội",
+      "address": "Phố Duy Tân, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Hà Nội",
+      "taxNumber": "0100456789"
+    },
+    "setting": {
+      "url": "hanoi-global-tech-challenge-2025",
+      "messageAttendees": "Chào mừng các thiên tài công nghệ đến với Hanoi Global Tech Challenge! Hãy cùng nhau lập trình tương lai.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 300
+    }
+  },
+  {
+    "id": null,
+    "eventLogoUrl": "https://dalatrun.vn/images/dalat-ultra-trail-logo.png",
+    "eventBannerUrl": "https://dalatsports.vn/banners/dalat-trail-run.jpg",
+    "eventName": "Giải Chạy Địa Hình Đà Lạt Ultra Trail 2025",
+    "categories": ["sport"],
+    "eventDescription": "Giải chạy địa hình (trail run) hàng đầu tại Việt Nam, mang đến những cung đường tuyệt đẹp và đầy thử thách qua rừng thông, đồi chè và các thác nước hùng vĩ của Đà Lạt. Cuộc đua dành cho những người yêu thích thử thách và muốn hòa mình vào thiên nhiên.",
+    "orgLogoUrl": "https://vietnamtrail.org/logo/vietnam-trail-series.png",
+    "orgName": "Công ty TNHH Vietnam Trail Series",
+    "orgDescription": "Đơn vị chuyên tổ chức các giải chạy địa hình chuyên nghiệp tại Việt Nam, kết nối cộng đồng chạy bộ và quảng bá vẻ đẹp thiên nhiên Việt Nam.",
+    "venueName": "Hồ Tuyền Lâm (Khu vực xuất phát và đích)",
+    "cityId": 68,
+    "districtId": null,
+    "wardId": 22959,
+    "street": "đường Hoa Hạ",
+    "latitude": 11.89,
+    "longitude": 108.43,
+    "formattedAddress": "Hồ Tuyền Lâm, Phường 4, Thành phố Đà Lạt, Lâm Đồng",
+    "placeId": "ChIJcQf_TeyrNTERJ3oUe0oG69k",
+    "categoriesIds": ["4247769b-251e-4909-8c89-3af54d648374"],
+    "eventType": "OFFLINE",
+    "shows": [
+      {
+        "startTime": "2025-04-06T04:00:00.000Z",
+        "endTime": "2025-04-06T18:00:00.000Z",
+        "ticketTypes": [
+          {
+            "name": "Vé Cự Ly 70km Ultra",
+            "price": 500000,
+            "isFree": false,
+            "quantity": 500,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-03-01T00:00:00.000Z",
+            "endTime": "2025-04-06T03:00:00.000Z",
+            "description": "Bao gồm Bib, áo finisher, huy chương, túi race kit và hỗ trợ tại các trạm tiếp nước.",
+            "imageUrl": "https://ultratrail.vn/images/tickets/70k-ultra-ticket.jpg"
+          },
+          {
+            "name": "Vé Cự Ly 42km Marathon",
+            "price": 300000,
+            "isFree": false,
+            "quantity": 1000,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-03-01T00:00:00.000Z",
+            "endTime": "2025-04-06T03:00:00.000Z",
+            "description": "Bao gồm Bib, áo finisher, huy chương, túi race kit và hỗ trợ tại các trạm tiếp nước.",
+            "imageUrl": "https://ultratrail.vn/images/tickets/42k-trail-ticket.jpg"
+          },
+          {
+            "name": "Vé Cự Ly 21km Half",
+            "price": 180000,
+            "isFree": false,
+            "quantity": 1500,
+            "minTicketPurchase": 1,
+            "maxTicketPurchase": 1,
+            "startTime": "2025-03-01T00:00:00.000Z",
+            "endTime": "2025-04-06T03:00:00.000Z",
+            "description": "Bao gồm Bib, áo finisher, huy chương và hỗ trợ tại các trạm tiếp nước.",
+            "imageUrl": "https://ultratrail.vn/images/tickets/21k-trail-ticket.jpg"
+          }
+        ]
+      }
+    ],
+    "paymentInfo": {
+      "bankAccount": "Vietcombank",
+      "bankAccountName": "CONG TY TNHH VIETNAM TRAIL SERIES",
+      "bankAccountNumber": "00110098765432107",
+      "bankOffice": "Chi nhánh Hồ Chí Minh, TP.HCM",
+      "businessType": "COMPANY",
+      "name": "Công ty TNHH Vietnam Trail Series",
+      "address": "12 Ngô Thời Nhiệm, Phường 6, Quận 3, TP. Hồ Chí Minh",
+      "taxNumber": "0319283746"
+    },
+    "setting": {
+      "url": "dalat-ultra-trail-2025",
+      "messageAttendees": "Chào mừng quý vị đến với Đà Lạt Ultra Trail! Chúc các runners có một cuộc đua thành công và đáng nhớ trên những cung đường tuyệt đẹp.",
+      "isPrivate": false,
+      "ageRestriction": "OVER_18",
+      "maximumAttendees": 3000
+    }
+  }
+]

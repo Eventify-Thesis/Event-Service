@@ -29,6 +29,9 @@ import * as handlebarsHelpers from 'handlebars-helpers';
 import { ShowScheduleModule } from './show-schedule/show-schedule.module';
 import { KanbanModule } from './kanban/kanban.module';
 import { RedisModule } from './redis/redis.module';
+import { DemoEventModule } from './event/demo-event.module';
+import { CommentModule } from './comment/comment.module';
+import { IssueReportModule } from './event/issue-report.module';
 
 @Module({
   imports: [
@@ -94,6 +97,9 @@ import { RedisModule } from './redis/redis.module';
     ShowScheduleModule,
     KanbanModule,
     RedisModule,
+    DemoEventModule,
+    CommentModule,
+    IssueReportModule,
   ],
   controllers: [AppController],
   providers: [AppService, ClerkClientProvider],
