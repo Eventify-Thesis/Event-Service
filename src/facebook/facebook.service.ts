@@ -15,7 +15,7 @@ export class FacebookService {
     private facebookTokenRepository: Repository<FacebookToken>,
     @InjectRepository(FacebookPost)
     private facebookPostRepository: Repository<FacebookPost>,
-  ) { }
+  ) {}
 
   async getAccessToken(code: string, userId: string): Promise<void> {
     try {
@@ -51,22 +51,27 @@ export class FacebookService {
         },
       );
 
-
       // Get user's pages
-      const pages = await this.getUserPagesFromToken(longLivedTokenResponse.data.access_token);
+      const pages = await this.getUserPagesFromToken(
+        longLivedTokenResponse.data.access_token,
+      );
 
       let tokenExpiresAt: Date | undefined = undefined;
       if (longLivedTokenResponse.data.expires_in) {
         tokenExpiresAt = new Date();
-        tokenExpiresAt.setSeconds(tokenExpiresAt.getSeconds() + longLivedTokenResponse.data.expires_in);
+        tokenExpiresAt.setSeconds(
+          tokenExpiresAt.getSeconds() + longLivedTokenResponse.data.expires_in,
+        );
       }
       // Store tokens
-      await this.checkGrantedPermissions(longLivedTokenResponse.data.access_token);
+      await this.checkGrantedPermissions(
+        longLivedTokenResponse.data.access_token,
+      );
 
       const facebookToken = this.facebookTokenRepository.create({
         userId,
         longLivedUserToken: longLivedTokenResponse.data.access_token,
-        pageTokens: pages.map(page => ({
+        pageTokens: pages.map((page) => ({
           pageId: page.id,
           pageName: page.name,
           accessToken: page.accessToken,
@@ -100,7 +105,10 @@ export class FacebookService {
         accessToken: page.access_token,
       }));
     } catch (error) {
-      console.error('Error fetching Facebook pages from token:', error.response?.data || error.message);
+      console.error(
+        'Error fetching Facebook pages from token:',
+        error.response?.data || error.message,
+      );
       throw new Error('Failed to fetch Facebook pages from token');
     }
   }
@@ -130,7 +138,10 @@ export class FacebookService {
 
       return pages;
     } catch (error) {
-      console.error('Error fetching Facebook pages:', error.response?.data || error.message);
+      console.error(
+        'Error fetching Facebook pages:',
+        error.response?.data || error.message,
+      );
       throw new Error('Failed to fetch Facebook pages');
     }
   }
@@ -149,7 +160,9 @@ export class FacebookService {
     }
     console.log('Tokens:', tokens);
 
-    const pageToken: any = tokens.pageTokens.find((p: any) => p.pageId === pageId);
+    const pageToken: any = tokens.pageTokens.find(
+      (p: any) => p.pageId === pageId,
+    );
     if (!pageToken) {
       throw new Error('No access token found for this page');
     }
@@ -158,7 +171,9 @@ export class FacebookService {
     return pageToken.accessToken;
   }
 
-  async checkGrantedPermissions(userAccessToken: string): Promise<{ [permission: string]: string }> {
+  async checkGrantedPermissions(
+    userAccessToken: string,
+  ): Promise<{ [permission: string]: string }> {
     try {
       const response = await axios.get(
         'https://graph.facebook.com/v18.0/me/permissions',
@@ -177,13 +192,19 @@ export class FacebookService {
       console.log('Granted Facebook permissions:', granted);
       return granted;
     } catch (error) {
-      console.error('Failed to check Facebook permissions:', error.response?.data || error.message);
+      console.error(
+        'Failed to check Facebook permissions:',
+        error.response?.data || error.message,
+      );
       throw new Error('Could not verify Facebook permissions');
     }
   }
 
-
-  private async uploadImage(pageId: string, accessToken: string, imageUrl: string): Promise<string> {
+  private async uploadImage(
+    pageId: string,
+    accessToken: string,
+    imageUrl: string,
+  ): Promise<string> {
     try {
       const response = await axios.post(
         `https://graph.facebook.com/v18.0/${pageId}/photos`,
@@ -193,17 +214,26 @@ export class FacebookService {
         },
         {
           params: { access_token: accessToken },
-        }
+        },
       );
       return response.data.id;
     } catch (error) {
-      console.error('Failed to upload image:', error.response?.data || error.message);
+      console.error(
+        'Failed to upload image:',
+        error.response?.data || error.message,
+      );
       throw new Error('Failed to upload image to Facebook');
     }
   }
 
-  async schedulePost(eventId: string, userId: string, pageId: string, message: string, scheduledTime: string, imageUrls: string[] = []) {
-
+  async schedulePost(
+    eventId: string,
+    userId: string,
+    pageId: string,
+    message: string,
+    scheduledTime: string,
+    imageUrls: string[] = [],
+  ) {
     try {
       const accessToken = await this.getPageAccessToken(userId, pageId);
       const now = new Date();
@@ -223,9 +253,11 @@ export class FacebookService {
       const postData: any = {
         message,
         published: isImmediate,
-        ...(isImmediate ? {} : {
-          scheduled_publish_time: Math.floor(targetTime.getTime() / 1000)
-        })
+        ...(isImmediate
+          ? {}
+          : {
+              scheduled_publish_time: Math.floor(targetTime.getTime() / 1000),
+            }),
       };
 
       // Add attached media if we have any
@@ -237,17 +269,20 @@ export class FacebookService {
         `https://graph.facebook.com/v18.0/${pageId}/feed`,
         postData,
         {
-          params: { access_token: accessToken }
-        }
+          params: { access_token: accessToken },
+        },
       );
 
       // Log the post for tracking
-      console.log(`Facebook post ${isImmediate ? 'published' : 'scheduled'} for event ${eventId}:`, {
-        postId: response.data.id,
-        pageId,
-        scheduledTime: isImmediate ? now.toISOString() : scheduledTime,
-        isImmediate
-      });
+      console.log(
+        `Facebook post ${isImmediate ? 'published' : 'scheduled'} for event ${eventId}:`,
+        {
+          postId: response.data.id,
+          pageId,
+          scheduledTime: isImmediate ? now.toISOString() : scheduledTime,
+          isImmediate,
+        },
+      );
 
       const facebookPost = this.facebookPostRepository.create({
         userId,
@@ -256,7 +291,7 @@ export class FacebookService {
         postId: response.data.id,
         message,
         imageUrls,
-        scheduledAt: targetTime
+        scheduledAt: targetTime,
       });
 
       await this.facebookPostRepository.save(facebookPost);
@@ -264,11 +299,17 @@ export class FacebookService {
       return {
         success: true,
         data: response.data,
-        message: `Post successfully ${isImmediate ? 'published' : 'scheduled'}`
+        message: `Post successfully ${isImmediate ? 'published' : 'scheduled'}`,
       };
     } catch (error) {
-      console.error('Error with Facebook post:', error.response?.data || error.message);
-      throw new Error(error.response?.data?.error?.message || 'Failed to process Facebook post');
+      console.error(
+        'Error with Facebook post:',
+        error.response?.data || error.message,
+      );
+      throw new Error(
+        error.response?.data?.error?.message ||
+          'Failed to process Facebook post',
+      );
     }
   }
 
@@ -288,7 +329,6 @@ export class FacebookService {
     };
   }
 
-
   async getPosts(pageId: string, userId: string): Promise<FacebookPostDto[]> {
     try {
       const posts = await this.facebookPostRepository.find({
@@ -298,12 +338,20 @@ export class FacebookService {
       });
 
       const accessToken = await this.getPageAccessToken(userId, pageId);
-      const sortedPosts = posts.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      const sortedPosts = posts.sort(
+        (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
+      );
 
-      const dtos = sortedPosts.map(async post => {
-        const stats = await this.getPostStats(post.pageId, post.postId, accessToken);
+      const dtos = sortedPosts.map(async (post) => {
+        const stats = await this.getPostStats(
+          post.pageId,
+          post.postId,
+          accessToken,
+        );
         const dto = new FacebookPostDto();
         dto.id = post.id;
+        dto.pageId = post.pageId;
+        dto.postId = post.postId;
         dto.message = post.message;
         dto.imageUrls = post.imageUrls;
         dto.scheduledAt = post.scheduledAt;
@@ -314,7 +362,10 @@ export class FacebookService {
       });
       return Promise.all(dtos);
     } catch (error) {
-      console.error('Error fetching Facebook posts:', error.response?.data || error.message);
+      console.error(
+        'Error fetching Facebook posts:',
+        error.response?.data || error.message,
+      );
       throw new Error('Failed to fetch Facebook posts');
     }
   }
