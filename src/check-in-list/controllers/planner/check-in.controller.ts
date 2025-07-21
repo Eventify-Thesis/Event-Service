@@ -58,12 +58,13 @@ export class PlannerCheckInController {
     @Body() body: { attendee_public_ids: string[] },
     @Ip() ip: string,
   ) {
-    return await this.checkInService.createCheckIn(
+    const result = await this.checkInService.createCheckIn(
       eventId,
       checkInListShortId,
       body.attendee_public_ids,
       ip,
     );
+    return result;
   }
 
   @Delete(':checkInListShortId/check-ins/:attendeePublicId')
