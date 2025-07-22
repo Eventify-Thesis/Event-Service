@@ -23,11 +23,20 @@ async function bootstrap() {
       httpsOptions = undefined;
     }
   }
-  const app = await NestFactory.create(AppModule, { httpsOptions });
+  const app = await NestFactory.create(AppModule, { 
+    httpsOptions,
+    bodyParser: true,
+    rawBody: true
+  });
   app.setGlobalPrefix('event');
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
   app.use(cookieParser());
+
+  // Increase body size limit to handle large payloads
+  const express = require('express');
+  app.use(express.json({ limit: '50mb' }));
+  app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
   app.enableCors({
     origin: (origin, callback) => {

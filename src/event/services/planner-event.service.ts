@@ -335,10 +335,9 @@ export class PlannerEventService {
               .findOne({
                 where: { id: ticketDto.id },
               });
-            ticketType.name = ticketDto.name;
-            ticketType.price = ticketDto.price;
-            ticketType.quantity = ticketDto.quantity;
-            ticketType.isFree = ticketDto.isFree;
+            ticketType = {
+              ...ticketDto
+            };
           } else {
             // Create new ticket type
             ticketType = entityManager

@@ -111,6 +111,17 @@ export class PlannerEventController {
 
   @UseGuards(EventRoleGuard([EventRole.OWNER, EventRole.ADMIN]))
   @Post('draft')
+  @ApiBody({
+    description: 'Create or update draft event',
+    type: CreateDraftEventDto,
+    schema: {
+      type: 'object',
+      properties: {
+        // Add any specific properties if needed
+      },
+      maxProperties: 1000, // Allow for complex event objects
+    }
+  })
   async upsert(
     @Body(EventBodyExists) createDraftEventDto: CreateDraftEventDto,
     @Req() req: RequestWithUser,
