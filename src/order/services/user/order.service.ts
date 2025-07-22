@@ -177,4 +177,57 @@ export class OrderService {
       .getOne();
     return order;
   }
+
+  async getOrderDetailById(orderId: string) {
+    const order = this.orderRepository
+      .createQueryBuilder('order')
+      .where('order.id = :orderId', { orderId })
+      .leftJoinAndSelect('order.items', 'items')
+      .leftJoinAndSelect('order.attendees', 'attendees')
+      .leftJoin('order.show', 'show')
+      .leftJoin('order.event', 'event')
+      .leftJoinAndSelect('attendees.ticketType', 'ticketType')
+      .select([
+        'order.id',
+        'order.publicId',
+        'order.shortId',
+        'order.userId',
+        'order.firstName',
+        'order.lastName',
+        'order.email',
+        'order.eventId',
+        'order.showId',
+        'order.bookingCode',
+        'order.status',
+        'order.subtotalAmount',
+        'order.platformDiscountAmount',
+        'order.totalAmount',
+        'order.reservedUntil',
+        'order.stripePaymentIntentId',
+        'order.stripePaymentStatus',
+        'order.stripePaymentErrorMessage',
+        'order.stripeCustomerId',
+        'order.paymentProvider',
+        'order.paymentProviderTransactionId',
+        'order.paymentProviderMetadata',
+        'order.paymentRedirectUrl',
+        'order.paymentQrCode',
+        'order.paidAt',
+        'order.createdAt',
+        'order.updatedAt',
+        'items',
+        'attendees',
+        'ticketType.name',
+        'ticketType.price',
+        'ticketType.isFree',
+        'ticketType.description',
+        'show.startTime',
+        'show.endTime',
+        'event.eventName',
+        'event.venueName',
+        'event.eventBannerUrl',
+      ])
+      .getOne();
+    return order;
+  }
 }

@@ -16,4 +16,9 @@ export class OrderController {
   getDetail(@Payload() orderPublicId: string) {
     return this.orderService.getOrderDetail(orderPublicId);
   }
+
+  @MessagePattern('getOrderDetailById')
+  getDetailById(@Payload() orderPublicId: string) {
+    return this.orderService.getOrderDetailById(orderPublicId);
+  }
 }
